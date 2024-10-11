@@ -1,0 +1,11 @@
+[package]
+name = "stars"
+version = "0.1.0"
+authors = ["Pâris DOUADY <paris.douady@hotmail.fr>"]
+edition = "2021"
+
+description = "An implementation of basic Static Timing Analysis (STA) based on the Standard Delay Format (SDF) for learning how STA works under the hood"
+repository = "https://github.com/Uriopass/stars"
+
+[dependencies]
+
