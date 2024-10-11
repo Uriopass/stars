@@ -16,13 +16,13 @@ fn main() {
 
     let analysis = graph.analyze();
 
-    let mut outputs_with_delay = graph.outputs.iter().map(|output| {
-        (output, analysis.max_delay.get(output).unwrap())
+    let mut outputs_with_delay = graph.outputs.iter().filter_map(|output| {
+        Some((output, analysis.max_delay.get(output)?))
     }).collect::<Vec<_>>();
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().take(1) {
+    for (output, delay) in outputs_with_delay.into_iter().take(10) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         let path_l = path.len();

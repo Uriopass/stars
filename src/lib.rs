@@ -17,6 +17,8 @@ pub struct SDFGraph {
     pub reverse_graph: FxHashMap<SDFNode, Vec<SDFEdge>>,
     pub inputs: Vec<SDFNode>,
     pub outputs: Vec<SDFNode>,
+    pub clk: Option<SDFNode>,
+    pub rst: Option<SDFNode>,
 }
 
 fn unique_name(path: &SDFPath) -> SDFNode {
@@ -68,6 +70,16 @@ fn extract_delay(value: &SDFValue) -> f32 {
     }
 }
 
+fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
+    match value {
+        [updown] => {
+            let v = extract_delay(updown);
+            (v, v)
+        },
+        [up, down] => (extract_delay(up), extract_delay(down)),
+        _ => panic!("Interconnect delay is not of length 1 or 2 (up, down), but {:?}", value.len()),
+    }
+}
 
 impl SDFGraph {
     pub fn new(sdf: &sdfparse::SDF, check_cycle: bool) -> Self {
@@ -83,24 +95,22 @@ impl SDFGraph {
             for delay in &cell.delays {
                 match delay {
                     SDFDelay::Interconnect(inter) => {
-                        let [up, down] = &*inter.delay else {
-                            panic!("Interconnect delay is not of length 2 (up, down) for {:?}", cell.instance);
-                        };
+                        let (up, down) = parse_delays(&inter.delay);
 
                         let a_name = unique_name(&inter.a);
                         let b_name = unique_name(&inter.b);
 
                         graph.entry(a_name.clone()).or_insert_with(Vec::new).push(SDFEdge {
                             dst: b_name.clone(),
-                            delay_pos: extract_delay(up),
-                            delay_neg: extract_delay(down),
+                            delay_pos: up,
+                            delay_neg: down,
                         });
                         graph.entry(b_name.clone()).or_insert_with(Vec::new);
 
                         reverse_graph.entry(b_name).or_insert_with(Vec::new).push(SDFEdge {
                             dst: a_name.clone(),
-                            delay_pos: extract_delay(up),
-                            delay_neg: extract_delay(down),
+                            delay_pos: up,
+                            delay_neg: down,
                         });
                         reverse_graph.entry(a_name).or_insert_with(Vec::new);
                     }
@@ -116,21 +126,19 @@ impl SDFGraph {
                         let a_name = unique_name_port(&cell_name, &io.a.port);
                         let b_name = unique_name_port(&cell_name, &io.b);
 
-                        let [up, down] = &*io.delay else {
-                            panic!("Interconnect delay is not of length 2 (up, down) for {:?}", cell.instance);
-                        };
+                        let (up, down) = parse_delays(&io.delay);
 
                         graph.entry(a_name.clone()).or_insert_with(Vec::new).push(SDFEdge {
                             dst: b_name.clone(),
-                            delay_pos: extract_delay(up),
-                            delay_neg: extract_delay(down),
+                            delay_pos: up,
+                            delay_neg: down,
                         });
                         graph.entry(b_name.clone()).or_insert_with(Vec::new);
 
                         reverse_graph.entry(b_name).or_insert_with(Vec::new).push(SDFEdge {
                             dst: a_name.clone(),
-                            delay_pos: extract_delay(up),
-                            delay_neg: extract_delay(down),
+                            delay_pos: up,
+                            delay_neg: down,
                         });
                         reverse_graph.entry(a_name).or_insert_with(Vec::new);
                     }
@@ -162,11 +170,33 @@ impl SDFGraph {
             }
         }
 
+        let mut clk = None;
+        if graph.contains_key("clk") {
+            clk = Some("clk".to_string());
+        } else if graph.contains_key("clock") {
+            clk = Some("clock".to_string());
+        } else {
+            eprintln!("Warning: No clock (clk) signal found");
+        }
+
+        let mut rst = None;
+        if graph.contains_key("rst") {
+            rst = Some("rst".to_string());
+        } else if graph.contains_key("reset") {
+            rst = Some("reset".to_string());
+        } else if graph.contains_key("resetn") {
+            rst = Some("resetn".to_string());
+        } else {
+            eprintln!("Warning: No reset (rst) signal found");
+        }
+
         SDFGraph {
             graph,
             reverse_graph,
             inputs,
             outputs,
+            clk,
+            rst,
         }
     }
 
@@ -220,6 +250,9 @@ impl SDFGraph {
         let mut visited: FxHashSet<_> = Default::default();
 
         for node in &self.inputs {
+            if Some(node) == self.clk.as_ref() || Some(node) == self.rst.as_ref() {
+                continue;
+            }
             queue.push(node.clone(), OrderedFloat(0.0));
         }
 
@@ -275,7 +308,9 @@ impl SDFGraphAnalyzed {
             let delay = max_delay[node];
             let mut prev = None;
             for edge in edges {
-                let prev_delay = max_delay[&edge.dst];
+                let Some(prev_delay) = max_delay.get(&edge.dst).copied() else {
+                    continue;
+                };
 
                 //println!("{} -> {}\t{}, ↗{:.3} ↘{:.3} = {}", edge.dst, node, prev_delay, edge.delay_pos, edge.delay_neg, delay);
 
