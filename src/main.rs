@@ -14,15 +14,15 @@ fn main() {
 
     // print_graph(&graph, &mut keys);
 
-    let analysis = graph.analyze();
+    let analysis = graph.analyze_reg2reg();
 
-    let mut outputs_with_delay = graph.outputs.iter().filter_map(|output| {
+    let mut outputs_with_delay = graph.regs_d.iter().filter_map(|output| {
         Some((output, analysis.max_delay.get(output)?))
     }).collect::<Vec<_>>();
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().take(10) {
+    for (output, delay) in outputs_with_delay.into_iter().take(5) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         let path_l = path.len();

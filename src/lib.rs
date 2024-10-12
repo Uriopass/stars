@@ -15,6 +15,8 @@ pub type SDFNode = String;
 pub struct SDFGraph {
     pub graph: FxHashMap<SDFNode, Vec<SDFEdge>>,
     pub reverse_graph: FxHashMap<SDFNode, Vec<SDFEdge>>,
+    pub regs_d: Vec<SDFNode>,
+    pub regs_q: Vec<SDFNode>,
     pub inputs: Vec<SDFNode>,
     pub outputs: Vec<SDFNode>,
     pub clk: Option<SDFNode>,
@@ -85,6 +87,8 @@ impl SDFGraph {
     pub fn new(sdf: &sdfparse::SDF, check_cycle: bool) -> Self {
         let mut graph: FxHashMap<_, _> = FxHashMap::with_capacity_and_hasher(sdf.cells.len(), Default::default());
         let mut reverse_graph: FxHashMap<_, _> = FxHashMap::with_capacity_and_hasher(sdf.cells.len(), Default::default());
+        let mut regs_d = vec![];
+        let mut regs_q = vec![];
 
         for cell in &sdf.cells {
             let cell_name = unique_name(cell.instance.as_ref().unwrap_or(&SDFPath {
@@ -125,6 +129,11 @@ impl SDFGraph {
 
                         let a_name = unique_name_port(&cell_name, &io.a.port);
                         let b_name = unique_name_port(&cell_name, &io.b);
+
+                        if io.a.port.port_name == "CLK" && io.b.port_name == "Q" {
+                            regs_d.push(cell_name.clone() + "/D");
+                            regs_q.push(cell_name.clone() + "/Q");
+                        }
 
                         let (up, down) = parse_delays(&io.delay);
 
@@ -197,6 +206,8 @@ impl SDFGraph {
             outputs,
             clk,
             rst,
+            regs_d,
+            regs_q,
         }
     }
 
@@ -243,16 +254,13 @@ pub struct SDFGraphAnalyzed {
 impl SDFGraph {
     /// Propagate delays through the graph and return the maximum delay for each node.
     /// The maximum delay is the maximum time it takes for a signal to propagate from the inputs to the node.
-    pub fn analyze(&self) -> SDFGraphAnalyzed {
+    pub fn analyze_reg2reg(&self) -> SDFGraphAnalyzed {
         let mut max_delay = FxHashMap::default();
 
         let mut queue = priority_queue::PriorityQueue::with_capacity(self.graph.len());
         let mut visited: FxHashSet<_> = Default::default();
 
-        for node in &self.inputs {
-            if Some(node) == self.clk.as_ref() || Some(node) == self.rst.as_ref() {
-                continue;
-            }
+        for node in &self.regs_q {
             queue.push(node.clone(), OrderedFloat(0.0));
         }
 
