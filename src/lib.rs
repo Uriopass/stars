@@ -1,29 +1,40 @@
+use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::{Display, Formatter};
 use ordered_float::OrderedFloat;
-use rustc_hash::{FxHashMap, FxHashSet};
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub struct SDFEdge {
-    pub dst: SDFNode,
+    pub dst: SDFPin,
     pub delay_pos: f32,
     pub delay_neg: f32,
 }
 
-pub type SDFNode = String;
+pub type SDFPin = String;
+pub type SDFInstance = String;
+pub type SDFCellType = String;
+pub type PinMap<V> = BTreeMap<SDFPin, V>;
+pub type PinSet = BTreeSet<SDFPin>;
+pub type InstanceMap<V> = BTreeMap<SDFInstance, V>;
 
 pub struct SDFGraph {
-    pub graph: FxHashMap<SDFNode, Vec<SDFEdge>>,
-    pub reverse_graph: FxHashMap<SDFNode, Vec<SDFEdge>>,
-    pub regs_d: Vec<SDFNode>,
-    pub regs_q: Vec<SDFNode>,
-    pub inputs: Vec<SDFNode>,
-    pub outputs: Vec<SDFNode>,
-    pub clk: Option<SDFNode>,
-    pub rst: Option<SDFNode>,
+    pub graph: PinMap<Vec<SDFEdge>>,
+    pub reverse_graph: PinMap<Vec<SDFEdge>>,
+    pub instance_celltype: InstanceMap<String>,
+    pub pin_instance: PinMap<SDFInstance>,
+    // list of pin of input of the instance
+    pub instance_ins: InstanceMap<PinSet>,
+    // list of pins that are connected to the output of this instance
+    pub instance_fanout: InstanceMap<PinSet>,
+    pub regs_d: Vec<SDFPin>,
+    pub regs_q: Vec<SDFPin>,
+    pub inputs: Vec<SDFPin>,
+    pub outputs: Vec<SDFPin>,
+    pub clk: Option<SDFPin>,
+    pub rst: Option<SDFPin>,
 }
 
-fn unique_name(path: &SDFPath) -> SDFNode {
+fn unique_name(path: &SDFPath) -> SDFPin {
     let mut name = String::new();
     for part in &path.path {
         name.push_str(&part);
@@ -44,7 +55,7 @@ fn unique_name(path: &SDFPath) -> SDFNode {
     name
 }
 
-fn unique_name_port(cell_name: &SDFNode, port: &SDFPort) -> SDFNode {
+fn unique_name_port(cell_name: &SDFPin, port: &SDFPort) -> SDFPin {
     let mut name = cell_name.clone();
     name.push('/');
     name.push_str(&port.port_name);
@@ -85,8 +96,12 @@ fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
 
 impl SDFGraph {
     pub fn new(sdf: &sdfparse::SDF, check_cycle: bool) -> Self {
-        let mut graph: FxHashMap<_, _> = FxHashMap::with_capacity_and_hasher(sdf.cells.len(), Default::default());
-        let mut reverse_graph: FxHashMap<_, _> = FxHashMap::with_capacity_and_hasher(sdf.cells.len(), Default::default());
+        let mut graph: PinMap<_> = Default::default();
+        let mut reverse_graph: PinMap<_> = Default::default();
+        let mut instance_celltype: InstanceMap<_> = Default::default();
+        let mut instance_ins: InstanceMap<_> = Default::default();
+        let mut instance_fanout: InstanceMap<_> = Default::default();
+        let mut pin_instance: PinMap<_> = Default::default();
         let mut regs_d = vec![];
         let mut regs_q = vec![];
 
@@ -96,6 +111,8 @@ impl SDFGraph {
                 bus: SDFBus::None,
             }));
 
+            instance_celltype.insert(cell_name.clone(), cell.celltype.to_string());
+
             for delay in &cell.delays {
                 match delay {
                     SDFDelay::Interconnect(inter) => {
@@ -103,6 +120,10 @@ impl SDFGraph {
 
                         let a_name = unique_name(&inter.a);
                         let b_name = unique_name(&inter.b);
+
+                        if let Some((instance_a, _)) = a_name.rsplit_once("/") {
+                            instance_fanout.entry(instance_a.to_string()).or_insert_with(PinSet::new).insert(b_name.clone());
+                        }
 
                         graph.entry(a_name.clone()).or_insert_with(Vec::new).push(SDFEdge {
                             dst: b_name.clone(),
@@ -130,6 +151,11 @@ impl SDFGraph {
                         let a_name = unique_name_port(&cell_name, &io.a.port);
                         let b_name = unique_name_port(&cell_name, &io.b);
 
+                        pin_instance.insert(a_name.clone(), cell_name.clone());
+                        pin_instance.insert(b_name.clone(), cell_name.clone());
+
+                        instance_ins.entry(cell_name.clone()).or_insert_with(PinSet::new).insert(a_name.clone());
+
                         if io.a.port.port_name == "CLK" && io.b.port_name == "Q" {
                             regs_d.push(cell_name.clone() + "/D");
                             regs_q.push(cell_name.clone() + "/Q");
@@ -155,8 +181,8 @@ impl SDFGraph {
             }
         }
 
-        let mut outputs: Vec<SDFNode> = Vec::new();
-        let mut inputs: Vec<SDFNode> = Vec::new();
+        let mut outputs: Vec<SDFPin> = Vec::new();
+        let mut inputs: Vec<SDFPin> = Vec::new();
 
         for (key, edges) in &graph {
             if edges.is_empty() {
@@ -202,6 +228,10 @@ impl SDFGraph {
         SDFGraph {
             graph,
             reverse_graph,
+            instance_celltype,
+            instance_ins,
+            instance_fanout,
+            pin_instance,
             inputs,
             outputs,
             clk,
@@ -211,7 +241,7 @@ impl SDFGraph {
         }
     }
 
-    fn has_cycle_dfs(graph: &FxHashMap<SDFNode, Vec<SDFEdge>>, node: &SDFNode, visited: &mut FxHashSet<SDFNode>, stack: &mut FxHashSet<SDFNode>) -> bool {
+    fn has_cycle_dfs(graph: &PinMap<Vec<SDFEdge>>, node: &SDFPin, visited: &mut PinSet, stack: &mut PinSet) -> bool {
         if stack.contains(node) {
             return true;
         }
@@ -233,9 +263,9 @@ impl SDFGraph {
         false
     }
 
-    pub fn has_cycle(graph: &FxHashMap<SDFNode, Vec<SDFEdge>>, inputs: &[SDFNode]) -> bool {
-        let mut visited = FxHashSet::default();
-        let mut stack = FxHashSet::default();
+    pub fn has_cycle(graph: &PinMap<Vec<SDFEdge>>, inputs: &[SDFPin]) -> bool {
+        let mut visited = Default::default();
+        let mut stack = Default::default();
 
         for node in inputs {
             if Self::has_cycle_dfs(graph, node, &mut visited, &mut stack) {
@@ -248,19 +278,30 @@ impl SDFGraph {
 }
 
 pub struct SDFGraphAnalyzed {
-    pub max_delay: FxHashMap<SDFNode, f32>,
+    pub max_delay: PinMap<f32>,
+    pub max_delay_backwards: PinMap<f32>,
 }
 
 impl SDFGraph {
     /// Propagate delays through the graph and return the maximum delay for each node.
     /// The maximum delay is the maximum time it takes for a signal to propagate from the inputs to the node.
     pub fn analyze_reg2reg(&self) -> SDFGraphAnalyzed {
-        let mut max_delay = FxHashMap::default();
+        let max_delay = self.delay_pass(&self.regs_q, |g, n| &g.graph[n]);
+        let max_delay_backwards = self.delay_pass(&self.regs_d, |g, n| &g.reverse_graph[n]);
+
+        SDFGraphAnalyzed {
+            max_delay,
+            max_delay_backwards,
+        }
+    }
+
+    fn delay_pass<'b>(&'b self, init: impl IntoIterator<Item=&'b SDFPin>, edges: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge]) -> PinMap<f32> {
+        let mut max_delay: PinMap<_> = Default::default();
 
         let mut queue = priority_queue::PriorityQueue::with_capacity(self.graph.len());
-        let mut visited: FxHashSet<_> = Default::default();
+        let mut visited: PinSet = Default::default();
 
-        for node in &self.regs_q {
+        for node in init {
             queue.push(node.clone(), OrderedFloat(0.0));
         }
 
@@ -268,7 +309,7 @@ impl SDFGraph {
             max_delay.insert(node.clone(), delay);
             visited.insert(node.clone());
 
-            let edges = &self.graph[&node];
+            let edges = edges(self, &node);
             for edge in edges {
                 let delay = delay + f32::max(edge.delay_pos, edge.delay_neg);
 
@@ -278,9 +319,7 @@ impl SDFGraph {
             }
         }
 
-        SDFGraphAnalyzed {
-            max_delay,
-        }
+        max_delay
     }
 }
 
@@ -308,10 +347,10 @@ impl SDFGraphAnalyzed {
     /// **Example**: `[(1, Pos, 0.1), (2, Neg, 0.2)]` means that the transition from 1 to 2 was a positive transition with a delay of 0.1, and the transition from 2 to the output was a negative transition with a delay of 0.2.
     ///
     /// **Note**: The output is _not_ included in the path (since it doesn't do any transitions itself).
-    pub fn extract_path(&self, graph: &SDFGraph, output: &SDFNode) -> Vec<(SDFNode, Transition, f32)> {
+    pub fn extract_path(&self, graph: &SDFGraph, output: &SDFPin) -> Vec<(SDFPin, Transition, f32)> {
         let mut path = Vec::new();
 
-        fn find_prev(graph: &SDFGraph, node: &SDFNode, max_delay: &FxHashMap<SDFNode, f32>) -> Option<(SDFNode, Transition, f32)> {
+        fn find_prev(graph: &SDFGraph, node: &SDFPin, max_delay: &PinMap<f32>) -> Option<(SDFPin, Transition, f32)> {
             let edges = &graph.reverse_graph[node];
             let delay = max_delay[node];
             let mut prev = None;

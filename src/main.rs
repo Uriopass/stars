@@ -1,7 +1,7 @@
 use std::cmp::Reverse;
 use std::fs::read_to_string;
 use ordered_float::OrderedFloat;
-use stars::{SDFGraph, SDFNode};
+use stars::{PinMap, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition};
 
 fn main() {
     let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
@@ -22,23 +22,83 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().take(5) {
+    for (output, delay) in outputs_with_delay.into_iter().take(1) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
-        let path_l = path.len();
-        for (i, (node, transition, delay)) in path.into_iter().enumerate() {
-            print!("{} {}{:.3}", node, transition, delay);
-            if i + 1 < path_l {
-                print!(" -> ");
+        for (pin, transition, delay) in &path {
+            let instance = &graph.pin_instance[pin];
+            let celltype = &graph.instance_celltype[instance];
+            println!("  {} {}{:.3} {} {}", pin, transition, *delay, instance, celltype);
+        }
+        let o_instance = output.rsplit_once("/").unwrap().0;
+        let o_celltype = &graph.instance_celltype[o_instance];
+        println!("  {} {:.3} {} {}", output, delay, o_instance, o_celltype);
+
+        let extracted = extract_path_for_manual_analysis(&graph, &analysis, output, &path);
+        println!("{:#?}", extracted);
+    }
+}
+
+// struct containing the path with context
+// context includes: Incoming delay and outgoing delays (maybe more after)
+#[derive(Debug)]
+struct ExtractedPathWithContext {
+    instances: Vec<(SDFInstance, SDFCellType)>,
+    wires: Vec<(SDFPin, SDFPin)>,
+    arrivals: PinMap<f32>,
+    constraints: PinMap<f32>,
+}
+
+fn extract_path_for_manual_analysis(graph: &SDFGraph, analysis: &SDFGraphAnalyzed, output: &SDFPin, path: &[(SDFPin, Transition, f32)]) -> ExtractedPathWithContext {
+    let mut instances: Vec<(SDFInstance, SDFCellType)> = vec![];
+    let mut wires = vec![];
+    let mut arrivals: PinMap<_> = Default::default();
+    let mut constraints: PinMap<_> = Default::default();
+
+    let mut last_pin: Option<&SDFPin> = None;
+    for (pin, trans, delay) in path {
+        constraints.remove(pin);
+        eprintln!("    {} {} {}", pin, trans, delay);
+        let instance = &graph.pin_instance[pin];
+        let celltype = &graph.instance_celltype[instance];
+        if instances.last().map(|v| &v.0) != Some(instance) {
+            instances.push((instance.clone(), celltype.clone()));
+            if let Some(v) = last_pin {
+                wires.push((v.clone(), pin.clone()));
+            }
+        } else if !last_pin.is_none() {
+            for pin_in in &graph.instance_ins[instance] {
+                if pin_in == pin {
+                    eprintln!("weird...");
+                    continue;
+                }
+                eprintln!("      {}", pin_in);
+                arrivals.insert(pin_in.clone(), *analysis.max_delay.get(pin_in).unwrap_or(&0.0));
+            }
+            for pin_out in &graph.instance_fanout[instance] {
+                constraints.insert(pin_out.clone(), *analysis.max_delay_backwards.get(pin_out).unwrap_or(&0.0));
             }
         }
-        println!();
+
+        last_pin = Some(pin);
+    }
+    let o_instance = output.rsplit_once("/").unwrap().0;
+    let o_celltype = &graph.instance_celltype[o_instance];
+
+    instances.push((o_instance.to_string(), o_celltype.clone()));
+    wires.push((last_pin.unwrap().clone(), output.clone()));
+
+    ExtractedPathWithContext {
+        instances,
+        wires,
+        arrivals,
+        constraints,
     }
 }
 
 #[allow(dead_code)]
 fn print_graph(graph: &SDFGraph) {
-    let mut keys: Vec<&SDFNode> = graph.graph.keys().collect();
+    let mut keys: Vec<&SDFPin> = graph.graph.keys().collect();
 
     numeric_sort::sort_unstable(&mut keys);
 
