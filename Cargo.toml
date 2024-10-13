@@ -10,6 +10,7 @@ repository = "https://github.com/Uriopass/stars"
 [dependencies]
 sdfparse = "0.1.1"
 compact_str = "0.6.1"
+rustc-hash = "2.0.0"
 numeric-sort = "0.1.1"
 ordered-float = "4.3.0"
 priority-queue = "2.1.1"

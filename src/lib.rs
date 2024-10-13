@@ -1,6 +1,8 @@
+mod util;
+
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::{Display, Formatter};
-use ordered_float::OrderedFloat;
+use rustc_hash::FxHashSet;
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
@@ -296,25 +298,24 @@ impl SDFGraph {
     }
 
     fn delay_pass<'b>(&'b self, init: impl IntoIterator<Item=&'b SDFPin>, edges: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge]) -> PinMap<f32> {
-        let mut max_delay: PinMap<_> = Default::default();
+        let init: FxHashSet<_> = init.into_iter().collect();
+        let mut max_delay = PinMap::new();
 
-        let mut queue = priority_queue::PriorityQueue::with_capacity(self.graph.len());
-        let mut visited: PinSet = Default::default();
-
-        for node in init {
-            queue.push(node.clone(), OrderedFloat(0.0));
+        for &v in init.iter() {
+            max_delay.insert(v.clone(), 0.0);
         }
 
-        while let Some((node, OrderedFloat(delay))) = queue.pop() {
-            max_delay.insert(node.clone(), delay);
-            visited.insert(node.clone());
+        let sorted = util::topological_sort(
+            init,
+            |node| edges(self, node).iter().map(|edge| &edge.dst),
+        ).expect("cycle detected");
 
-            let edges = edges(self, &node);
-            for edge in edges {
-                let delay = delay + f32::max(edge.delay_pos, edge.delay_neg);
-
-                if !visited.contains(&edge.dst) {
-                    queue.push(edge.dst.clone(), OrderedFloat(delay));
+        for node in sorted {
+            let mut delay = max_delay[node];
+            for edge in edges(self, &node) {
+                let new_delay = delay + f32::max(edge.delay_pos, edge.delay_neg);
+                if new_delay > max_delay.get(&edge.dst).copied().unwrap_or(f32::NEG_INFINITY) {
+                    max_delay.insert(edge.dst.clone(), new_delay);
                 }
             }
         }

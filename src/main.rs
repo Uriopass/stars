@@ -22,7 +22,7 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().take(1) {
+    for (output, delay) in outputs_with_delay.into_iter().skip(1).take(1) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         for (pin, transition, delay) in &path {
@@ -58,7 +58,6 @@ fn extract_path_for_manual_analysis(graph: &SDFGraph, analysis: &SDFGraphAnalyze
     let mut last_pin: Option<&SDFPin> = None;
     for (pin, trans, delay) in path {
         constraints.remove(pin);
-        eprintln!("    {} {} {}", pin, trans, delay);
         let instance = &graph.pin_instance[pin];
         let celltype = &graph.instance_celltype[instance];
         if instances.last().map(|v| &v.0) != Some(instance) {
@@ -72,7 +71,6 @@ fn extract_path_for_manual_analysis(graph: &SDFGraph, analysis: &SDFGraphAnalyze
                     eprintln!("weird...");
                     continue;
                 }
-                eprintln!("      {}", pin_in);
                 arrivals.insert(pin_in.clone(), *analysis.max_delay.get(pin_in).unwrap_or(&0.0));
             }
             for pin_out in &graph.instance_fanout[instance] {
