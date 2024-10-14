@@ -28,10 +28,10 @@ fn main() {
         }
     };
 
-    let analysis = graph.analyze_reg2reg();
+    let analysis = graph.analyze();
 
     let mut outputs_with_delay = graph
-        .regs_d
+        .outputs
         .iter()
         .filter_map(|output| Some((output, analysis.max_delay.get(output)?)))
         .collect::<Vec<_>>();
@@ -42,16 +42,23 @@ fn main() {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         for (pin, transition, delay) in &path {
-            let instance = &graph.pin_instance[pin];
-            let celltype = &graph.instance_celltype[instance];
-            println!("  {} {}{:.3} {} {}", pin, transition, *delay, instance, celltype);
+            let instance = graph.pin_instance.get(pin);
+            let celltype = instance.and_then(|instance| graph.instance_celltype.get(instance));
+            println!(
+                "  {} {}{:.3} {} {}",
+                pin,
+                transition,
+                *delay,
+                instance.unwrap_or(&String::new()),
+                celltype.unwrap_or(&String::new())
+            );
         }
         let o_instance = instance_name(output);
         let o_celltype = &graph.instance_celltype[&o_instance];
         println!("  {} {:.3} {} {}", output, delay, o_instance, o_celltype);
 
         if let Some(subckt) = &subckt {
-            extract_spice_for_manual_analysis(&graph, &analysis, subckt, output, &path);
+            extract_spice_for_manual_analysis(&graph, &analysis, subckt, output, *delay, &path);
         }
     }
 }

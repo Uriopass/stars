@@ -1,5 +1,6 @@
 use crate::{
-    pin_name_ref, InstanceMap, PinMap, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition,
+    instance_name, pin_name, pin_name_ref, InstanceMap, PinMap, PinSet, SDFCellType, SDFGraph, SDFGraphAnalyzed,
+    SDFInstance, SDFPin, Transition,
 };
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
@@ -53,21 +54,25 @@ impl SubcktData {
     }
 }
 
+#[allow(unreachable_code, dead_code, unused_variables)]
 pub fn extract_spice_for_manual_analysis(
     graph: &SDFGraph,
     analysis: &SDFGraphAnalyzed,
     subckt: &SubcktData,
     output: &SDFPin,
+    max_delay: f32,
     path: &[(SDFPin, Transition, f32)],
 ) {
     let mut instances: Vec<(SDFInstance, SDFCellType)> = vec![];
     let mut wires: Vec<(SDFPin, SDFPin)> = Default::default();
+    let mut pins_in_path: PinSet = Default::default();
     let mut wire_in: InstanceMap<SDFPin> = Default::default();
     let mut arrivals: PinMap<_> = Default::default();
     let mut constraints: PinMap<_> = Default::default();
+    let mut transitions: PinMap<Transition> = Default::default();
 
     let mut last_pin: Option<&SDFPin> = None;
-    for (pin, _trans, _delay) in path {
+    for (pin, transition, _delay) in path {
         constraints.remove(pin);
 
         let instance = &graph.pin_instance[pin];
@@ -79,33 +84,201 @@ pub fn extract_spice_for_manual_analysis(
             if let Some(last_pin) = last_pin {
                 wire_in.insert(instance.clone(), pin.clone());
                 wires.push((last_pin.clone(), pin.clone()));
+                pins_in_path.insert(last_pin.clone());
+                pins_in_path.insert(pin.clone());
             }
             // external conn
             instances.push((instance.clone(), celltype.clone()));
         } else {
             // internal conn
+            transitions.insert(pin.clone(), *transition);
             for pin_in in &graph.instance_ins[instance] {
                 if pin_in == pin {
                     eprintln!("weird...");
                     continue;
                 }
-                arrivals.insert(pin_in.clone(), *analysis.max_delay.get(pin_in).unwrap_or(&0.0));
+
+                let t_setup = *analysis.max_delay.get(pin_in).unwrap_or(&0.0);
+                let t_arrival = *analysis.max_delay_backwards.get(pin_in).unwrap_or(&0.0);
+                let slack = max_delay - (t_setup + t_arrival);
+
+                arrivals.insert(pin_in.clone(), (t_setup, t_arrival, slack));
             }
-            for pin_out in &graph.instance_fanout[instance] {
-                constraints.insert(
-                    pin_out.clone(),
-                    *analysis.max_delay_backwards.get(pin_out).unwrap_or(&0.0),
-                );
+            for pin_in in &graph.instance_fanout[instance] {
+                let t_setup = *analysis.max_delay.get(pin_in).unwrap_or(&0.0);
+                let t_arrival = *analysis.max_delay_backwards.get(pin_in).unwrap_or(&0.0);
+                let slack = max_delay - (t_setup + t_arrival);
+                constraints.insert(pin_in.clone(), (t_setup, t_arrival, slack));
             }
         }
 
         last_pin = Some(pin);
     }
+
     let o_instance = output.rsplit_once('/').unwrap().0;
     let o_celltype = &graph.instance_celltype[o_instance];
 
+    constraints.remove(output);
     instances.push((o_instance.to_string(), o_celltype.clone()));
     wires.push((last_pin.unwrap().clone(), output.clone()));
+    pins_in_path.insert(output.clone());
+    pins_in_path.insert(last_pin.unwrap().clone());
+    wire_in.insert(o_instance.to_string(), output.clone());
+
+    let mut html = String::new();
+    writeln!(&mut html, "<html>").unwrap();
+    writeln!(&mut html, "<head>").unwrap();
+    // utf8
+    writeln!(&mut html, "<meta charset=\"UTF-8\">").unwrap();
+    writeln!(&mut html, "<style>").unwrap();
+    html.push_str(
+        r#"
+table, th, td { border: 1px solid #c1c1c1; border-collapse: collapse; }
+th, td { padding: 5px 10px; }
+td {
+    font-family: monospace;
+    text-align: right;
+}
+        "#,
+    );
+    writeln!(&mut html, "</style>").unwrap();
+    writeln!(&mut html, "</head>").unwrap();
+    writeln!(&mut html, "<body>").unwrap();
+    writeln!(&mut html, "<table>").unwrap();
+    writeln!(&mut html, "<tr>").unwrap();
+    writeln!(&mut html, "<th>Instance</th>").unwrap();
+    writeln!(&mut html, "<th>Celltype</th>").unwrap();
+    writeln!(&mut html, "<th>Setup</th>").unwrap();
+    writeln!(&mut html, "<th>Arr.</th>").unwrap();
+    writeln!(&mut html, "<th><b>Slack</b></th>").unwrap();
+    writeln!(&mut html, "<th></th>").unwrap();
+    writeln!(&mut html, "<th>Input Pin: Setup, Arr, <b>Slack</b></th>").unwrap();
+    writeln!(&mut html, "<th>Output Cells Pin (fanout)</th>").unwrap();
+    writeln!(&mut html, "</tr>").unwrap();
+
+    for (instance, celltype) in &instances {
+        let celltype = graph.instance_celltype[instance].trim_start_matches("sky130_fd_sc_hd__");
+        let mut pin_out = graph.instance_outs[instance].first().unwrap();
+        let pin_out_holder = String::new();
+        if !pins_in_path.contains(pin_out) {
+            pin_out = &pin_out_holder;
+        }
+        let wire_in = wire_in.get(instance);
+
+        let mut t_setup = analysis.max_delay.get(pin_out).copied();
+        let mut t_arrival = analysis.max_delay_backwards.get(pin_out).copied();
+        let mut slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+            Some(max_delay - (t_setup + t_arrival))
+        } else {
+            None
+        };
+        let transition = transitions.get(pin_out).copied();
+
+        if instance == &instance_name(output) {
+            t_setup = None;
+            t_arrival = None;
+            slack = None;
+        }
+
+        writeln!(&mut html, "<tr>").unwrap();
+        writeln!(
+            &mut html,
+            "<td><center>{}<br/>{} → {}</center></td>",
+            instance,
+            pin_name(wire_in.unwrap_or(&String::new())),
+            pin_name(pin_out)
+        )
+        .unwrap();
+        writeln!(&mut html, "<td>{}</td>", celltype).unwrap();
+        let mut writecell = |v: Option<f32>| {
+            if let Some(v) = v {
+                writeln!(&mut html, "<td>{:.3}</td>", v).unwrap();
+            } else {
+                writeln!(&mut html, "<td></td>").unwrap();
+            }
+        };
+        writecell(t_setup);
+        writecell(t_arrival);
+        writecell(slack);
+        if let Some(transition) = transition {
+            writeln!(&mut html, "<td>{}</td>", transition).unwrap();
+        } else {
+            writeln!(&mut html, "<td></td>").unwrap();
+        }
+
+        let mut input_pin_html = String::new();
+        for pin_in in &graph.instance_ins[instance] {
+            if wire_in == Some(pin_in) {
+                continue;
+            }
+            if pin_name(pin_in) == "CLK" {
+                continue;
+            }
+            if let Some((t_setup, t_arrival, slack)) = arrivals.get(pin_in).copied() {
+                write!(
+                    input_pin_html,
+                    "{}: {:.3} {:.3} <b>{:.3}</b><br>",
+                    pin_name(pin_in),
+                    t_setup,
+                    t_arrival,
+                    slack
+                )
+                .unwrap();
+            } else {
+                write!(input_pin_html, "{}<br>", pin_in).unwrap();
+            }
+        }
+        writeln!(&mut html, "<td>{}</td>", input_pin_html).unwrap();
+
+        let mut output_pin_html = String::new();
+        for fanout_pin_in in &graph.instance_fanout[instance] {
+            if pins_in_path.contains(fanout_pin_in) {
+                continue;
+            }
+
+            let instance = &graph.pin_instance[fanout_pin_in];
+            let celltype = &graph.instance_celltype[instance];
+            let celltype_short = celltype
+                .trim_start_matches("sky130_fd_sc_hd__")
+                .rsplit_once('_')
+                .unwrap()
+                .0;
+
+            let mut t_setup = analysis.max_delay.get(fanout_pin_in).copied();
+            let mut t_arrival = analysis.max_delay_backwards.get(fanout_pin_in).copied();
+            let mut slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+                Some(max_delay - (t_setup + t_arrival))
+            } else {
+                None
+            };
+
+            if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
+                write!(
+                    output_pin_html,
+                    "{}.{}: {:.3} {:.3} <b>{:.3}</b><br>",
+                    celltype_short,
+                    pin_name(fanout_pin_in),
+                    t_setup,
+                    t_arrival,
+                    slack
+                )
+                .unwrap();
+            } else {
+                write!(output_pin_html, "{}.{}<br>", celltype_short, pin_name(fanout_pin_in)).unwrap();
+            }
+        }
+        writeln!(&mut html, "<td>{}</td>", output_pin_html).unwrap();
+
+        writeln!(&mut html, "</tr>").unwrap();
+    }
+
+    writeln!(&mut html, "</table>").unwrap();
+    writeln!(&mut html, "</body>").unwrap();
+    writeln!(&mut html, "</html>").unwrap();
+
+    std::fs::write("path.html", html).unwrap();
+
+    return;
 
     let mut spice = String::new();
 

@@ -103,19 +103,28 @@ fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
 /// Extract the name of the pin from the full path.
 /// For example, `and4/A` -> `A`
 pub fn pin_name_ref(pin: &SDFPin) -> &str {
-    pin.rsplit_once('/').unwrap().1
+    let Some(v) = pin.rsplit_once('/') else {
+        return pin;
+    };
+    v.1
 }
 
 /// Extract the name of the pin from the full path.
 /// For example, `and4/A` -> `A`
 pub fn pin_name(pin: &SDFPin) -> String {
-    pin.rsplit_once('/').unwrap().1.to_string()
+    let Some(v) = pin.rsplit_once('/') else {
+        return pin.to_string();
+    };
+    v.1.to_string()
 }
 
 /// Extract the name of the instance from the full path.
 /// For example, `and4/A` -> `and4`
 pub fn instance_name(pin: &SDFPin) -> String {
-    pin.rsplit_once('/').unwrap().0.to_string()
+    let Some(v) = pin.rsplit_once('/') else {
+        return pin.to_string();
+    };
+    v.0.to_string()
 }
 
 impl SDFGraph {
@@ -262,6 +271,11 @@ impl SDFGraph {
             eprintln!("Warning: No reset (rst) signal found");
         }
 
+        inputs.retain(|v| Some(v) != clk.as_ref() && Some(v) != rst.as_ref());
+        inputs.extend(regs_q.iter().cloned());
+
+        outputs.extend(regs_d.iter().cloned());
+
         SDFGraph {
             graph,
             reverse_graph,
@@ -323,9 +337,9 @@ pub struct SDFGraphAnalyzed {
 impl SDFGraph {
     /// Propagate delays through the graph and return the maximum delay for each node.
     /// The maximum delay is the maximum time it takes for a signal to propagate from the inputs to the node.
-    pub fn analyze_reg2reg(&self) -> SDFGraphAnalyzed {
-        let max_delay = self.delay_pass(&self.regs_q, |g, n| &g.reverse_graph[n]);
-        let max_delay_backwards = self.delay_pass(&self.regs_d, |g, n| &g.graph[n]);
+    pub fn analyze(&self) -> SDFGraphAnalyzed {
+        let max_delay = self.delay_pass(self.inputs.iter(), self.graph.keys(), |g, n| &g.reverse_graph[n]);
+        let max_delay_backwards = self.delay_pass(self.outputs.iter(), self.reverse_graph.keys(), |g, n| &g.graph[n]);
 
         SDFGraphAnalyzed {
             max_delay,
@@ -336,6 +350,7 @@ impl SDFGraph {
     fn delay_pass<'b>(
         &'b self,
         init: impl IntoIterator<Item = &'b SDFPin>,
+        all_keys: impl IntoIterator<Item = &'b SDFPin>,
         bw_edges: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge] + Copy,
     ) -> PinMap<f32> {
         let init: FxHashSet<_> = init.into_iter().collect();
@@ -345,7 +360,7 @@ impl SDFGraph {
             max_delay.insert(v.clone(), 0.0);
         }
 
-        for v in self.graph.keys() {
+        for v in all_keys {
             if !max_delay.contains_key(v) {
                 self.visit(&mut max_delay, v, bw_edges);
             }
@@ -373,6 +388,8 @@ impl SDFGraph {
             match max_delay.get(&edge.dst) {
                 None => {
                     self.visit(max_delay, &edge.dst, bw_edges_fn);
+                    let delay = max_delay[&edge.dst] + edge.delay_max;
+                    max = f32::max(max, delay);
                 }
                 Some(delay) => {
                     let delay = delay + edge.delay_max;
@@ -380,11 +397,12 @@ impl SDFGraph {
                 }
             }
         }
+
         max_delay.insert(node.clone(), max);
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub enum Transition {
     /// Positive transition. 0 -> 1
     Pos,
