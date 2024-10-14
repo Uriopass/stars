@@ -1,6 +1,5 @@
 use crate::{
-    pin_name, pin_name_ref, InstanceMap, PinMap, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin,
-    Transition,
+    pin_name_ref, InstanceMap, PinMap, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition,
 };
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
@@ -102,7 +101,7 @@ pub fn extract_spice_for_manual_analysis(
 
         last_pin = Some(pin);
     }
-    let o_instance = output.rsplit_once("/").unwrap().0;
+    let o_instance = output.rsplit_once('/').unwrap().0;
     let o_celltype = &graph.instance_celltype[o_instance];
 
     instances.push((o_instance.to_string(), o_celltype.clone()));
@@ -130,7 +129,7 @@ pub fn extract_spice_for_manual_analysis(
     for celltype in celltypes {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
-            .rsplit_once("_")
+            .rsplit_once('_')
             .unwrap()
             .0;
         writeln!(
@@ -150,7 +149,7 @@ pub fn extract_spice_for_manual_analysis(
     for (instance, celltype) in &instances {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
-            .rsplit_once("_")
+            .rsplit_once('_')
             .unwrap()
             .0;
         values.clear();

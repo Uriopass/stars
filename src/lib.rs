@@ -42,7 +42,7 @@ pub struct SDFGraph {
 fn unique_name(path: &SDFPath) -> SDFPin {
     let mut name = String::new();
     for part in &path.path {
-        name.push_str(&part);
+        name.push_str(part);
         name.push('/');
     }
     name.pop();
@@ -103,19 +103,19 @@ fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
 /// Extract the name of the pin from the full path.
 /// For example, `and4/A` -> `A`
 pub fn pin_name_ref(pin: &SDFPin) -> &str {
-    pin.rsplit_once("/").unwrap().1
+    pin.rsplit_once('/').unwrap().1
 }
 
 /// Extract the name of the pin from the full path.
 /// For example, `and4/A` -> `A`
 pub fn pin_name(pin: &SDFPin) -> String {
-    pin.rsplit_once("/").unwrap().1.to_string()
+    pin.rsplit_once('/').unwrap().1.to_string()
 }
 
 /// Extract the name of the instance from the full path.
 /// For example, `and4/A` -> `and4`
 pub fn instance_name(pin: &SDFPin) -> String {
-    pin.rsplit_once("/").unwrap().0.to_string()
+    pin.rsplit_once('/').unwrap().0.to_string()
 }
 
 impl SDFGraph {
@@ -146,7 +146,7 @@ impl SDFGraph {
                         let a_name = unique_name(&inter.a);
                         let b_name = unique_name(&inter.b);
 
-                        if let Some((instance_a, _)) = a_name.rsplit_once("/") {
+                        if let Some((instance_a, _)) = a_name.rsplit_once('/') {
                             instance_fanout
                                 .entry(instance_a.to_string())
                                 .or_insert_with(PinSet::new)
@@ -238,10 +238,8 @@ impl SDFGraph {
         numeric_sort::sort_unstable(&mut inputs);
         numeric_sort::sort_unstable(&mut outputs);
 
-        if check_cycle {
-            if Self::has_cycle(&graph, &inputs) {
-                panic!("graph has cycle :(");
-            }
+        if check_cycle && Self::has_cycle(&graph, &inputs) {
+            panic!("graph has cycle :(");
         }
 
         let mut clk = None;
@@ -365,7 +363,7 @@ impl SDFGraph {
         bw_edges_fn: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge] + Copy,
     ) {
         let bw_edges = bw_edges_fn(self, node);
-        if bw_edges.len() == 0 {
+        if bw_edges.is_empty() {
             max_delay.insert(node.clone(), f32::NAN);
             return;
         }
