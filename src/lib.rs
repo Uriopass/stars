@@ -1,15 +1,16 @@
-mod util;
+pub mod spice;
 
-use std::collections::{BTreeMap, BTreeSet};
-use std::fmt::{Display, Formatter};
 use rustc_hash::FxHashSet;
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};
+use std::collections::{BTreeMap, BTreeSet};
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub struct SDFEdge {
     pub dst: SDFPin,
     pub delay_pos: f32,
     pub delay_neg: f32,
+    pub delay_max: f32,
 }
 
 pub type SDFPin = String;
@@ -26,6 +27,8 @@ pub struct SDFGraph {
     pub pin_instance: PinMap<SDFInstance>,
     // list of pin of input of the instance
     pub instance_ins: InstanceMap<PinSet>,
+    // list of pin of output of the instance
+    pub instance_outs: InstanceMap<PinSet>,
     // list of pins that are connected to the output of this instance
     pub instance_fanout: InstanceMap<PinSet>,
     pub regs_d: Vec<SDFPin>,
@@ -79,9 +82,7 @@ fn extract_delay(value: &SDFValue) -> f32 {
     match *value {
         SDFValue::None => 0.0,
         SDFValue::Single(v) => v,
-        SDFValue::Multi(v, _, _) => {
-            v.unwrap_or(0.0)
-        }
+        SDFValue::Multi(v, _, _) => v.unwrap_or(0.0),
     }
 }
 
@@ -90,10 +91,31 @@ fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
         [updown] => {
             let v = extract_delay(updown);
             (v, v)
-        },
+        }
         [up, down] => (extract_delay(up), extract_delay(down)),
-        _ => panic!("Interconnect delay is not of length 1 or 2 (up, down), but {:?}", value.len()),
+        _ => panic!(
+            "Interconnect delay is not of length 1 or 2 (up, down), but {:?}",
+            value.len()
+        ),
     }
+}
+
+/// Extract the name of the pin from the full path.
+/// For example, `and4/A` -> `A`
+pub fn pin_name_ref(pin: &SDFPin) -> &str {
+    pin.rsplit_once("/").unwrap().1
+}
+
+/// Extract the name of the pin from the full path.
+/// For example, `and4/A` -> `A`
+pub fn pin_name(pin: &SDFPin) -> String {
+    pin.rsplit_once("/").unwrap().1.to_string()
+}
+
+/// Extract the name of the instance from the full path.
+/// For example, `and4/A` -> `and4`
+pub fn instance_name(pin: &SDFPin) -> String {
+    pin.rsplit_once("/").unwrap().0.to_string()
 }
 
 impl SDFGraph {
@@ -102,6 +124,7 @@ impl SDFGraph {
         let mut reverse_graph: PinMap<_> = Default::default();
         let mut instance_celltype: InstanceMap<_> = Default::default();
         let mut instance_ins: InstanceMap<_> = Default::default();
+        let mut instance_outs: InstanceMap<_> = Default::default();
         let mut instance_fanout: InstanceMap<_> = Default::default();
         let mut pin_instance: PinMap<_> = Default::default();
         let mut regs_d = vec![];
@@ -124,13 +147,17 @@ impl SDFGraph {
                         let b_name = unique_name(&inter.b);
 
                         if let Some((instance_a, _)) = a_name.rsplit_once("/") {
-                            instance_fanout.entry(instance_a.to_string()).or_insert_with(PinSet::new).insert(b_name.clone());
+                            instance_fanout
+                                .entry(instance_a.to_string())
+                                .or_insert_with(PinSet::new)
+                                .insert(b_name.clone());
                         }
 
                         graph.entry(a_name.clone()).or_insert_with(Vec::new).push(SDFEdge {
                             dst: b_name.clone(),
                             delay_pos: up,
                             delay_neg: down,
+                            delay_max: f32::max(up, down),
                         });
                         graph.entry(b_name.clone()).or_insert_with(Vec::new);
 
@@ -138,6 +165,7 @@ impl SDFGraph {
                             dst: a_name.clone(),
                             delay_pos: up,
                             delay_neg: down,
+                            delay_max: f32::max(up, down),
                         });
                         reverse_graph.entry(a_name).or_insert_with(Vec::new);
                     }
@@ -156,7 +184,14 @@ impl SDFGraph {
                         pin_instance.insert(a_name.clone(), cell_name.clone());
                         pin_instance.insert(b_name.clone(), cell_name.clone());
 
-                        instance_ins.entry(cell_name.clone()).or_insert_with(PinSet::new).insert(a_name.clone());
+                        instance_ins
+                            .entry(cell_name.clone())
+                            .or_insert_with(PinSet::new)
+                            .insert(a_name.clone());
+                        instance_outs
+                            .entry(cell_name.clone())
+                            .or_insert_with(PinSet::new)
+                            .insert(b_name.clone());
 
                         if io.a.port.port_name == "CLK" && io.b.port_name == "Q" {
                             regs_d.push(cell_name.clone() + "/D");
@@ -169,6 +204,7 @@ impl SDFGraph {
                             dst: b_name.clone(),
                             delay_pos: up,
                             delay_neg: down,
+                            delay_max: f32::max(up, down),
                         });
                         graph.entry(b_name.clone()).or_insert_with(Vec::new);
 
@@ -176,6 +212,7 @@ impl SDFGraph {
                             dst: a_name.clone(),
                             delay_pos: up,
                             delay_neg: down,
+                            delay_max: f32::max(up, down),
                         });
                         reverse_graph.entry(a_name).or_insert_with(Vec::new);
                     }
@@ -232,6 +269,7 @@ impl SDFGraph {
             reverse_graph,
             instance_celltype,
             instance_ins,
+            instance_outs,
             instance_fanout,
             pin_instance,
             inputs,
@@ -288,8 +326,8 @@ impl SDFGraph {
     /// Propagate delays through the graph and return the maximum delay for each node.
     /// The maximum delay is the maximum time it takes for a signal to propagate from the inputs to the node.
     pub fn analyze_reg2reg(&self) -> SDFGraphAnalyzed {
-        let max_delay = self.delay_pass(&self.regs_q, |g, n| &g.graph[n]);
-        let max_delay_backwards = self.delay_pass(&self.regs_d, |g, n| &g.reverse_graph[n]);
+        let max_delay = self.delay_pass(&self.regs_q, |g, n| &g.reverse_graph[n]);
+        let max_delay_backwards = self.delay_pass(&self.regs_d, |g, n| &g.graph[n]);
 
         SDFGraphAnalyzed {
             max_delay,
@@ -297,7 +335,11 @@ impl SDFGraph {
         }
     }
 
-    fn delay_pass<'b>(&'b self, init: impl IntoIterator<Item=&'b SDFPin>, edges: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge]) -> PinMap<f32> {
+    fn delay_pass<'b>(
+        &'b self,
+        init: impl IntoIterator<Item = &'b SDFPin>,
+        bw_edges: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge] + Copy,
+    ) -> PinMap<f32> {
         let init: FxHashSet<_> = init.into_iter().collect();
         let mut max_delay = PinMap::new();
 
@@ -305,22 +347,42 @@ impl SDFGraph {
             max_delay.insert(v.clone(), 0.0);
         }
 
-        let sorted = util::topological_sort(
-            init,
-            |node| edges(self, node).iter().map(|edge| &edge.dst),
-        ).expect("cycle detected");
-
-        for node in sorted {
-            let mut delay = max_delay[node];
-            for edge in edges(self, &node) {
-                let new_delay = delay + f32::max(edge.delay_pos, edge.delay_neg);
-                if new_delay > max_delay.get(&edge.dst).copied().unwrap_or(f32::NEG_INFINITY) {
-                    max_delay.insert(edge.dst.clone(), new_delay);
-                }
+        for v in self.graph.keys() {
+            if !max_delay.contains_key(v) {
+                self.visit(&mut max_delay, v, bw_edges);
             }
         }
 
+        max_delay.retain(|_, delay| !delay.is_nan());
+
         max_delay
+    }
+
+    fn visit<'b>(
+        &'b self,
+        max_delay: &mut BTreeMap<SDFPin, f32>,
+        node: &SDFPin,
+        bw_edges_fn: impl for<'c> Fn(&'b Self, &'c SDFPin) -> &'b [SDFEdge] + Copy,
+    ) {
+        let bw_edges = bw_edges_fn(self, node);
+        if bw_edges.len() == 0 {
+            max_delay.insert(node.clone(), f32::NAN);
+            return;
+        }
+
+        let mut max = f32::NAN;
+        for edge in bw_edges {
+            match max_delay.get(&edge.dst) {
+                None => {
+                    self.visit(max_delay, &edge.dst, bw_edges_fn);
+                }
+                Some(delay) => {
+                    let delay = delay + edge.delay_max;
+                    max = f32::max(max, delay);
+                }
+            }
+        }
+        max_delay.insert(node.clone(), max);
     }
 }
 
