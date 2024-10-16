@@ -1,4 +1,5 @@
 pub mod spice;
+pub mod html;
 
 use rustc_hash::FxHashSet;
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};

@@ -5,6 +5,7 @@ use ordered_float::OrderedFloat;
 
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
 use stars::{instance_name, SDFGraph, SDFPin};
+use stars::html::extract_html_for_manual_analysis;
 
 fn main() {
     let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
@@ -37,7 +38,7 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().skip(2).take(1) {
+    for (output, delay) in outputs_with_delay.into_iter().take(1) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         for (pin, transition, delay) in &path {
@@ -56,8 +57,9 @@ fn main() {
         let o_celltype = &graph.instance_celltype[&o_instance];
         println!("  {} {:.3} {} {}", output, delay, o_instance, o_celltype);
 
+        extract_html_for_manual_analysis(&graph, &analysis, output, *delay, &path);
         if let Some(subckt) = &subckt {
-            extract_spice_for_manual_analysis(&graph, &analysis, subckt, output, *delay, &path);
+            extract_spice_for_manual_analysis(&graph, &analysis, &subckt, output, *delay, &path);
         }
     }
 }
