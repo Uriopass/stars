@@ -75,12 +75,12 @@ pub fn extract_spice_for_manual_analysis(
     for (pin, transition, _delay) in path {
         constraints.remove(pin);
 
-        let instance = &graph.pin_instance[pin];
-        let celltype = &graph.instance_celltype[instance];
+        let instance = instance_name(pin);
+        let celltype = &graph.instance_celltype[&instance];
 
         let last_instance = instances.last().map(|v| &v.0);
 
-        if last_instance != Some(instance) {
+        if last_instance != Some(&instance) {
             if let Some(last_pin) = last_pin {
                 wire_in.insert(instance.clone(), pin.clone());
                 wires.push((last_pin.clone(), pin.clone()));
@@ -92,7 +92,7 @@ pub fn extract_spice_for_manual_analysis(
         } else {
             // internal conn
             transitions.insert(pin.clone(), *transition);
-            for pin_in in &graph.instance_ins[instance] {
+            for pin_in in &graph.instance_ins[&instance] {
                 if pin_in == pin {
                     eprintln!("weird...");
                     continue;
@@ -104,7 +104,7 @@ pub fn extract_spice_for_manual_analysis(
 
                 arrivals.insert(pin_in.clone(), (t_setup, t_arrival, slack));
             }
-            for pin_in in &graph.instance_fanout[instance] {
+            for pin_in in &graph.instance_fanout[&instance] {
                 let t_setup = *analysis.max_delay.get(pin_in).unwrap_or(&0.0);
                 let t_arrival = *analysis.max_delay_backwards.get(pin_in).unwrap_or(&0.0);
                 let slack = max_delay - (t_setup + t_arrival);
@@ -236,8 +236,8 @@ td {
                 continue;
             }
 
-            let instance = &graph.pin_instance[fanout_pin_in];
-            let celltype = &graph.instance_celltype[instance];
+            let instance = instance_name(fanout_pin_in);
+            let celltype = &graph.instance_celltype[&instance];
             let celltype_short = celltype
                 .trim_start_matches("sky130_fd_sc_hd__")
                 .rsplit_once('_')
@@ -382,8 +382,8 @@ td {
     let mut capacitances = String::new();
 
     for (i, (pin_in, pin_out)) in wires.iter().enumerate() {
-        let instance_in = &graph.pin_instance[pin_in];
-        let fanout = graph.instance_fanout[instance_in].len();
+        let instance_in = instance_name(pin_in);
+        let fanout = graph.instance_fanout[&instance_in].len();
 
         let mult = if fanout <= load_model.len() {
             load_model[fanout - 1]

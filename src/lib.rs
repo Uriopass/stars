@@ -24,7 +24,6 @@ pub struct SDFGraph {
     pub graph: PinMap<Vec<SDFEdge>>,
     pub reverse_graph: PinMap<Vec<SDFEdge>>,
     pub instance_celltype: InstanceMap<String>,
-    pub pin_instance: PinMap<SDFInstance>,
     // list of pin of input of the instance
     pub instance_ins: InstanceMap<PinSet>,
     // list of pin of output of the instance
@@ -135,7 +134,6 @@ impl SDFGraph {
         let mut instance_ins: InstanceMap<_> = Default::default();
         let mut instance_outs: InstanceMap<_> = Default::default();
         let mut instance_fanout: InstanceMap<_> = Default::default();
-        let mut pin_instance: PinMap<_> = Default::default();
         let mut regs_d = vec![];
         let mut regs_q = vec![];
 
@@ -189,9 +187,6 @@ impl SDFGraph {
 
                         let a_name = unique_name_port(&cell_name, &io.a.port);
                         let b_name = unique_name_port(&cell_name, &io.b);
-
-                        pin_instance.insert(a_name.clone(), cell_name.clone());
-                        pin_instance.insert(b_name.clone(), cell_name.clone());
 
                         instance_ins
                             .entry(cell_name.clone())
@@ -283,7 +278,6 @@ impl SDFGraph {
             instance_ins,
             instance_outs,
             instance_fanout,
-            pin_instance,
             inputs,
             outputs,
             clk,

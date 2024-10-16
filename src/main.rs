@@ -29,7 +29,6 @@ fn main() {
     };
 
     let analysis = graph.analyze();
-
     let mut outputs_with_delay = graph
         .outputs
         .iter()
@@ -38,18 +37,18 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().skip(1).take(1) {
+    for (output, delay) in outputs_with_delay.into_iter().skip(2).take(1) {
         println!("{}:\t{:.3}", output, delay);
         let path = analysis.extract_path(&graph, output);
         for (pin, transition, delay) in &path {
-            let instance = graph.pin_instance.get(pin);
-            let celltype = instance.and_then(|instance| graph.instance_celltype.get(instance));
+            let instance = instance_name(pin);
+            let celltype = graph.instance_celltype.get(&instance);
             println!(
                 "  {} {}{:.3} {} {}",
                 pin,
                 transition,
                 *delay,
-                instance.unwrap_or(&String::new()),
+                instance,
                 celltype.unwrap_or(&String::new())
             );
         }
