@@ -3,9 +3,9 @@ use std::fs::read_to_string;
 
 use ordered_float::OrderedFloat;
 
+use stars::html::extract_html_for_manual_analysis;
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
 use stars::{instance_name, SDFGraph, SDFPin};
-use stars::html::extract_html_for_manual_analysis;
 
 fn main() {
     let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
