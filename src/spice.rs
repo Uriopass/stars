@@ -1,5 +1,4 @@
 use std::borrow::Cow;
-use std::collections::BTreeSet;
 use std::fmt::Write;
 
 use rustc_hash::{FxHashMap, FxHashSet};
@@ -176,25 +175,6 @@ pub fn extract_spice_for_manual_analysis(
     writeln!(&mut spice, "Vclk clk Vgnd PULSE(0 {} 0n 0.2n 0.2n 4.6n 10.0n)", VDD).unwrap();
     writeln!(&mut spice).unwrap();
 
-    let celltypes = instances
-        .iter()
-        .map(|(_, celltype, _)| celltype)
-        .collect::<BTreeSet<_>>();
-    for celltype in celltypes {
-        let celltype_short = celltype
-            .trim_start_matches("sky130_fd_sc_hd__")
-            .rsplit_once('_')
-            .unwrap()
-            .0;
-        writeln!(
-            &mut spice,
-            ".include ./sky130_fd_sc_hd/cells/{}/{}.spice",
-            celltype_short, celltype
-        )
-        .unwrap();
-    }
-    writeln!(&mut spice).unwrap();
-
     let mut values: FxHashMap<_, Cow<str>> = Default::default();
     let mut pins_to_plot = FxHashSet::default();
 
@@ -236,7 +216,7 @@ pub fn extract_spice_for_manual_analysis(
             values.insert(pin, full_pin.into());
         }
 
-        subckt.call(instance, celltype, &values, &mut spice);
+        subckt.instanciate(instance, celltype, &values, &mut spice);
     }
 
     // remove output of last instance
@@ -301,7 +281,7 @@ plot V(clk) {}
     )
     .unwrap();
 
-    println!("\n\n{}", spice);
+    std::fs::write("out.spice", spice).unwrap();
 }
 
 #[cfg(test)]
