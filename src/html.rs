@@ -1,7 +1,5 @@
-use crate::{
-    instance_name, pin_name,  PinSet, SDFGraph, SDFGraphAnalyzed,
-    SDFInstance, SDFPin, Transition,
-};
+use crate::{instance_name, pin_name, PinSet, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition};
+use ordered_float::OrderedFloat;
 use std::fmt::Write;
 
 pub fn extract_html_for_manual_analysis(
@@ -41,7 +39,8 @@ pub fn extract_html_for_manual_analysis(
     pins_in_path.insert(last_pin.unwrap().clone());
 
     let mut html = String::new();
-    html.push_str(r#"<html lang="en">
+    html.push_str(
+        r#"<html lang="en">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -65,7 +64,8 @@ pub fn extract_html_for_manual_analysis(
         <th></th>
         <th>Input Pin: Setup, Arr, <b>Slack</b></th>
         <th>Output Cells Pin (fanout)</th>
-    </tr>"#);
+    </tr>"#,
+    );
 
     for (instance, wire_in, transition) in &instances {
         let celltype = graph.instance_celltype[instance].trim_start_matches("sky130_fd_sc_hd__");
@@ -142,23 +142,32 @@ pub fn extract_html_for_manual_analysis(
         writeln!(&mut html, "<td>{}</td>", input_pin_html).unwrap();
 
         let mut output_pin_html = String::new();
-        for fanout_pin_in in &graph.instance_fanout[instance] {
+
+        let mut fanout_with_slack = graph.instance_fanout[instance]
+            .iter()
+            .map(|pin| {
+                let t_setup = analysis.max_delay.get(pin).copied();
+                let t_arrival = analysis.max_delay_backwards.get(pin).copied();
+                let slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+                    Some(max_delay - (t_setup + t_arrival))
+                } else {
+                    None
+                };
+
+                (pin, t_setup, t_arrival, slack)
+            })
+            .collect::<Vec<_>>();
+
+        fanout_with_slack.sort_unstable_by_key(|(_, _, _, slack)| slack.map(|val| OrderedFloat(val)));
+
+        for (fanout_pin_in, t_setup, t_arrival, slack) in fanout_with_slack {
             if pins_in_path.contains(fanout_pin_in) {
                 continue;
             }
 
             let instance = instance_name(fanout_pin_in);
             let celltype = &graph.instance_celltype[&instance];
-            let celltype_short = celltype
-                .trim_start_matches("sky130_fd_sc_hd__");
-
-            let t_setup = analysis.max_delay.get(fanout_pin_in).copied();
-            let t_arrival = analysis.max_delay_backwards.get(fanout_pin_in).copied();
-            let slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
-                Some(max_delay - (t_setup + t_arrival))
-            } else {
-                None
-            };
+            let celltype_short = celltype.trim_start_matches("sky130_fd_sc_hd__");
 
             if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
                 write!(
