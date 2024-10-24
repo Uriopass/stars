@@ -1,9 +1,37 @@
+use crate::{instance_name, pin_name_ref, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition};
+use miniserde::Deserialize;
+use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
 use std::fmt::Write;
 
-use rustc_hash::{FxHashMap, FxHashSet};
+static CELL_TRANSITION_COMBINATIONS_JSON: &str = include_str!("cells_transition_combinations.json");
 
-use crate::{instance_name, pin_name_ref, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition};
+#[derive(Debug, Deserialize, Eq, PartialEq)]
+enum Unate {
+    #[serde(rename = "positive")]
+    Positive,
+    #[serde(rename = "negative")]
+    Negative,
+}
+
+#[derive(Debug, Deserialize)]
+struct CellTransitionCombination {
+    pins: FxHashMap<SDFPin, bool>,
+    unate: Unate,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CellTransitionData {
+    data: FxHashMap<SDFCellType, FxHashMap<SDFPin, Vec<CellTransitionCombination>>>,
+}
+
+impl CellTransitionData {
+    pub fn new() -> Self {
+        Self {
+            data: miniserde::json::from_str(CELL_TRANSITION_COMBINATIONS_JSON).unwrap(),
+        }
+    }
+}
 
 pub struct SubcktData {
     data: FxHashMap<SDFCellType, Subckt>,
@@ -114,12 +142,101 @@ impl SubcktData {
                 }
                 if let Some(substitution) = substitutions.get(word) {
                     write!(spice_append, "{} ", substitution).unwrap();
+                } else if word == "sky130_fd_pr__special_nfet_01v8" {
+                    write!(spice_append, "sky130_fd_pr__nfet_01v8 ").unwrap();
                 } else {
                     write!(spice_append, "{} ", word).unwrap();
                 }
             }
             writeln!(spice_append).unwrap();
         }
+    }
+}
+
+#[allow(dead_code)]
+mod cell_logic {
+    fn xnor2(a: bool, b: bool) -> bool {
+        !(a ^ b)
+    }
+
+    fn dfxtp(d: bool) -> bool {
+        d
+    }
+
+    fn dfrtp(d: bool) -> bool {
+        d
+    }
+
+    fn a21o(a1: bool, a2: bool, b1: bool) -> bool {
+        (a1 && a2) || b1
+    }
+
+    fn a41o(a1: bool, a2: bool, a3: bool, a4: bool, b1: bool) -> bool {
+        (a1 && a2 && a3 && a4) || b1
+    }
+
+    fn xor2(a: bool, b: bool) -> bool {
+        a ^ b
+    }
+
+    fn nor2(a: bool, b: bool) -> bool {
+        !(a || b)
+    }
+
+    fn mux2(a0: bool, a1: bool, s: bool) -> bool {
+        if s {
+            a1
+        } else {
+            a0
+        }
+    }
+
+    fn a211o(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
+        (a1 && a2) || b1 || c1
+    }
+
+    fn a22o(a1: bool, a2: bool, b1: bool, b2: bool) -> bool {
+        (a1 && a2) || (b1 && b2)
+    }
+
+    fn o211a(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
+        (a1 || a2) && b1 && c1
+    }
+
+    fn a21oi(a1: bool, a2: bool, b1: bool) -> bool {
+        !((a1 && a2) || b1)
+    }
+
+    fn a311o(a1: bool, a2: bool, a3: bool, b1: bool, c1: bool) -> bool {
+        (a1 && a2 && a3) || b1 || c1
+    }
+
+    fn nand2b(a_n: bool, b: bool) -> bool {
+        !(!a_n && b)
+    }
+
+    fn o21a(a1: bool, a2: bool, b1: bool) -> bool {
+        (a1 || a2) && b1
+    }
+
+    fn clkbuf(a: bool) -> bool {
+        a
+    }
+
+    fn and2(a: bool, b: bool) -> bool {
+        a && b
+    }
+
+    fn buf(a: bool) -> bool {
+        a
+    }
+
+    fn a221oi(a1: bool, a2: bool, b1: bool, b2: bool, c1: bool) -> bool {
+        !((a1 && a2) || (b1 && b2) || c1)
+    }
+
+    fn or4(a: bool, b: bool, c: bool, d: bool) -> bool {
+        a || b || c || d
     }
 }
 
@@ -132,10 +249,13 @@ pub fn extract_spice_for_manual_analysis(
     max_delay: f32,
     path: &[(SDFPin, Transition, f32)],
 ) {
-    let mut instances: Vec<(SDFInstance, SDFCellType, SDFPin)> = vec![];
+    let transdata = CellTransitionData::new();
+
+    let mut instances: Vec<(SDFInstance, SDFCellType, SDFPin, Transition, Transition)> = vec![];
     let mut wires: Vec<(SDFPin, SDFPin)> = Default::default();
 
     let mut last_pin: Option<&SDFPin> = None;
+    let mut last_transition: Option<Transition> = None;
     for (pin, transition, _delay) in path {
         let instance = instance_name(pin);
         let celltype = &graph.instance_celltype[&instance];
@@ -144,21 +264,35 @@ pub fn extract_spice_for_manual_analysis(
 
         if last_instance == Some(&instance) {
             last_pin = Some(pin);
+            last_transition = Some(*transition);
             continue;
         }
 
         if let Some(last_pin) = last_pin {
             wires.push((last_pin.clone(), pin.clone()));
         }
-        instances.push((instance.clone(), celltype.clone(), pin.clone()));
+        instances.push((
+            instance.clone(),
+            celltype.clone(),
+            pin.clone(),
+            last_transition.unwrap_or(*transition),
+            *transition,
+        ));
 
         last_pin = Some(pin);
+        last_transition = Some(*transition);
     }
 
     let o_instance = output.rsplit_once('/').unwrap().0;
     let o_celltype = &graph.instance_celltype[o_instance];
 
-    instances.push((o_instance.to_string(), o_celltype.clone(), output.clone()));
+    instances.push((
+        o_instance.to_string(),
+        o_celltype.clone(),
+        output.clone(),
+        last_transition.unwrap(),
+        last_transition.unwrap(),
+    ));
     wires.push((last_pin.unwrap().clone(), output.clone()));
 
     let mut spice = String::new();
@@ -170,6 +304,7 @@ pub fn extract_spice_for_manual_analysis(
     writeln!(&mut spice).unwrap();
     writeln!(&mut spice, ".title sdf_based_path_extraction_of_{}", o_instance).unwrap();
     writeln!(&mut spice).unwrap();
+    writeln!(&mut spice, ".include \"./lib/prelude.spice\"").unwrap();
     writeln!(&mut spice, "Vgnd Vgnd 0 0").unwrap();
     writeln!(&mut spice, "Vdd Vdd Vgnd {}", VDD).unwrap();
     writeln!(&mut spice, "Vclk clk Vgnd PULSE(0 {} 0n 0.2n 0.2n 4.6n 10.0n)", VDD).unwrap();
@@ -178,9 +313,32 @@ pub fn extract_spice_for_manual_analysis(
     let mut values: FxHashMap<_, Cow<str>> = Default::default();
     let mut pins_to_plot = FxHashSet::default();
 
-    let mut const_pin: FxHashMap<_, _> = FxHashMap::default();
+    let mut const_pin: FxHashMap<_, _> = Default::default();
 
-    for (instance, celltype, pin_i) in &instances {
+    /*
+    let mut celltypes = FxHashSet::default();
+    for (_, celltype, pin) in &instances {
+        celltypes.insert((&**celltype, pin_name_ref(pin)));
+    }
+    for (celltype, pin) in &celltypes {
+        let celltype_short = celltype
+            .trim_start_matches("sky130_fd_sc_hd__")
+            .rsplit_once('_')
+            .unwrap()
+            .0;
+
+        let other_pins = subckt.data[*celltype]
+            .pins
+            .iter()
+            .filter(|p| p != pin && *p != "VPWR" && *p != "VPB" && *p != "VGND" && *p != "VNB")
+            .collect::<Vec<_>>();
+        eprintln!(
+            "Using celltype/pin: {}/{} (other pins: {:?})",
+            celltype_short, pin, other_pins
+        );
+    }*/
+
+    for (instance, celltype, pin_i, last_transition, transition) in &instances {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
             .rsplit_once('_')
@@ -195,23 +353,41 @@ pub fn extract_spice_for_manual_analysis(
         values.insert("CLK", "clk".into());
         values.insert("RESET_B", "Vdd".into()); // reset really is nreset (damnit)
 
-        values.insert(pin_name_ref(pin_i), pin_i.into());
+        let transition_pin = pin_name_ref(pin_i); // instance/A -> A
+        values.insert(transition_pin, pin_i.into());
 
         for out in &graph.instance_outs[instance] {
             values.insert(pin_name_ref(out), out.into());
             pins_to_plot.insert(out);
         }
 
+        let unate = if last_transition == transition {
+            Unate::Positive
+        } else {
+            Unate::Negative
+        };
+
+        let pin_vals = transdata
+            .data
+            .get(celltype)
+            .and_then(|v| v.get(transition_pin))
+            .and_then(|v| v.iter().find(|v| v.unate == unate));
+
         for pin in &subckt.data[celltype].pins {
             if values.contains_key(&**pin) {
                 continue;
             }
+            let other_pin = pin_name_ref(pin);
             let full_pin = format!("{}/{}", instance, pin);
-            let pin_v = match celltype_short {
-                "dfrtp" | "dfxtp" => VDD,
-                "and4" => VDD,
-                _ => "0.0",
-            };
+            let mut pin_v = VDD;
+
+            if let Some(pin_vals) = pin_vals {
+                pin_v = if pin_vals.pins[pin] { VDD } else { "0" };
+            }
+            if celltype_short == "dxftp" || celltype_short == "dfrtp" {
+                pin_v = VDD;
+            }
+
             const_pin.insert(full_pin.clone(), pin_v);
             values.insert(pin, full_pin.into());
         }
@@ -300,7 +476,7 @@ M4 a_test# a vdd vdd sky130_fd_sc_hd__nmos
 
         let subckt_data = SubcktData::new(contents);
 
-        let mut values = FxHashMap::default();
+        let mut values: FxHashMap<_, _> = Default::default();
         values.insert("a", "oa".into());
         values.insert("b", "ob".into());
         values.insert("c", "oc".into());

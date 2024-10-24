@@ -1,6 +1,7 @@
 pub mod html;
 pub mod spice;
 
+use miniserde::Deserialize;
 use rustc_hash::FxHashSet;
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};
 use std::collections::{BTreeMap, BTreeSet};
@@ -397,19 +398,21 @@ impl SDFGraph {
     }
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Deserialize)]
 pub enum Transition {
-    /// Positive transition. 0 -> 1
-    Pos,
-    /// Negative transition. 1 -> 0
-    Neg,
+    /// 0 -> 1
+    #[serde(rename = "rise")]
+    Rise,
+    /// 1 -> 0
+    #[serde(rename = "fall")]
+    Fall,
 }
 
 impl Display for Transition {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Transition::Pos => write!(f, "↗"),
-            Transition::Neg => write!(f, "↘"),
+            Transition::Rise => write!(f, "↗"),
+            Transition::Fall => write!(f, "↘"),
         }
     }
 }
@@ -436,9 +439,9 @@ impl SDFGraphAnalyzed {
                 //println!("{} -> {}\t{}, ↗{:.3} ↘{:.3} = {}", edge.dst, node, prev_delay, edge.delay_pos, edge.delay_neg, delay);
 
                 if prev_delay + edge.delay_pos == delay {
-                    prev = Some((edge.dst.clone(), Transition::Pos, prev_delay));
+                    prev = Some((edge.dst.clone(), Transition::Rise, prev_delay));
                 } else if prev_delay + edge.delay_neg == delay {
-                    prev = Some((edge.dst.clone(), Transition::Neg, prev_delay));
+                    prev = Some((edge.dst.clone(), Transition::Fall, prev_delay));
                 }
             }
             prev
