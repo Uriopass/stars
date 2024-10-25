@@ -12,21 +12,18 @@ pub struct SDFGraph {
     pub graph: PinTransMap<Vec<SDFEdge>>,
     pub reverse_graph: PinTransMap<Vec<SDFEdge>>,
     pub instance_celltype: InstanceMap<String>,
-    // list of pin of input of the instance
+    /// list of pin of input of the instance (e.g A)
     pub instance_ins: InstanceMap<PinSet>,
-    // list of pin of output of the instance
+    /// list of pin of output of the instance (e.g X). Most often there is only one pin in this set.
     pub instance_outs: InstanceMap<PinSet>,
-    // list of pins that are connected to the output of this instance
+    /// list of (input) pins that are connected to the output of this instance
     pub instance_fanout: InstanceMap<PinSet>,
-    pub regs_d: Vec<PinTrans>,
-    pub regs_q: Vec<PinTrans>,
     pub inputs: Vec<PinTrans>,
     pub outputs: Vec<PinTrans>,
-    pub clk: Option<SDFPin>,
-    pub rst: Option<SDFPin>,
 }
 
 struct UnatenessData {
+    /// celltype -> pin -> unateness
     data: FxHashMap<SDFCellType, FxHashMap<SDFPin, TriUnate>>,
 }
 
@@ -416,10 +413,6 @@ impl SDFGraph {
             instance_fanout,
             inputs,
             outputs,
-            clk,
-            rst,
-            regs_d,
-            regs_q,
         }
     }
 }

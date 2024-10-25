@@ -49,7 +49,7 @@ impl SubcktData {
         while let Some(line) = lines.next() {
             if line.starts_with(".subckt") {
                 let mut parts = line.split_whitespace();
-                let _ = parts.next(); // .subckt
+                let _ = parts.next();
                 let name = parts.next().unwrap();
                 let pins = parts.map(String::from).collect();
 
@@ -148,13 +148,11 @@ impl SubcktData {
     }
 }
 
-#[allow(unreachable_code, dead_code, unused_variables)]
 pub fn extract_spice_for_manual_analysis(
     graph: &SDFGraph,
     analysis: &SDFGraphAnalyzed,
     subckt: &SubcktData,
     output: &PinTrans,
-    max_delay: f32,
     path: &[(PinTrans, f32)],
 ) {
     let transdata = CellTransitionData::new();
@@ -276,7 +274,6 @@ pub fn extract_spice_for_manual_analysis(
             if values.contains_key(&**pin) {
                 continue;
             }
-            let other_pin = pin_name_ref(pin);
             let full_pin = format!("{}/{}", instance, pin);
             let mut pin_v = VDD;
 
