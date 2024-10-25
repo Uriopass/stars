@@ -1,4 +1,7 @@
-use crate::{instance_name, pin_name, PinTrans, PinTransSet, SDFGraph, SDFGraphAnalyzed, SDFInstance, Transition};
+use crate::analysis::SDFGraphAnalyzed;
+use crate::graph::SDFGraph;
+use crate::types::{PinTrans, PinTransSet, SDFInstance, Transition};
+use crate::{instance_name, pin_name};
 use ordered_float::OrderedFloat;
 use std::fmt::Write;
 

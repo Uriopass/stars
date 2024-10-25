@@ -1,18 +1,13 @@
-use crate::{instance_name, pin_name_ref, PinTrans, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin};
+use crate::analysis::SDFGraphAnalyzed;
+use crate::graph::SDFGraph;
+use crate::types::{BiUnate, PinTrans, SDFCellType, SDFInstance, SDFPin};
+use crate::{instance_name, pin_name_ref};
 use miniserde::Deserialize;
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
 use std::fmt::Write;
 
 static CELL_TRANSITION_COMBINATIONS_JSON: &str = include_str!("cells_transition_combinations.json");
-
-#[derive(Debug, Deserialize, Eq, PartialEq)]
-enum BiUnate {
-    #[serde(rename = "positive")]
-    Positive,
-    #[serde(rename = "negative")]
-    Negative,
-}
 
 #[derive(Debug, Deserialize)]
 struct CellTransitionCombination {
@@ -283,7 +278,7 @@ pub fn extract_spice_for_manual_analysis(
             }
             let other_pin = pin_name_ref(pin);
             let full_pin = format!("{}/{}", instance, pin);
-            let mut pin_v = "0";
+            let mut pin_v = VDD;
 
             if let Some(pin_vals) = pin_vals {
                 pin_v = if pin_vals.pins[pin] { VDD } else { "0" };

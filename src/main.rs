@@ -2,10 +2,12 @@ use std::cmp::Reverse;
 use std::fs::read_to_string;
 
 use ordered_float::OrderedFloat;
-
+use stars::analysis::SDFGraphAnalyzed;
+use stars::graph::SDFGraph;
 use stars::html::extract_html_for_manual_analysis;
+use stars::instance_name;
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
-use stars::{instance_name, PinTrans, SDFGraph};
+use stars::types::PinTrans;
 
 fn main() {
     let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
@@ -29,7 +31,7 @@ fn main() {
         }
     };
 
-    let analysis = graph.analyze();
+    let analysis = SDFGraphAnalyzed::analyze(&graph);
     let mut outputs_with_delay = graph
         .outputs
         .iter()
