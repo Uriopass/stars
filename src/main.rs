@@ -5,7 +5,7 @@ use ordered_float::OrderedFloat;
 
 use stars::html::extract_html_for_manual_analysis;
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
-use stars::{instance_name, SDFGraph, SDFPin};
+use stars::{instance_name, PinTrans, SDFGraph};
 
 fn main() {
     let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
@@ -14,7 +14,7 @@ fn main() {
 
     let sdf = sdfparse::SDF::parse_str(&content).expect("Could not parse SDF");
 
-    let graph = SDFGraph::new(&sdf, true);
+    let graph = SDFGraph::new(&sdf);
 
     // print_graph(&graph, &mut keys);
 
@@ -38,10 +38,10 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(**delay)));
 
-    for (output, delay) in outputs_with_delay.into_iter().take(1) {
-        println!("{}:\t{:.3}", output, delay);
+    for (i, (output, delay)) in outputs_with_delay.into_iter().skip(44).take(1).enumerate() {
+        println!("{}  -- {}{}:\t{:.3}", i, output.0, output.1, delay);
         let path = analysis.extract_path(&graph, output);
-        for (pin, transition, delay) in &path {
+        for ((pin, transition), delay) in &path {
             let instance = instance_name(pin);
             let celltype = graph.instance_celltype.get(&instance);
             println!(
@@ -53,9 +53,9 @@ fn main() {
                 celltype.unwrap_or(&String::new())
             );
         }
-        let o_instance = instance_name(output);
+        let o_instance = instance_name(&output.0);
         let o_celltype = &graph.instance_celltype[&o_instance];
-        println!("  {} {:.3} {} {}", output, delay, o_instance, o_celltype);
+        println!("  {}{} {:.3} {} {}", output.0, output.1, delay, o_instance, o_celltype);
 
         extract_html_for_manual_analysis(&graph, &analysis, output, *delay, &path);
         if let Some(subckt) = &subckt {
@@ -65,22 +65,22 @@ fn main() {
 }
 #[allow(dead_code)]
 fn print_graph(graph: &SDFGraph) {
-    let mut keys: Vec<&SDFPin> = graph.graph.keys().collect();
+    let mut keys: Vec<&PinTrans> = graph.graph.keys().collect();
 
-    numeric_sort::sort_unstable(&mut keys);
+    keys.sort_unstable();
 
     for inputs in &graph.inputs {
-        println!("input: {}", inputs);
+        println!("input: {}{}", inputs.0, inputs.1);
     }
 
     for outputs in &graph.outputs {
-        println!("output: {}", outputs);
+        println!("output: {}{}", outputs.0, outputs.1);
     }
 
     for key in keys {
         let edges = graph.graph.get(key).unwrap();
         for edge in edges {
-            println!("{} -> {}\t↗{:.3} ↘{:.3}", key, edge.dst, edge.delay_pos, edge.delay_neg);
+            println!("{}{} -> {}{}\t{:.3}", key.0, key.1, edge.dst.0, edge.dst.1, edge.delay);
         }
     }
 }

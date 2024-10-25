@@ -1,4 +1,4 @@
-use crate::{instance_name, pin_name_ref, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin, Transition};
+use crate::{instance_name, pin_name_ref, PinTrans, SDFCellType, SDFGraph, SDFGraphAnalyzed, SDFInstance, SDFPin};
 use miniserde::Deserialize;
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
@@ -7,7 +7,7 @@ use std::fmt::Write;
 static CELL_TRANSITION_COMBINATIONS_JSON: &str = include_str!("cells_transition_combinations.json");
 
 #[derive(Debug, Deserialize, Eq, PartialEq)]
-enum Unate {
+enum BiUnate {
     #[serde(rename = "positive")]
     Positive,
     #[serde(rename = "negative")]
@@ -17,7 +17,7 @@ enum Unate {
 #[derive(Debug, Deserialize)]
 struct CellTransitionCombination {
     pins: FxHashMap<SDFPin, bool>,
-    unate: Unate,
+    unate: BiUnate,
 }
 
 #[derive(Debug, Deserialize)]
@@ -153,147 +153,51 @@ impl SubcktData {
     }
 }
 
-#[allow(dead_code)]
-mod cell_logic {
-    fn xnor2(a: bool, b: bool) -> bool {
-        !(a ^ b)
-    }
-
-    fn dfxtp(d: bool) -> bool {
-        d
-    }
-
-    fn dfrtp(d: bool) -> bool {
-        d
-    }
-
-    fn a21o(a1: bool, a2: bool, b1: bool) -> bool {
-        (a1 && a2) || b1
-    }
-
-    fn a41o(a1: bool, a2: bool, a3: bool, a4: bool, b1: bool) -> bool {
-        (a1 && a2 && a3 && a4) || b1
-    }
-
-    fn xor2(a: bool, b: bool) -> bool {
-        a ^ b
-    }
-
-    fn nor2(a: bool, b: bool) -> bool {
-        !(a || b)
-    }
-
-    fn mux2(a0: bool, a1: bool, s: bool) -> bool {
-        if s {
-            a1
-        } else {
-            a0
-        }
-    }
-
-    fn a211o(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
-        (a1 && a2) || b1 || c1
-    }
-
-    fn a22o(a1: bool, a2: bool, b1: bool, b2: bool) -> bool {
-        (a1 && a2) || (b1 && b2)
-    }
-
-    fn o211a(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
-        (a1 || a2) && b1 && c1
-    }
-
-    fn a21oi(a1: bool, a2: bool, b1: bool) -> bool {
-        !((a1 && a2) || b1)
-    }
-
-    fn a311o(a1: bool, a2: bool, a3: bool, b1: bool, c1: bool) -> bool {
-        (a1 && a2 && a3) || b1 || c1
-    }
-
-    fn nand2b(a_n: bool, b: bool) -> bool {
-        !(!a_n && b)
-    }
-
-    fn o21a(a1: bool, a2: bool, b1: bool) -> bool {
-        (a1 || a2) && b1
-    }
-
-    fn clkbuf(a: bool) -> bool {
-        a
-    }
-
-    fn and2(a: bool, b: bool) -> bool {
-        a && b
-    }
-
-    fn buf(a: bool) -> bool {
-        a
-    }
-
-    fn a221oi(a1: bool, a2: bool, b1: bool, b2: bool, c1: bool) -> bool {
-        !((a1 && a2) || (b1 && b2) || c1)
-    }
-
-    fn or4(a: bool, b: bool, c: bool, d: bool) -> bool {
-        a || b || c || d
-    }
-}
-
 #[allow(unreachable_code, dead_code, unused_variables)]
 pub fn extract_spice_for_manual_analysis(
     graph: &SDFGraph,
     analysis: &SDFGraphAnalyzed,
     subckt: &SubcktData,
-    output: &SDFPin,
+    output: &PinTrans,
     max_delay: f32,
-    path: &[(SDFPin, Transition, f32)],
+    path: &[(PinTrans, f32)],
 ) {
     let transdata = CellTransitionData::new();
 
-    let mut instances: Vec<(SDFInstance, SDFCellType, SDFPin, Transition, Transition)> = vec![];
+    let mut instances: Vec<(SDFInstance, SDFCellType, PinTrans, PinTrans)> = vec![];
     let mut wires: Vec<(SDFPin, SDFPin)> = Default::default();
 
-    let mut last_pin: Option<&SDFPin> = None;
-    let mut last_transition: Option<Transition> = None;
-    for (pin, transition, _delay) in path {
-        let instance = instance_name(pin);
+    let mut last_pin: Option<&PinTrans> = None;
+    for (pin, _delay) in path {
+        let instance = instance_name(&pin.0);
         let celltype = &graph.instance_celltype[&instance];
 
         let last_instance = instances.last().map(|v| &v.0);
 
         if last_instance == Some(&instance) {
+            instances.last_mut().unwrap().3 = pin.clone();
             last_pin = Some(pin);
-            last_transition = Some(*transition);
             continue;
         }
 
         if let Some(last_pin) = last_pin {
-            wires.push((last_pin.clone(), pin.clone()));
+            wires.push((last_pin.0.clone(), pin.0.clone()));
         }
-        instances.push((
-            instance.clone(),
-            celltype.clone(),
-            pin.clone(),
-            last_transition.unwrap_or(*transition),
-            *transition,
-        ));
+        instances.push((instance.clone(), celltype.clone(), pin.clone(), pin.clone()));
 
         last_pin = Some(pin);
-        last_transition = Some(*transition);
     }
 
-    let o_instance = output.rsplit_once('/').unwrap().0;
+    let o_instance = output.0.rsplit_once('/').unwrap().0;
     let o_celltype = &graph.instance_celltype[o_instance];
 
     instances.push((
         o_instance.to_string(),
         o_celltype.clone(),
         output.clone(),
-        last_transition.unwrap(),
-        last_transition.unwrap(),
+        output.clone(),
     ));
-    wires.push((last_pin.unwrap().clone(), output.clone()));
+    wires.push((last_pin.unwrap().0.clone(), output.0.clone()));
 
     let mut spice = String::new();
 
@@ -338,7 +242,7 @@ pub fn extract_spice_for_manual_analysis(
         );
     }*/
 
-    for (instance, celltype, pin_i, last_transition, transition) in &instances {
+    for (instance, celltype, pin_i, pin_o) in &instances {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
             .rsplit_once('_')
@@ -353,25 +257,25 @@ pub fn extract_spice_for_manual_analysis(
         values.insert("CLK", "clk".into());
         values.insert("RESET_B", "Vdd".into()); // reset really is nreset (damnit)
 
-        let transition_pin = pin_name_ref(pin_i); // instance/A -> A
-        values.insert(transition_pin, pin_i.into());
+        let transition_pin = pin_name_ref(&pin_i.0); // instance/A -> A
+        values.insert(transition_pin, pin_i.0.clone().into());
 
         for out in &graph.instance_outs[instance] {
             values.insert(pin_name_ref(out), out.into());
             pins_to_plot.insert(out);
         }
 
-        let unate = if last_transition == transition {
-            Unate::Positive
+        let unate = if pin_i.1 == pin_o.1 {
+            BiUnate::Positive
         } else {
-            Unate::Negative
+            BiUnate::Negative
         };
 
         let pin_vals = transdata
             .data
             .get(celltype)
             .and_then(|v| v.get(transition_pin))
-            .and_then(|v| v.iter().find(|v| v.unate == unate));
+            .map(|v| v.iter().find(|v| v.unate == unate).expect("No transition found"));
 
         for pin in &subckt.data[celltype].pins {
             if values.contains_key(&**pin) {
@@ -379,15 +283,14 @@ pub fn extract_spice_for_manual_analysis(
             }
             let other_pin = pin_name_ref(pin);
             let full_pin = format!("{}/{}", instance, pin);
-            let mut pin_v = VDD;
+            let mut pin_v = "0";
 
             if let Some(pin_vals) = pin_vals {
                 pin_v = if pin_vals.pins[pin] { VDD } else { "0" };
+                if celltype_short == "dfxtp" {
+                    pin_v = VDD;
+                }
             }
-            if celltype_short == "dxftp" || celltype_short == "dfrtp" {
-                pin_v = VDD;
-            }
-
             const_pin.insert(full_pin.clone(), pin_v);
             values.insert(pin, full_pin.into());
         }
@@ -507,5 +410,92 @@ M3_and4_0 oy oa oc vdd sky130_fd_sc_hd__pmos
 M4_and4_0 and4_0_a_test# oa vdd vdd sky130_fd_sc_hd__nmos 
 "#;
         assert_eq!(spice, expected);
+    }
+}
+
+#[allow(dead_code)]
+mod cell_logic {
+    fn xnor2(a: bool, b: bool) -> bool {
+        !(a ^ b)
+    }
+
+    fn dfxtp(d: bool) -> bool {
+        d
+    }
+
+    fn dfrtp(d: bool) -> bool {
+        d
+    }
+
+    fn a21o(a1: bool, a2: bool, b1: bool) -> bool {
+        (a1 && a2) || b1
+    }
+
+    fn a41o(a1: bool, a2: bool, a3: bool, a4: bool, b1: bool) -> bool {
+        (a1 && a2 && a3 && a4) || b1
+    }
+
+    fn xor2(a: bool, b: bool) -> bool {
+        a ^ b
+    }
+
+    fn nor2(a: bool, b: bool) -> bool {
+        !(a || b)
+    }
+
+    fn mux2(a0: bool, a1: bool, s: bool) -> bool {
+        if s {
+            a1
+        } else {
+            a0
+        }
+    }
+
+    fn a211o(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
+        (a1 && a2) || b1 || c1
+    }
+
+    fn a22o(a1: bool, a2: bool, b1: bool, b2: bool) -> bool {
+        (a1 && a2) || (b1 && b2)
+    }
+
+    fn o211a(a1: bool, a2: bool, b1: bool, c1: bool) -> bool {
+        (a1 || a2) && b1 && c1
+    }
+
+    fn a21oi(a1: bool, a2: bool, b1: bool) -> bool {
+        !((a1 && a2) || b1)
+    }
+
+    fn a311o(a1: bool, a2: bool, a3: bool, b1: bool, c1: bool) -> bool {
+        (a1 && a2 && a3) || b1 || c1
+    }
+
+    fn nand2b(a_n: bool, b: bool) -> bool {
+        !(!a_n && b)
+    }
+
+    fn o21a(a1: bool, a2: bool, b1: bool) -> bool {
+        (a1 || a2) && b1
+    }
+
+    fn clkbuf(a: bool) -> bool {
+        a
+    }
+
+    fn and2(a: bool, b: bool) -> bool {
+        a && b
+    }
+
+    fn buf(a: bool) -> bool {
+        a
+    }
+
+    fn a221oi(a1: bool, a2: bool, b1: bool, b2: bool, c1: bool) -> bool {
+        !((a1 && a2) || (b1 && b2) || c1)
+    }
+
+    fn or4(a: bool, b: bool, c: bool, d: bool) -> bool {
+        a || b || c || d
     }
 }
