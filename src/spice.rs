@@ -1,5 +1,6 @@
 use crate::analysis::SDFGraphAnalyzed;
 use crate::graph::SDFGraph;
+use crate::parasitics::Parasitics;
 use crate::types::{BiUnate, PinTrans, SDFCellType, SDFInstance, SDFPin};
 use crate::{instance_name, pin_name_ref};
 use miniserde::Deserialize;
@@ -152,6 +153,7 @@ pub fn extract_spice_for_manual_analysis(
     graph: &SDFGraph,
     analysis: &SDFGraphAnalyzed,
     subckt: &SubcktData,
+    parasitics: Option<&Parasitics>,
     output: &PinTrans,
     path: &[(PinTrans, f32)],
 ) {
@@ -313,6 +315,16 @@ pub fn extract_spice_for_manual_analysis(
     let mut capacitances = String::new();
 
     for (i, (pin_in, pin_out)) in wires.iter().enumerate() {
+        if let Some(para) = parasitics {
+            if let Some(wire) = para.wires.get(&(pin_in.clone(), pin_out.clone())) {
+                writeln!(&mut resistances, "RW{} {} {} {}", i, pin_in, pin_out, wire.res).unwrap();
+                writeln!(&mut capacitances, "CW{} {} Vgnd {}p", i, pin_out, wire.cap * 1e12).unwrap();
+                continue;
+            } else {
+                eprintln!("No parasitics for wire {} -> {}", pin_in, pin_out);
+            }
+        }
+
         let instance_in = instance_name(pin_in);
         let fanout = graph.instance_fanout[&instance_in].len();
 
@@ -327,6 +339,12 @@ pub fn extract_spice_for_manual_analysis(
 
         writeln!(&mut resistances, "RW{} {} {} {}", i, pin_in, pin_out, res).unwrap();
         writeln!(&mut capacitances, "CW{} {} Vgnd {}p", i, pin_out, capa).unwrap();
+    }
+
+    if let Some(para) = parasitics {
+        for (pin, value) in &para.caps {
+            writeln!(&mut capacitances, "CW{}_solo {} Vgnd {}p", pin, pin, value * 1e12).unwrap();
+        }
     }
 
     writeln!(&mut spice, "{}", resistances).unwrap();

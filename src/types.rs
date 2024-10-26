@@ -2,10 +2,15 @@ use miniserde::Deserialize;
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::{Display, Formatter};
 
+/// Example: instance3/A
 pub type SDFPin = String;
+/// Example: instance3
 pub type SDFInstance = String;
+/// Example: sky130_fd_sc_hd__xor2_1
 pub type SDFCellType = String;
+/// Example: (instance1/A, rise)
 pub type PinTrans = (SDFPin, Transition);
+
 pub type PinMap<V> = BTreeMap<SDFPin, V>;
 pub type PinTransMap<V> = BTreeMap<PinTrans, V>;
 pub type PinSet = BTreeSet<SDFPin>;

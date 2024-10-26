@@ -6,6 +6,7 @@ use stars::analysis::SDFGraphAnalyzed;
 use stars::graph::SDFGraph;
 use stars::html::extract_html_for_manual_analysis;
 use stars::instance_name;
+use stars::parasitics::Parasitics;
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
 
 fn main() {
@@ -48,7 +49,7 @@ fn main() {
     };
 
     let spef = match spef_data_path {
-        Some(path) => Some(spef_parser::spef_parser::parse_spef_file(path.to_str().unwrap())),
+        Some(path) => Some(Parasitics::new(&path)),
         None => {
             eprintln!("SPEF not passed with --spef {{file}}, using wire load model (inaccurate!) for parasitics");
             None
@@ -87,7 +88,7 @@ fn main() {
 
         extract_html_for_manual_analysis(&graph, &analysis, output, delay, &path);
         if let Some(subckt) = &subckt {
-            extract_spice_for_manual_analysis(&graph, &analysis, &subckt, output, &path);
+            extract_spice_for_manual_analysis(&graph, &analysis, &subckt, spef.as_ref(), output, &path);
         }
     }
 }
