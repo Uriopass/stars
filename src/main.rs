@@ -9,23 +9,48 @@ use stars::instance_name;
 use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
 
 fn main() {
-    let path_to_parse = std::env::args_os().nth(1).expect("No argument given");
+    let mut subckt_data_path = None;
+    let mut sdf_data_path = None;
+    let mut spef_data_path = None;
 
-    let content = read_to_string(path_to_parse).expect("Could not read SDF file");
+    let mut args_iter = std::env::args_os().skip(1);
+    while let Some(arg) = args_iter.next() {
+        let arg = arg.into_string().expect("Invalid argument");
+        if arg.starts_with("--subckt") {
+            subckt_data_path = Some(args_iter.next().expect("No argument given"));
+        } else if arg.starts_with("--sdf") {
+            sdf_data_path = Some(args_iter.next().expect("No argument given"));
+        } else if arg.starts_with("--spef") {
+            spef_data_path = Some(args_iter.next().expect("No argument given"));
+        } else {
+            eprintln!("Unknown argument: {}", arg);
+        }
+    }
 
-    let sdf = sdfparse::SDF::parse_str(&content).expect("Could not parse SDF");
+    let sdf_data_path = sdf_data_path.expect("No SDF file specified");
+
+    let sdf_content = read_to_string(sdf_data_path).expect("Could not read SDF file");
+
+    let sdf = sdfparse::SDF::parse_str(&sdf_content).expect("Could not parse SDF");
 
     let graph = SDFGraph::new(&sdf);
 
     // print_graph(&graph, &mut keys);
 
-    let subckt_data_path = std::env::var_os("SUBCKT_FILE");
     let subckt = match subckt_data_path {
         Some(path) => Some(SubcktData::new(
             &read_to_string(path).expect("Could not read SUBCKT_FILE"),
         )),
         None => {
-            eprintln!("No SUBCKT_FILE specified, skipping spice extraction");
+            eprintln!("SUBCKT not passed with --subckt {{file}}, skipping spice extraction");
+            None
+        }
+    };
+
+    let spef = match spef_data_path {
+        Some(path) => Some(spef_parser::spef_parser::parse_spef_file(path.to_str().unwrap())),
+        None => {
+            eprintln!("SPEF not passed with --spef {{file}}, using wire load model (inaccurate!) for parasitics");
             None
         }
     };

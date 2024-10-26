@@ -1,6 +1,7 @@
 pub mod analysis;
 pub mod graph;
 pub mod html;
+pub mod parasitics;
 pub mod spice;
 pub mod types;
 

@@ -18,3 +18,4 @@ log = "0.4.22"
 itertools = "0.13.0"
 miniserde = "0.1.40"
 serde = { version = "1.0.211", features = ["derive"] }
+spef-parser = "0.2.4"
