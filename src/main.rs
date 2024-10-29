@@ -7,7 +7,8 @@ use stars::graph::SDFGraph;
 use stars::html::extract_html_for_manual_analysis;
 use stars::instance_name;
 use stars::parasitics::Parasitics;
-use stars::spice::{extract_spice_for_manual_analysis, SubcktData};
+use stars::spice::extract_spice_for_manual_analysis;
+use stars::subckt::SubcktData;
 
 fn main() {
     let mut subckt_data_path = None;

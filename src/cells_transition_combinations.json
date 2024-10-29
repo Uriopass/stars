@@ -1,9 +1,18 @@
 {
-  "sky130_fd_sc_hd__nand2b_1": {
-    "A_N": [
+  "sky130_fd_sc_hd__buf_4": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or3_1": {
+    "C": [
       {
         "pins": {
-          "B": true
+          "B": false,
+          "A": false
         },
         "unate": "positive"
       }
@@ -11,7 +20,536 @@
     "B": [
       {
         "pins": {
+          "C": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": false,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__xor3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": true,
+          "A": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": false,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": true,
+          "B": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": false,
+          "B": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": false,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand2b_1": {
+    "B": [
+      {
+        "pins": {
           "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfxtp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand4b_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfstp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4_4": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4bb_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B_N": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlxtn_1": {
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "GATE_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a221oi_1": {
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__einvn_1": {
+    "TE_B": [],
+    "A": [
+      {
+        "pins": {
+          "TE_B": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "TE_B": false
         },
         "unate": "negative"
       }
@@ -48,28 +586,28 @@
     ]
   },
   "sky130_fd_sc_hd__a22o_1": {
-    "B2": [
+    "B1": [
       {
         "pins": {
           "A1": true,
-          "B1": true,
-          "A2": false
+          "A2": false,
+          "B2": true
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": false,
-          "B1": true,
-          "A2": true
+          "A2": true,
+          "B2": true
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": false,
-          "B1": true,
-          "A2": false
+          "A2": false,
+          "B2": true
         },
         "unate": "positive"
       }
@@ -77,51 +615,25 @@
     "A1": [
       {
         "pins": {
-          "B2": true,
-          "B1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "B2": false,
           "B1": true,
-          "A2": true
+          "A2": true,
+          "B2": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B2": false,
           "B1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      }
-    ],
-    "B1": [
-      {
-        "pins": {
-          "B2": true,
-          "A1": true,
-          "A2": false
+          "A2": true,
+          "B2": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B2": true,
-          "A1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "B2": true,
-          "A1": false,
-          "A2": false
+          "B1": false,
+          "A2": true,
+          "B2": false
         },
         "unate": "positive"
       }
@@ -129,53 +641,1204 @@
     "A2": [
       {
         "pins": {
-          "B2": true,
+          "B1": true,
           "A1": true,
-          "B1": false
+          "B2": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B2": false,
+          "B1": false,
           "A1": true,
-          "B1": true
+          "B2": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B2": false,
+          "B1": false,
           "A1": true,
-          "B1": false
+          "B2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkdlybuf4s15_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlymetal6s2s_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and3_2": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o311ai_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o2bb2a_1": {
+    "A1_N": [
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A1_N": true,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": true,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2_N": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": false,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": false,
+          "A2_N": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "A2_N": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "A2_N": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__edfxtp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfrbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__fah_1": {
+    "B": [
+      {
+        "pins": {
+          "A": true,
+          "CI": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A": true,
+          "CI": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CI": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CI": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": true,
+          "CI": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "CI": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CI": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CI": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "CI": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfbbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o21ba_1": {
+    "A1": [
+      {
+        "pins": {
+          "A2": false,
+          "B1_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A1": false,
+          "B1_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1_N": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlclkp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4bb_2": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B_N": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkbuf_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfrbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlrbp_1": {
+    "GATE": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfsbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a41oi_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A4": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A4": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A4": true,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and2b_1": {
+    "B": [
+      {
+        "pins": {
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a2111o_1": {
+    "B1": [
+      {
+        "pins": {
+          "C1": false,
+          "A2": true,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C1": false,
+          "A2": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C1": false,
+          "A2": false,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "D1": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "D1": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlymetal6s6s_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o21ai_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfxtp_2": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a2bb2oi_1": {
+    "A1_N": [
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": false,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A1_N": true,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "A2_N": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2_N": [
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": true,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "B2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "A2_N": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "A2_N": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": true,
+          "A2_N": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlrtp_1": {
+    "GATE": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand3b_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
         },
         "unate": "positive"
       }
     ]
   },
   "sky130_fd_sc_hd__o211a_1": {
-    "C1": [
+    "B1": [
       {
         "pins": {
           "A1": true,
-          "B1": true,
-          "A2": true
+          "A2": true,
+          "C1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": true,
-          "B1": true,
-          "A2": false
+          "A2": false,
+          "C1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": false,
-          "B1": true,
-          "A2": true
+          "A2": true,
+          "C1": true
         },
         "unate": "positive"
       }
@@ -183,35 +1846,9 @@
     "A1": [
       {
         "pins": {
-          "C1": true,
           "B1": true,
-          "A2": false
-        },
-        "unate": "positive"
-      }
-    ],
-    "B1": [
-      {
-        "pins": {
-          "C1": true,
-          "A1": true,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "C1": true,
-          "A1": true,
-          "A2": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "C1": true,
-          "A1": false,
-          "A2": true
+          "A2": false,
+          "C1": true
         },
         "unate": "positive"
       }
@@ -219,15 +1856,64 @@
     "A2": [
       {
         "pins": {
-          "C1": true,
+          "B1": true,
           "A1": false,
-          "B1": true
+          "C1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": true
         },
         "unate": "positive"
       }
     ]
   },
   "sky130_fd_sc_hd__a21oi_2": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ],
     "A1": [
       {
         "pins": {
@@ -237,7 +1923,332 @@
         "unate": "negative"
       }
     ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o22a_1": {
     "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "B2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor3b_1": {
+    "C_N": [
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C_N": true,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C_N": true,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o2111a_1": {
+    "B1": [
+      {
+        "pins": {
+          "C1": true,
+          "A2": true,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C1": true,
+          "A2": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C1": true,
+          "A2": false,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": true,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "D1": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "D1": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkdlybuf4s50_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor4b_1": {
+    "D_N": [
+      {
+        "pins": {
+          "C": false,
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D_N": true,
+          "C": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D_N": true,
+          "C": false,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a21bo_1": {
+    "A1": [
+      {
+        "pins": {
+          "A2": true,
+          "B1_N": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A1": true,
+          "B1_N": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1_N": [
       {
         "pins": {
           "A1": true,
@@ -259,14 +2270,53 @@
         },
         "unate": "negative"
       }
-    ],
-    "A2": [
+    ]
+  },
+  "sky130_fd_sc_hd__bufinv_8": {
+    "A": [
       {
-        "pins": {
-          "A1": true,
-          "B1": false
-        },
+        "pins": {},
         "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlrbn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "GATE_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfbbn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "CLK_N": [
+      {
+        "pins": {},
+        "unate": "positive"
       }
     ]
   },
@@ -301,28 +2351,28 @@
     ]
   },
   "sky130_fd_sc_hd__a211o_1": {
-    "C1": [
+    "B1": [
       {
         "pins": {
           "A1": true,
-          "B1": false,
-          "A2": false
+          "A2": false,
+          "C1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": false,
-          "B1": false,
-          "A2": true
+          "A2": true,
+          "C1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
           "A1": false,
-          "B1": false,
-          "A2": false
+          "A2": false,
+          "C1": false
         },
         "unate": "positive"
       }
@@ -330,35 +2380,9 @@
     "A1": [
       {
         "pins": {
-          "C1": false,
           "B1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      }
-    ],
-    "B1": [
-      {
-        "pins": {
-          "C1": false,
-          "A1": true,
-          "A2": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "C1": false,
-          "A1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "C1": false,
-          "A1": false,
-          "A2": false
+          "A2": true,
+          "C1": false
         },
         "unate": "positive"
       }
@@ -366,275 +2390,296 @@
     "A2": [
       {
         "pins": {
-          "C1": false,
-          "A1": true,
-          "B1": false
-        },
-        "unate": "positive"
-      }
-    ]
-  },
-  "sky130_fd_sc_hd__o21a_1": {
-    "A1": [
-      {
-        "pins": {
-          "B1": true,
-          "A2": false
-        },
-        "unate": "positive"
-      }
-    ],
-    "B1": [
-      {
-        "pins": {
-          "A1": true,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": true,
-          "A2": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A2": true
-        },
-        "unate": "positive"
-      }
-    ],
-    "A2": [
-      {
-        "pins": {
-          "A1": false,
-          "B1": true
-        },
-        "unate": "positive"
-      }
-    ]
-  },
-  "sky130_fd_sc_hd__a221oi_2": {
-    "B1": [
-      {
-        "pins": {
-          "A1": true,
-          "A2": false,
-          "B2": true,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A2": true,
-          "B2": true,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A2": false,
-          "B2": true,
-          "C1": false
-        },
-        "unate": "negative"
-      }
-    ],
-    "A1": [
-      {
-        "pins": {
-          "B1": true,
-          "A2": true,
-          "B2": false,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A2": true,
-          "B2": true,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A2": true,
-          "B2": false,
-          "C1": false
-        },
-        "unate": "negative"
-      }
-    ],
-    "A2": [
-      {
-        "pins": {
-          "B1": true,
-          "A1": true,
-          "B2": false,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
           "B1": false,
           "A1": true,
-          "B2": true,
           "C1": false
         },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": true,
-          "B2": false,
-          "C1": false
-        },
-        "unate": "negative"
-      }
-    ],
-    "B2": [
-      {
-        "pins": {
-          "B1": true,
-          "A1": true,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": true,
-          "A1": false,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": true,
-          "A1": false,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "negative"
+        "unate": "positive"
       }
     ],
     "C1": [
       {
         "pins": {
-          "B1": true,
-          "A1": true,
-          "A2": false,
-          "B2": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": true,
-          "A1": false,
-          "A2": true,
-          "B2": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": true,
-          "A1": false,
-          "A2": false,
-          "B2": false
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
           "B1": false,
           "A1": true,
-          "A2": false,
-          "B2": true
+          "A2": false
         },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": true,
-          "A2": false,
-          "B2": false
-        },
-        "unate": "negative"
+        "unate": "positive"
       },
       {
         "pins": {
           "B1": false,
           "A1": false,
-          "A2": true,
-          "B2": true
+          "A2": true
         },
-        "unate": "negative"
+        "unate": "positive"
       },
       {
         "pins": {
           "B1": false,
           "A1": false,
-          "A2": true,
-          "B2": false
+          "A2": false
         },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": false,
-          "A2": false,
-          "B2": true
-        },
-        "unate": "negative"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": false,
-          "A2": false,
-          "B2": false
-        },
-        "unate": "negative"
+        "unate": "positive"
       }
     ]
   },
-  "sky130_fd_sc_hd__or4_1": {
-    "D": [
+  "sky130_fd_sc_hd__xnor3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "positive"
+      },
       {
         "pins": {
           "B": false,
-          "A": false,
-          "C": false
+          "A": true
         },
         "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
       }
     ],
     "B": [
       {
         "pins": {
-          "D": false,
+          "C": true,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": true,
+          "A": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C": true,
+          "B": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "B": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a21boi_1": {
+    "A1": [
+      {
+        "pins": {
+          "A2": true,
+          "B1_N": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A1": true,
+          "B1_N": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1_N": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__buf_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o21a_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfrtn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "CLK_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__fa_1": {
+    "B": [
+      {
+        "pins": {
+          "A": true,
+          "CIN": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A": true,
+          "CIN": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
           "A": false,
-          "C": false
+          "CIN": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CIN": false
         },
         "unate": "positive"
       }
@@ -642,9 +2687,708 @@
     "A": [
       {
         "pins": {
-          "D": false,
+          "B": true,
+          "CIN": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "CIN": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
           "B": false,
-          "C": false
+          "CIN": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CIN": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "CIN": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sedfxbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4b_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a221oi_2": {
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o211ai_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "C1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "C1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "C1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "C1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "C1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfrtp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o2111ai_1": {
+    "B1": [
+      {
+        "pins": {
+          "C1": true,
+          "A2": true,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C1": true,
+          "A2": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C1": true,
+          "A2": false,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": true,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "D1": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "D1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "D1": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "D1": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfsbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a31oi_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A3": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkdlybuf4s18_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfbbn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "CLK_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__einvp_1": {
+    "TE": [],
+    "A": [
+      {
+        "pins": {
+          "TE": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "TE": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkinv_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfrtn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "CLK_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkdlybuf4s25_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfxbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or4_1": {
+    "D": [
+      {
+        "pins": {
+          "C": false,
+          "B": false,
+          "A": false
         },
         "unate": "positive"
       }
@@ -658,18 +3402,1469 @@
         },
         "unate": "positive"
       }
-    ]
-  },
-  "sky130_fd_sc_hd__a21oi_1": {
-    "A1": [
+    ],
+    "B": [
       {
         "pins": {
-          "B1": false,
-          "A2": true
+          "D": false,
+          "C": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": false,
+          "C": false,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o41ai_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
         },
         "unate": "negative"
       }
     ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A4": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A4": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A4": false,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a311oi_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4b_2": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__ebufn_1": {
+    "TE_B": [],
+    "A": [
+      {
+        "pins": {
+          "TE_B": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "TE_B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o22ai_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__fahcin_1": {
+    "B": [
+      {
+        "pins": {
+          "A": true,
+          "CIN": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": true,
+          "CIN": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CIN": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CIN": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": true,
+          "CIN": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": true,
+          "CIN": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CIN": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CIN": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "CIN": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlygate4sd1_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a32o_1": {
+    "A3": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "B1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "B1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or3b_1": {
+    "C_N": [
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C_N": true,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C_N": true,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o2bb2ai_1": {
+    "A1_N": [
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": true,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A1_N": true,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2_N": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "B2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": false,
+          "B2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": false,
+          "A2_N": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "A2_N": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "A2_N": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a22oi_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "B2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__mux2i_1": {
+    "A0": [
+      {
+        "pins": {
+          "A1": true,
+          "S": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "S": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A0": true,
+          "S": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A0": false,
+          "S": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "S": [
+      {
+        "pins": {
+          "A0": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A0": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand4bb_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B_N": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand4_1": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__probec_p_8": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlrtn_1": {
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "GATE_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor4bb_1": {
+    "C_N": [
+      {
+        "pins": {
+          "D_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "D_N": [
+      {
+        "pins": {
+          "C_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C_N": true,
+          "D_N": true,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C_N": true,
+          "D_N": true,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or4b_1": {
+    "D_N": [
+      {
+        "pins": {
+          "C": false,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D_N": true,
+          "C": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D_N": true,
+          "C": false,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfxtp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4bb_4": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B_N": false,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B_N": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and3b_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a21oi_1": {
     "B1": [
       {
         "pins": {
@@ -693,13 +4888,1476 @@
         "unate": "negative"
       }
     ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ],
     "A2": [
       {
         "pins": {
-          "A1": true,
-          "B1": false
+          "B1": false,
+          "A1": true
         },
         "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a211oi_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "C1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "C1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "C1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "C1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "C1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A1": false,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or4bb_1": {
+    "C_N": [
+      {
+        "pins": {
+          "D_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "D_N": [
+      {
+        "pins": {
+          "C_N": true,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C_N": true,
+          "D_N": true,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C_N": true,
+          "D_N": true,
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o31ai_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A3": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A3": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o221a_1": {
+    "B2": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdlclkp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": false,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__edfxbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfbbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "RESET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__mux4_1": {
+    "A3": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A0": true,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A0": true,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A0": false,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A0": true,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A0": false,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A0": false,
+          "S1": true,
+          "S0": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "A2": true,
+          "A0": true,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A2": true,
+          "A0": false,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A2": false,
+          "A0": true,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A2": false,
+          "A0": false,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A2": true,
+          "A0": true,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A2": true,
+          "A0": false,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A2": false,
+          "A0": true,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A2": false,
+          "A0": false,
+          "S1": false,
+          "S0": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A0": true,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A0": false,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A0": true,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A0": false,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A0": true,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A0": false,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A0": true,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A0": false,
+          "S1": true,
+          "S0": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A0": [
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": true,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": false,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": true,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": false,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": true,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": false,
+          "S1": false,
+          "S0": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "S1": [
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": false,
+          "A0": true,
+          "S0": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": true,
+          "A0": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": true,
+          "A0": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": true,
+          "A0": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S0": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": false,
+          "S0": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": true,
+          "S0": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S0": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": false,
+          "A0": true,
+          "S0": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": false,
+          "A0": true,
+          "S0": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": false,
+          "A0": false,
+          "S0": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": true,
+          "A0": false,
+          "S0": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S0": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "S0": [
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": false,
+          "A0": true,
+          "S1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": false,
+          "A0": false,
+          "S1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": true,
+          "A2": false,
+          "A0": false,
+          "S1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": true,
+          "A0": true,
+          "S1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A1": false,
+          "A2": false,
+          "A0": false,
+          "S1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": true,
+          "S1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": true,
+          "A0": false,
+          "S1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": true,
+          "A2": false,
+          "A0": false,
+          "S1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": true,
+          "A0": true,
+          "S1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": true,
+          "A0": true,
+          "S1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": true,
+          "A0": false,
+          "S1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A1": false,
+          "A2": false,
+          "A0": true,
+          "S1": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a221o_1": {
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__ha_1": {
+    "B": [
+      {
+        "pins": {
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor2b_1": {
+    "B_N": [
+      {
+        "pins": {
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B_N": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and3b_2": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__maj3_1": {
+    "C": [
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "C": true,
+          "A": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "C": true,
+          "B": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "C": false,
+          "B": true
+        },
+        "unate": "positive"
       }
     ]
   },
@@ -721,101 +6379,79 @@
       }
     ]
   },
-  "sky130_fd_sc_hd__a311o_1": {
-    "B1": [
-      {
-        "pins": {
-          "A1": true,
-          "A3": true,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": true,
-          "A3": false,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": true,
-          "A3": false,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": true,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": true,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": false,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": false,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      }
-    ],
-    "A1": [
-      {
-        "pins": {
-          "B1": false,
-          "A3": true,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      }
-    ],
+  "sky130_fd_sc_hd__o311a_1": {
     "A3": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
-          "A2": true,
-          "C1": false
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": false
         },
         "unate": "positive"
       }
     ],
-    "A2": [
+    "B1": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
           "A3": true,
-          "C1": false
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
         },
         "unate": "positive"
       }
@@ -823,75 +6459,238 @@
     "C1": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
           "A3": true,
-          "A2": false
+          "B1": true,
+          "A2": true,
+          "A1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": true,
-          "A3": false,
-          "A2": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": true,
-          "A3": false,
-          "A2": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "B1": false,
-          "A1": false,
           "A3": true,
-          "A2": true
+          "B1": true,
+          "A2": true,
+          "A1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
           "A3": true,
-          "A2": false
+          "B1": true,
+          "A2": false,
+          "A1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
-          "A3": false,
-          "A2": true
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
           "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "C1": true,
           "A2": false
         },
         "unate": "positive"
       }
     ]
   },
-  "sky130_fd_sc_hd__a41o_1": {
+  "sky130_fd_sc_hd__a2bb2o_1": {
+    "A1_N": [
+      {
+        "pins": {
+          "B1": true,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2_N": false,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
     "B1": [
       {
         "pins": {
-          "A4": true,
+          "A1_N": true,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "A2_N": false,
+          "B2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "A2_N": true,
+          "B2": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2_N": [
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": true,
+          "B2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "B2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": false,
+          "B2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "A2_N": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": true,
+          "B1": true,
+          "A2_N": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1_N": false,
+          "B1": true,
+          "A2_N": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__inv_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlygate4sd3_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlygate4sd2_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a311o_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
           "A3": true,
+          "C1": false,
           "A2": true,
           "A1": false
         },
@@ -899,8 +6698,8 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": true,
+          "C1": false,
           "A2": false,
           "A1": true
         },
@@ -908,8 +6707,8 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": true,
+          "C1": false,
           "A2": false,
           "A1": false
         },
@@ -917,8 +6716,8 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": false,
+          "C1": false,
           "A2": true,
           "A1": true
         },
@@ -926,8 +6725,8 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": false,
+          "C1": false,
           "A2": true,
           "A1": false
         },
@@ -935,8 +6734,8 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": false,
+          "C1": false,
           "A2": false,
           "A1": true
         },
@@ -944,26 +6743,19 @@
       },
       {
         "pins": {
-          "A4": true,
           "A3": false,
+          "C1": false,
           "A2": false,
           "A1": false
         },
         "unate": "positive"
-      },
+      }
+    ],
+    "C1": [
       {
         "pins": {
-          "A4": false,
           "A3": true,
-          "A2": true,
-          "A1": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A4": false,
-          "A3": true,
+          "B1": false,
           "A2": true,
           "A1": false
         },
@@ -971,8 +6763,8 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": true,
+          "B1": false,
           "A2": false,
           "A1": true
         },
@@ -980,8 +6772,8 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": true,
+          "B1": false,
           "A2": false,
           "A1": false
         },
@@ -989,8 +6781,8 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": false,
+          "B1": false,
           "A2": true,
           "A1": true
         },
@@ -998,8 +6790,8 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": false,
+          "B1": false,
           "A2": true,
           "A1": false
         },
@@ -1007,8 +6799,8 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": false,
+          "B1": false,
           "A2": false,
           "A1": true
         },
@@ -1016,8 +6808,180 @@
       },
       {
         "pins": {
-          "A4": false,
           "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a41o_1": {
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
           "A2": false,
           "A1": false
         },
@@ -1027,19 +6991,8 @@
     "A4": [
       {
         "pins": {
-          "B1": false,
           "A3": true,
-          "A2": true,
-          "A1": true
-        },
-        "unate": "positive"
-      }
-    ],
-    "A3": [
-      {
-        "pins": {
           "B1": false,
-          "A4": true,
           "A2": true,
           "A1": true
         },
@@ -1049,9 +7002,9 @@
     "A2": [
       {
         "pins": {
+          "A3": true,
           "B1": false,
           "A4": true,
-          "A3": true,
           "A1": true
         },
         "unate": "positive"
@@ -1060,25 +7013,607 @@
     "A1": [
       {
         "pins": {
+          "A3": true,
           "B1": false,
           "A4": true,
-          "A3": true,
           "A2": true
         },
         "unate": "positive"
       }
     ]
   },
-  "sky130_fd_sc_hd__a21o_1": {
+  "sky130_fd_sc_hd__o21bai_1": {
     "A1": [
       {
         "pins": {
-          "B1": false,
+          "A2": false,
+          "B1_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A1": false,
+          "B1_N": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1_N": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
           "A2": true
         },
         "unate": "positive"
       }
+    ]
+  },
+  "sky130_fd_sc_hd__probe_p_8": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or2b_1": {
+    "B_N": [
+      {
+        "pins": {
+          "A": false
+        },
+        "unate": "negative"
+      }
     ],
+    "A": [
+      {
+        "pins": {
+          "B_N": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o32a_1": {
+    "A3": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "B1": true,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": false,
+          "A2": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "B1": true,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4_2": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o32ai_1": {
+    "A3": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "B1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "B1": false,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": false,
+          "B1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__bufbuf_8": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfxbp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__clkinvlp_2": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nand2_1": {
+    "B": [
+      {
+        "pins": {
+          "A": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a21o_1": {
     "B1": [
       {
         "pins": {
@@ -1102,111 +7637,98 @@
         "unate": "positive"
       }
     ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ],
     "A2": [
       {
         "pins": {
-          "A1": true,
-          "B1": false
+          "B1": false,
+          "A1": true
         },
         "unate": "positive"
       }
     ]
   },
   "sky130_fd_sc_hd__a311o_2": {
-    "B1": [
-      {
-        "pins": {
-          "A1": true,
-          "A3": true,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": true,
-          "A3": false,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": true,
-          "A3": false,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": true,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": true,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": false,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "A1": false,
-          "A3": false,
-          "A2": false,
-          "C1": false
-        },
-        "unate": "positive"
-      }
-    ],
-    "A1": [
-      {
-        "pins": {
-          "B1": false,
-          "A3": true,
-          "A2": true,
-          "C1": false
-        },
-        "unate": "positive"
-      }
-    ],
     "A3": [
       {
         "pins": {
           "B1": false,
-          "A1": true,
+          "C1": false,
           "A2": true,
-          "C1": false
+          "A1": true
         },
         "unate": "positive"
       }
     ],
-    "A2": [
+    "B1": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
           "A3": true,
-          "C1": false
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "C1": false,
+          "A2": false,
+          "A1": false
         },
         "unate": "positive"
       }
@@ -1214,63 +7736,276 @@
     "C1": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
           "A3": true,
-          "A2": false
+          "B1": false,
+          "A2": true,
+          "A1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
+          "A3": true,
           "B1": false,
-          "A1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
           "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": false,
+          "C1": false,
           "A2": true
         },
         "unate": "positive"
-      },
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sedfxtp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o41a_1": {
+    "A3": [
       {
         "pins": {
-          "B1": false,
-          "A1": true,
-          "A3": false,
-          "A2": false
+          "B1": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
         },
         "unate": "positive"
-      },
+      }
+    ],
+    "B1": [
       {
         "pins": {
-          "B1": false,
-          "A1": false,
           "A3": true,
-          "A2": true
+          "A4": true,
+          "A2": true,
+          "A1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
           "A3": true,
-          "A2": false
+          "A4": true,
+          "A2": true,
+          "A1": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
-          "A3": false,
-          "A2": true
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "B1": false,
-          "A1": false,
+          "A3": true,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "A4": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
           "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "A4": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A4": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A4": false,
+          "A1": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A4": false,
           "A2": false
         },
         "unate": "positive"
@@ -1278,6 +8013,38 @@
     ]
   },
   "sky130_fd_sc_hd__mux2_1": {
+    "A0": [
+      {
+        "pins": {
+          "A1": true,
+          "S": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "S": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A0": true,
+          "S": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A0": false,
+          "S": true
+        },
+        "unate": "positive"
+      }
+    ],
     "S": [
       {
         "pins": {
@@ -1293,19 +8060,480 @@
         },
         "unate": "positive"
       }
-    ],
-    "A0": [
+    ]
+  },
+  "sky130_fd_sc_hd__fahcon_1": {
+    "B": [
       {
         "pins": {
-          "S": false,
-          "A1": true
+          "A": true,
+          "CI": true
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "S": false,
+          "A": true,
+          "CI": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CI": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A": false,
+          "CI": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": true,
+          "CI": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "CI": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CI": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "CI": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "CI": [
+      {
+        "pins": {
+          "B": true,
+          "A": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "B": true,
+          "A": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B": false,
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__or2_1": {
+    "B": [
+      {
+        "pins": {
+          "A": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "B": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dfstp_1": {
+    "CLK": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "SET_B": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlxbp_1": {
+    "GATE": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlxtp_1": {
+    "GATE": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o221ai_1": {
+    "B2": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": true,
           "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": true,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlxbn_1": {
+    "D": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ],
+    "GATE_N": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__dlymetal6s4s_1": {
+    "A": [
+      {
+        "pins": {},
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__nor4_1": {
+    "D": [
+      {
+        "pins": {
+          "C": false,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": false,
+          "B": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": false,
+          "C": false,
+          "A": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A": [
+      {
+        "pins": {
+          "D": false,
+          "C": false,
+          "B": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__o31a_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": true
         },
         "unate": "positive"
       }
@@ -1313,17 +8541,1047 @@
     "A1": [
       {
         "pins": {
-          "S": true,
-          "A0": true
+          "B1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A3": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A3": [
+      {
+        "pins": {
+          "B1": true,
+          "A1": false,
+          "A2": false
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a32oi_1": {
+    "A3": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "B2": [
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": false,
+          "B2": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "B1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": true,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A3": true,
+          "B2": true,
+          "B1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": true,
+          "A2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "A3": true,
+          "B2": false,
+          "B1": false,
+          "A2": true
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a31o_1": {
+    "B1": [
+      {
+        "pins": {
+          "A1": true,
+          "A2": true,
+          "A3": false
         },
         "unate": "positive"
       },
       {
         "pins": {
-          "S": true,
-          "A0": false
+          "A1": true,
+          "A2": false,
+          "A3": true
         },
         "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": true,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": true,
+          "A3": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "A2": false,
+          "A3": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "A3": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A3": true
+        },
+        "unate": "positive"
+      }
+    ],
+    "A3": [
+      {
+        "pins": {
+          "B1": false,
+          "A1": true,
+          "A2": true
+        },
+        "unate": "positive"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a2111oi_1": {
+    "B1": [
+      {
+        "pins": {
+          "C1": false,
+          "A2": true,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C1": false,
+          "A2": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "C1": false,
+          "A2": false,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B1": false,
+          "A2": true,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "A2": false,
+          "D1": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "D1": false,
+          "A1": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "D1": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "D1": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__a222oi_1": {
+    "B2": [
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B1": true,
+          "C1": false,
+          "A2": false,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "B1": [
+      {
+        "pins": {
+          "B2": true,
+          "C1": true,
+          "A2": true,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": true,
+          "A2": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": true,
+          "A2": false,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": true,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": true,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "C1": false,
+          "A2": false,
+          "A1": false,
+          "C2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": true,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "A2": false,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": true,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "A2": false,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": true,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "A2": false,
+          "A1": false,
+          "C2": true
+        },
+        "unate": "negative"
+      }
+    ],
+    "A2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": true,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A1": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A1": true,
+          "C2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": false,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "C2": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": false,
+          "A2": true,
+          "C2": false
+        },
+        "unate": "negative"
+      }
+    ],
+    "C2": [
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": true,
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": true,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": true,
+          "A2": true,
+          "A1": false
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": true
+        },
+        "unate": "negative"
+      },
+      {
+        "pins": {
+          "B2": false,
+          "B1": false,
+          "C1": true,
+          "A2": false,
+          "A1": false
+        },
+        "unate": "negative"
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__and4b_4": {
+    "D": [
+      {
+        "pins": {
+          "C": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "C": [
+      {
+        "pins": {
+          "D": true,
+          "B": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "B": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "A_N": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A_N": [
+      {
+        "pins": {
+          "D": true,
+          "C": true,
+          "B": true
+        },
+        "unate": "negative"
       }
     ]
   },
@@ -1346,6 +9604,38 @@
     ]
   },
   "sky130_fd_sc_hd__mux2_2": {
+    "A0": [
+      {
+        "pins": {
+          "A1": true,
+          "S": false
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A1": false,
+          "S": false
+        },
+        "unate": "positive"
+      }
+    ],
+    "A1": [
+      {
+        "pins": {
+          "A0": true,
+          "S": true
+        },
+        "unate": "positive"
+      },
+      {
+        "pins": {
+          "A0": false,
+          "S": true
+        },
+        "unate": "positive"
+      }
+    ],
     "S": [
       {
         "pins": {
@@ -1361,36 +9651,26 @@
         },
         "unate": "positive"
       }
-    ],
-    "A0": [
+    ]
+  },
+  "sky130_fd_sc_hd__clkbuf_4": {
+    "A": [
       {
-        "pins": {
-          "S": false,
-          "A1": true
-        },
+        "pins": {},
         "unate": "positive"
-      },
+      }
+    ]
+  },
+  "sky130_fd_sc_hd__sdfrtp_1": {
+    "CLK": [
       {
-        "pins": {
-          "S": false,
-          "A1": false
-        },
+        "pins": {},
         "unate": "positive"
       }
     ],
-    "A1": [
+    "RESET_B": [
       {
-        "pins": {
-          "S": true,
-          "A0": true
-        },
-        "unate": "positive"
-      },
-      {
-        "pins": {
-          "S": true,
-          "A0": false
-        },
+        "pins": {},
         "unate": "positive"
       }
     ]

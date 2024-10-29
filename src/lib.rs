@@ -3,6 +3,7 @@ pub mod graph;
 pub mod html;
 pub mod parasitics;
 pub mod spice;
+pub mod subckt;
 pub mod types;
 
 use types::SDFPin;

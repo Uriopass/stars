@@ -1,9 +1,11 @@
 use crate::analysis::SDFGraphAnalyzed;
 use crate::graph::SDFGraph;
 use crate::parasitics::Parasitics;
-use crate::types::{BiUnate, PinTrans, SDFCellType, SDFInstance, SDFPin};
+use crate::subckt::SubcktData;
+use crate::types::{BiUnate, PinTrans, SDFCellType, SDFInstance, SDFPin, Transition};
 use crate::{instance_name, pin_name_ref};
 use miniserde::Deserialize;
+use ordered_float::OrderedFloat;
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
 use std::fmt::Write;
@@ -29,124 +31,52 @@ impl CellTransitionData {
     }
 }
 
-pub struct SubcktData {
-    data: FxHashMap<SDFCellType, Subckt>,
+fn area(w: f32) -> f32 {
+    0.15 * w
 }
 
-struct Subckt {
-    pins: Vec<SDFPin>,
-    temp_variables: Vec<String>,
-    body: String,
+fn perim(w: f32) -> f32 {
+    w + 2.0 * 0.15
 }
 
-impl SubcktData {
-    pub fn new(contents: &str) -> Self {
-        let mut subckt_data = Self {
-            data: Default::default(),
-        };
+fn pfet(name: &str, d: &str, g: &str, s: &str, w: f32) -> String {
+    let bins_pfet = vec![
+        0.36, 0.42, 0.54, 0.55, 0.63, 0.64, 0.70, 0.75, 0.79, 0.82, 0.84, 0.86, 0.94, 1.00, 1.12, 1.26, 1.65, 1.68,
+        2.00, 3.00, 5.00, 7.00,
+    ];
 
-        let mut lines = contents.lines();
+    let pos = bins_pfet
+        .binary_search_by(|val| OrderedFloat(*val).cmp(&OrderedFloat(w)))
+        .unwrap_or_else(|x| x);
+    let closest_bin = bins_pfet[usize::min(pos, bins_pfet.len() - 1)];
+    let mult = w / closest_bin;
+    let ar = area(w) / mult;
+    let pe = perim(w) / mult;
 
-        while let Some(line) = lines.next() {
-            if line.starts_with(".subckt") {
-                let mut parts = line.split_whitespace();
-                let _ = parts.next();
-                let name = parts.next().unwrap();
-                let pins = parts.map(String::from).collect();
+    format!(
+        "X{name} {d} {g} {s} Vdd sky130_fd_pr__pfet_01v8_hvt w={:.2} l=0.15 ad={:.2} as={:.2} pd={:.2} ps={:.2} m={:.2}",
+        closest_bin, ar, ar, pe, pe, mult
+    )
+}
 
-                let mut body = String::with_capacity(256);
-                let mut temp_variables = FxHashSet::default();
+fn nfet(name: &str, d: &str, g: &str, s: &str, w: f32) -> String {
+    let bins_nfet = vec![
+        0.36, 0.39, 0.42, 0.52, 0.54, 0.55, 0.58, 0.6, 0.61, 0.64, 0.65, 0.74, 0.84, 1.0, 1.26, 1.68, 2.0, 3.0, 5.0,
+        7.0,
+    ];
 
-                while let Some(line) = lines.next() {
-                    if line.starts_with(".ends") {
-                        break;
-                    }
+    let pos = bins_nfet
+        .binary_search_by(|val| OrderedFloat(*val).cmp(&OrderedFloat(w)))
+        .unwrap_or_else(|x| x);
+    let closest_bin = bins_nfet[usize::min(pos, bins_nfet.len() - 1)];
+    let mult = w / closest_bin;
+    let ar = area(w) / mult;
+    let pe = perim(w) / mult;
 
-                    for word in line.split_whitespace() {
-                        if word.starts_with("a_") && word.ends_with('#') {
-                            temp_variables.insert(word.to_string());
-                        }
-                    }
-
-                    body.push_str(line);
-                    body.push('\n');
-                }
-
-                subckt_data.data.insert(
-                    name.to_string(),
-                    Subckt {
-                        pins,
-                        temp_variables: temp_variables.into_iter().collect(),
-                        body,
-                    },
-                );
-            }
-        }
-
-        subckt_data
-    }
-
-    pub fn call(
-        &self,
-        instance: &SDFInstance,
-        celltype: &SDFCellType,
-        values: &FxHashMap<&str, Cow<str>>,
-        spice_append: &mut String,
-    ) {
-        let subckt = self.data.get(celltype).unwrap();
-
-        write!(spice_append, "X{} ", instance).unwrap();
-        for pin in &subckt.pins {
-            let Some(val) = values.get(&**pin) else {
-                panic!("Missing value for pin {} for instance {}({})", pin, instance, celltype);
-            };
-            write!(spice_append, "{} ", val).unwrap();
-        }
-        writeln!(spice_append, "{}", celltype).unwrap();
-    }
-
-    pub fn instanciate(
-        &self,
-        instance: &SDFInstance,
-        celltype: &SDFCellType,
-        values: &FxHashMap<&str, Cow<str>>,
-        spice_append: &mut String,
-    ) {
-        let subckt = self.data.get(celltype).unwrap();
-
-        let mut substitutions =
-            FxHashMap::with_capacity_and_hasher(subckt.temp_variables.len() + subckt.pins.len(), Default::default());
-
-        for temp_variable in &subckt.temp_variables {
-            substitutions.insert(&**temp_variable, format!("{}_{}", instance, temp_variable));
-        }
-
-        for pin in &subckt.pins {
-            let Some(val) = values.get(&**pin) else {
-                panic!("Missing value for pin {} for instance {}({})", pin, instance, celltype);
-            };
-            substitutions.insert(pin, val.to_string());
-        }
-
-        for line in subckt.body.lines() {
-            let mut first_word = true;
-            for word in line.split_whitespace() {
-                if first_word {
-                    first_word = false;
-                    write!(spice_append, "{}_{} ", word, instance).unwrap();
-                    continue;
-                }
-                if let Some(substitution) = substitutions.get(word) {
-                    write!(spice_append, "{} ", substitution).unwrap();
-                } else if word == "sky130_fd_pr__special_nfet_01v8" {
-                    write!(spice_append, "sky130_fd_pr__nfet_01v8 ").unwrap();
-                } else {
-                    write!(spice_append, "{} ", word).unwrap();
-                }
-            }
-            writeln!(spice_append).unwrap();
-        }
-    }
+    format!(
+        "X{name} {d} {g} {s} Vgnd sky130_fd_pr__nfet_01v8 w={:.2} l=0.15 ad={:.2} as={:.2} pd={:.2} ps={:.2} m={:.2}",
+        closest_bin, ar, ar, pe, pe, mult
+    )
 }
 
 pub fn extract_spice_for_manual_analysis(
@@ -212,8 +142,6 @@ pub fn extract_spice_for_manual_analysis(
     let mut values: FxHashMap<_, Cow<str>> = Default::default();
     let mut pins_to_plot = FxHashSet::default();
 
-    let mut const_pin: FxHashMap<_, _> = Default::default();
-
     /*
     let mut celltypes = FxHashSet::default();
     for (_, celltype, pin) in &instances {
@@ -272,22 +200,66 @@ pub fn extract_spice_for_manual_analysis(
             .and_then(|v| v.get(transition_pin))
             .map(|v| v.iter().find(|v| v.unate == unate).expect("No transition found"));
 
+        if pin_vals.is_none() && celltype_short != "dfxtp" {
+            eprintln!("no pin combination found for {}", celltype);
+        }
+
+        writeln!(
+            &mut spice,
+            "* {} -> {} ({}): {}",
+            pin_i.0, pin_o.0, pin_i.1, celltype_short
+        )
+        .unwrap();
+
+        writeln!(&mut spice, "* pins ").unwrap();
         for pin in &subckt.data[celltype].pins {
             if values.contains_key(&**pin) {
                 continue;
             }
-            let full_pin = format!("{}/{}", instance, pin);
-            let mut pin_v = VDD;
 
+            let full_pin = format!("{}/{}", instance, pin);
+
+            let connected_to = &graph.reverse_graph[&(full_pin.clone(), Transition::Rise)][0].dst.0;
+
+            let instance_name = instance_name(connected_to);
+
+            if celltype_short == "dfxtp" {
+                writeln!(&mut spice, "V{} {} Vgnd {}", full_pin, full_pin, VDD).unwrap();
+                values.insert(pin, full_pin.into());
+                continue;
+            }
             if let Some(pin_vals) = pin_vals {
-                pin_v = if pin_vals.pins[pin] { VDD } else { "0" };
-                if celltype_short == "dfxtp" {
-                    pin_v = VDD;
+                if let Some(celltype_name) = graph.instance_celltype.get(&instance_name) {
+                    let drive = subckt.data[celltype_name].output_pin_drive[pin_name_ref(connected_to)];
+
+                    if pin_vals.pins[pin] {
+                        writeln!(
+                            &mut spice,
+                            "{}",
+                            pfet(&full_pin, &full_pin, "0", "Vdd", 0.15 / drive.rise_lw)
+                        )
+                        .unwrap();
+                    } else {
+                        writeln!(
+                            &mut spice,
+                            "{}",
+                            nfet(&full_pin, &full_pin, "Vdd", "Vgnd", 0.15 / drive.fall_lw)
+                        )
+                        .unwrap();
+                    };
+                } else {
+                    if pin_vals.pins[pin] {
+                        writeln!(&mut spice, "V{} {} Vgnd {}", full_pin, full_pin, VDD).unwrap();
+                    } else {
+                        writeln!(&mut spice, "V{} {} Vgnd 0", full_pin, full_pin).unwrap();
+                    };
                 }
             }
-            const_pin.insert(full_pin.clone(), pin_v);
+
             values.insert(pin, full_pin.into());
         }
+
+        writeln!(&mut spice, "\n* cell ").unwrap();
 
         subckt.instanciate(instance, celltype, &values, &mut spice);
     }
@@ -295,12 +267,6 @@ pub fn extract_spice_for_manual_analysis(
     // remove output of last instance
     for out in &graph.instance_outs[o_instance] {
         pins_to_plot.remove(out);
-    }
-
-    writeln!(&mut spice).unwrap();
-
-    for (pin, value) in &const_pin {
-        writeln!(&mut spice, "V{} {} Vgnd {}", pin, pin, value).unwrap();
     }
 
     writeln!(&mut spice).unwrap();
@@ -371,56 +337,6 @@ plot V(clk) {}
     .unwrap();
 
     std::fs::write("out.spice", spice).unwrap();
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_subckt_data() {
-        let contents = r#"
-.subckt sky130_fd_sc_hd__and4 a b c y
-M1 y a b vdd sky130_fd_sc_hd__nmos
-M2 y c b vdd sky130_fd_sc_hd__nmos
-M3 y a c vdd sky130_fd_sc_hd__pmos
-M4 a_test# a vdd vdd sky130_fd_sc_hd__nmos
-.ends"#;
-
-        let subckt_data = SubcktData::new(contents);
-
-        let mut values: FxHashMap<_, _> = Default::default();
-        values.insert("a", "oa".into());
-        values.insert("b", "ob".into());
-        values.insert("c", "oc".into());
-        values.insert("y", "oy".into());
-
-        let mut spice = String::new();
-        subckt_data.call(
-            &"and4_0".to_string(),
-            &"sky130_fd_sc_hd__and4".to_string(),
-            &values,
-            &mut spice,
-        );
-
-        let expected = "Xand4_0 oa ob oc oy sky130_fd_sc_hd__and4\n";
-        assert_eq!(spice, expected);
-
-        let mut spice = String::new();
-        subckt_data.instanciate(
-            &"and4_0".to_string(),
-            &"sky130_fd_sc_hd__and4".to_string(),
-            &values,
-            &mut spice,
-        );
-
-        let expected = r#"M1_and4_0 oy oa ob vdd sky130_fd_sc_hd__nmos 
-M2_and4_0 oy oc ob vdd sky130_fd_sc_hd__nmos 
-M3_and4_0 oy oa oc vdd sky130_fd_sc_hd__pmos 
-M4_and4_0 and4_0_a_test# oa vdd vdd sky130_fd_sc_hd__nmos 
-"#;
-        assert_eq!(spice, expected);
-    }
 }
 
 #[allow(dead_code)]
