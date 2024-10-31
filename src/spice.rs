@@ -136,7 +136,7 @@ pub fn extract_spice_for_manual_analysis(
     writeln!(&mut spice, ".include \"./lib/prelude.spice\"").unwrap();
     writeln!(&mut spice, "Vgnd Vgnd 0 0").unwrap();
     writeln!(&mut spice, "Vdd Vdd Vgnd {}", VDD).unwrap();
-    writeln!(&mut spice, "Vclk clk Vgnd PULSE(0 {} 0n 0.2n 0.2n 4.6n 10.0n)", VDD).unwrap();
+    writeln!(&mut spice, "Vclk clk Vgnd PULSE(0 {} 0n 0.2n 0 0 0)", VDD).unwrap();
     writeln!(&mut spice).unwrap();
 
     let mut values: FxHashMap<_, Cow<str>> = Default::default();
@@ -165,7 +165,7 @@ pub fn extract_spice_for_manual_analysis(
         );
     }*/
 
-    for (instance, celltype, pin_i, pin_o) in &instances {
+    for (i, (instance, celltype, pin_i, pin_o)) in instances.iter().enumerate() {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
             .rsplit_once('_')
@@ -185,7 +185,9 @@ pub fn extract_spice_for_manual_analysis(
 
         for out in &graph.instance_outs[instance] {
             values.insert(pin_name_ref(out), out.into());
-            pins_to_plot.insert(out);
+            //if i == 0 {
+            pins_to_plot.insert(out.clone());
+            //}
         }
 
         let unate = if pin_i.1 == pin_o.1 {
@@ -213,11 +215,18 @@ pub fn extract_spice_for_manual_analysis(
 
         writeln!(&mut spice, "* pins ").unwrap();
         for pin in &subckt.data[celltype].pins {
+            let full_pin = format!("{}/{}", instance, pin);
+            //if i == 7 {
+            //    match &**pin {
+            //        "VGND" | "VNB" | "VPB" | "VPWR" => {}
+            //        _ => {
+            //            pins_to_plot.insert(full_pin.clone());
+            //        }
+            //    }
+            //}
             if values.contains_key(&**pin) {
                 continue;
             }
-
-            let full_pin = format!("{}/{}", instance, pin);
 
             let connected_to = &graph.reverse_graph[&(full_pin.clone(), Transition::Rise)][0].dst.0;
 
@@ -232,21 +241,57 @@ pub fn extract_spice_for_manual_analysis(
                 if let Some(celltype_name) = graph.instance_celltype.get(&instance_name) {
                     let drive = subckt.data[celltype_name].output_pin_drive[pin_name_ref(connected_to)];
 
-                    if pin_vals.pins[pin] {
-                        writeln!(
-                            &mut spice,
-                            "{}",
-                            pfet(&full_pin, &full_pin, "0", "Vdd", 0.15 / drive.rise_lw)
-                        )
-                        .unwrap();
-                    } else {
-                        writeln!(
-                            &mut spice,
-                            "{}",
-                            nfet(&full_pin, &full_pin, "Vdd", "Vgnd", 0.15 / drive.fall_lw)
-                        )
-                        .unwrap();
-                    };
+                    let inv_in_node = format!("inv_in_{}/{}", instance, pin);
+                    let inv_in_val = !pin_vals.pins[pin];
+
+                    const FLIP_FLOP_DELAY: f32 = 0.418;
+                    const INV_DELAY: f32 = 0.15;
+                    const RISE_DELAY: f32 = 0.1;
+                    let t_setup = analysis
+                        .max_delay
+                        .get(&(
+                            connected_to.clone(),
+                            if pin_vals.pins[pin] {
+                                Transition::Rise
+                            } else {
+                                Transition::Fall
+                            },
+                        ))
+                        .copied()
+                        .unwrap_or_default()
+                        + FLIP_FLOP_DELAY
+                        - INV_DELAY
+                        - RISE_DELAY;
+
+                    eprintln!(
+                        "{} -> {} ({}): {} -> {} ({}): {}",
+                        connected_to,
+                        instance_name,
+                        pin_name_ref(connected_to),
+                        instance,
+                        pin,
+                        pin_name_ref(pin),
+                        t_setup
+                    );
+
+                    writeln!(
+                        &mut spice,
+                        "V{} {} Vgnd PULSE({} {} {}n {}n 0 1 2)",
+                        &inv_in_node,
+                        &inv_in_node,
+                        if inv_in_val { "0" } else { VDD },
+                        if inv_in_val { VDD } else { "0" },
+                        t_setup,
+                        RISE_DELAY * 2.0,
+                    )
+                    .unwrap();
+                    writeln!(
+                        &mut spice,
+                        "{}\n{}",
+                        pfet(&full_pin, &full_pin, &inv_in_node, "Vdd", 0.15 / drive.rise_lw),
+                        nfet(&full_pin, &full_pin, &inv_in_node, "Vgnd", 0.15 / drive.fall_lw)
+                    )
+                    .unwrap();
                 } else {
                     if pin_vals.pins[pin] {
                         writeln!(&mut spice, "V{} {} Vgnd {}", full_pin, full_pin, VDD).unwrap();
@@ -326,10 +371,10 @@ pub fn extract_spice_for_manual_analysis(
     writeln!(
         &mut spice,
         r#"
-.tran 0.01n 10n
+.tran 0.01n 7n
 .control
 run
-plot V(clk) {}
+plot {}
 .endc
 .end"#,
         to_plot_str
