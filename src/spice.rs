@@ -263,7 +263,7 @@ pub fn extract_spice_for_manual_analysis(
                         - INV_DELAY
                         - RISE_DELAY;
 
-                    eprintln!(
+                    /*eprintln!(
                         "{} -> {} ({}): {} -> {} ({}): {}",
                         connected_to,
                         instance_name,
@@ -272,19 +272,19 @@ pub fn extract_spice_for_manual_analysis(
                         pin,
                         pin_name_ref(pin),
                         t_setup
-                    );
+                    );*/
 
+                    // ignore t_setup for now, don't deal with simultaneous switching as it's weird
+                    // to convert STA time to spice time correctly
                     writeln!(
                         &mut spice,
-                        "V{} {} Vgnd PULSE({} {} {}n {}n 0 1 2)",
+                        "V{} {} Vgnd {}",
                         &inv_in_node,
                         &inv_in_node,
-                        if inv_in_val { "0" } else { VDD },
                         if inv_in_val { VDD } else { "0" },
-                        t_setup,
-                        RISE_DELAY * 2.0,
                     )
                     .unwrap();
+
                     writeln!(
                         &mut spice,
                         "{}\n{}",
