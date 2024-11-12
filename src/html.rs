@@ -1,6 +1,6 @@
 use crate::analysis::SDFGraphAnalyzed;
 use crate::graph::SDFGraph;
-use crate::types::{PinTrans, PinTransSet, SDFInstance, Transition};
+use crate::types::{PinSet, PinTrans, SDFInstance, Transition};
 use crate::{instance_name, pin_name};
 use ordered_float::OrderedFloat;
 use std::fmt::Write;
@@ -13,14 +13,14 @@ pub fn extract_html_for_manual_analysis(
     path: &[(PinTrans, f32)],
 ) {
     let mut instances: Vec<(SDFInstance, PinTrans, PinTrans)> = vec![];
-    let mut pins_in_path: PinTransSet = Default::default();
+    let mut pins_in_path: PinSet = Default::default();
 
     let mut last_pin: Option<&PinTrans> = None;
     for (pin_t, _delay) in path {
         let instance = instance_name(&pin_t.0);
         let last_instance = instances.last().map(|v| &v.0);
 
-        pins_in_path.insert(pin_t.clone());
+        pins_in_path.insert(pin_t.0.clone());
         if last_instance == Some(&instance) {
             last_pin = Some(pin_t);
             instances.last_mut().unwrap().2 = pin_t.clone();
@@ -35,8 +35,8 @@ pub fn extract_html_for_manual_analysis(
     let o_instance = output.0.rsplit_once('/').unwrap().0;
 
     instances.push((o_instance.to_string(), output.clone(), output.clone()));
-    pins_in_path.insert(output.clone());
-    pins_in_path.insert(last_pin.unwrap().clone());
+    pins_in_path.insert(output.0.clone());
+    pins_in_path.insert(last_pin.unwrap().0.clone());
 
     let mut html = String::new();
     html.push_str(
@@ -50,16 +50,43 @@ pub fn extract_html_for_manual_analysis(
     font-family: monospace;
     text-align: right;
     }
+    .nogain { display: block; }
+    .gain { display: none; }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('assume-gain').addEventListener('change', function() {
+        console.log(this.checked);
+        if (this.checked) {
+            document.querySelectorAll('.nogain').forEach(function(e) {
+                e.style.display = 'none';
+            });
+            document.querySelectorAll('.gain').forEach(function(e) {
+                e.style.display = 'block';
+            });
+        } else {
+            document.querySelectorAll('.nogain').forEach(function(e) {
+                e.style.display = 'block';
+            });
+            document.querySelectorAll('.gain').forEach(function(e) {
+                e.style.display = 'none';
+            });
+        }
+    });
+});
+</script>
 <title>Path analysis</title>
 </head>
 <body>
+    <div style="padding: 10px;display:flex;align-items: center;">
+        <input type="checkbox" id="assume-gain" />
+        <label for="assume-gain" style="user-select: none;">Assume 20% faster on non-critical paths</label>
+    </div>
     <table>
     <tr>
         <th>Instance</th>
         <th>Setup</th>
         <th>Arr.</th>
-        <th><b>Slack</b></th>
         <th>Input Pin: Setup, Arr, <b>Slack</b></th>
         <th>Output Cells Pin (fanout)</th>
     </tr>"#,
@@ -68,22 +95,16 @@ pub fn extract_html_for_manual_analysis(
     for (instance, pin_in, pin_out) in &instances {
         let mut pin_out = pin_out;
         let pin_out_holder = (String::new(), Transition::Rise);
-        if !pins_in_path.contains(&pin_out) {
+        if !pins_in_path.contains(&pin_out.0) {
             pin_out = &pin_out_holder;
         }
 
         let mut t_setup = analysis.max_delay.get(&pin_out).copied();
         let mut t_arrival = analysis.max_delay_backwards.get(&pin_out).copied();
-        let mut slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
-            Some(max_delay - (t_setup + t_arrival))
-        } else {
-            None
-        };
 
         if instance == &instance_name(&output.0) {
             t_setup = None;
             t_arrival = None;
-            slack = None;
         }
 
         writeln!(&mut html, "<tr>").unwrap();
@@ -106,9 +127,6 @@ pub fn extract_html_for_manual_analysis(
         };
         writecell(t_setup);
         writecell(t_arrival);
-        writecell(slack);
-
-        let mut input_pin_html = String::new();
 
         let mut fanin_with_slack = graph.instance_ins[instance]
             .iter()
@@ -133,37 +151,57 @@ pub fn extract_html_for_manual_analysis(
 
         fanin_with_slack.sort_unstable_by_key(|(_, _, _, slack)| OrderedFloat(slack.unwrap_or(f32::INFINITY)));
 
-        for (other_pin_in, t_setup, t_arrival, slack) in &fanin_with_slack {
-            let is_critical = pin_in == other_pin_in;
+        let mut input_pin_html = String::new();
+        let mut input_pin_20p = String::new();
 
-            if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
-                write!(
-                    input_pin_html,
-                    "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
-                    is_critical.then(|| "<b>").unwrap_or(""),
-                    pin_name(&other_pin_in.0),
-                    other_pin_in.1,
-                    t_setup,
-                    t_arrival,
-                    slack,
-                    is_critical.then(|| "</b>").unwrap_or("")
-                )
-                .unwrap();
-            } else {
-                write!(
-                    input_pin_html,
-                    "{}{}{}{}<br>",
-                    is_critical.then(|| "<b>").unwrap_or(""),
-                    pin_name(&other_pin_in.0),
-                    other_pin_in.1,
-                    is_critical.then(|| "</b>").unwrap_or("")
-                )
-                .unwrap();
+        for (other_pin_in, mut t_setup, mut t_arrival, slack) in fanin_with_slack {
+            let is_critical = pin_in.0 == other_pin_in.0;
+
+            let write_times = |html: &mut String, t_setup, t_arrival, slack| {
+                if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
+                    write!(
+                        html,
+                        "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
+                        is_critical.then(|| "<b>").unwrap_or(""),
+                        pin_name(&other_pin_in.0),
+                        other_pin_in.1,
+                        t_setup,
+                        t_arrival,
+                        slack,
+                        is_critical.then(|| "</b>").unwrap_or("")
+                    )
+                    .unwrap();
+                } else {
+                    write!(
+                        html,
+                        "{}{}{}{}<br>",
+                        is_critical.then(|| "<b>").unwrap_or(""),
+                        pin_name(&other_pin_in.0),
+                        other_pin_in.1,
+                        is_critical.then(|| "</b>").unwrap_or("")
+                    )
+                    .unwrap();
+                }
+            };
+
+            write_times(&mut input_pin_html, t_setup, t_arrival, slack);
+            if !is_critical {
+                t_arrival = t_arrival.map(|v| v / 1.2);
+                t_setup = t_setup.map(|v| v / 1.2);
             }
+            let slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+                Some(max_delay - (t_setup + t_arrival))
+            } else {
+                None
+            };
+            write_times(&mut input_pin_20p, t_setup, t_arrival, slack);
         }
-        writeln!(&mut html, "<td>{}</td>", input_pin_html).unwrap();
-
-        let mut output_pin_html = String::new();
+        writeln!(
+            &mut html,
+            "<td><div class='nogain'>{}</div><div class='gain'>{}</div></td>",
+            input_pin_html, input_pin_20p
+        )
+        .unwrap();
 
         let mut fanout_with_slack = graph.instance_fanout[instance]
             .iter()
@@ -188,27 +226,50 @@ pub fn extract_html_for_manual_analysis(
 
         fanout_with_slack.sort_unstable_by_key(|(_, _, _, slack)| OrderedFloat(slack.unwrap_or(f32::INFINITY)));
 
-        for (fanout_pin_in, t_setup, t_arrival, slack) in fanout_with_slack {
-            let is_critical = pins_in_path.contains(&fanout_pin_in);
+        let mut output_pin_html = String::new();
+        let mut output_pin_20p = String::new();
 
-            if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
-                write!(
-                    output_pin_html,
-                    "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
-                    is_critical.then(|| "<b>").unwrap_or(""),
-                    &fanout_pin_in.0,
-                    fanout_pin_in.1,
-                    t_setup,
-                    t_arrival,
-                    slack,
-                    is_critical.then(|| "</b>").unwrap_or("")
-                )
-                .unwrap();
-            } else {
-                write!(output_pin_html, "{}{}<br>", &fanout_pin_in.0, fanout_pin_in.1).unwrap();
+        for (fanout_pin_in, mut t_setup, mut t_arrival, slack) in fanout_with_slack {
+            let is_critical = pins_in_path.contains(&fanout_pin_in.0);
+
+            let write_times = |html: &mut String, t_setup, t_arrival, slack| {
+                if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
+                    write!(
+                        html,
+                        "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
+                        is_critical.then(|| "<b>").unwrap_or(""),
+                        &fanout_pin_in.0,
+                        fanout_pin_in.1,
+                        t_setup,
+                        t_arrival,
+                        slack,
+                        is_critical.then(|| "</b>").unwrap_or("")
+                    )
+                    .unwrap();
+                } else {
+                    write!(html, "{}{}<br>", pin_name(&fanout_pin_in.0), fanout_pin_in.1).unwrap();
+                }
+            };
+
+            write_times(&mut output_pin_html, t_setup, t_arrival, slack);
+            if !is_critical {
+                t_arrival = t_arrival.map(|v| v / 1.2);
+                t_setup = t_setup.map(|v| v / 1.2);
             }
+            let slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+                Some(max_delay - (t_setup + t_arrival))
+            } else {
+                None
+            };
+            write_times(&mut output_pin_20p, t_setup, t_arrival, slack);
         }
-        writeln!(&mut html, "<td>{}</td>", output_pin_html).unwrap();
+        // no pain no gain
+        writeln!(
+            &mut html,
+            "<td><div class='nogain'>{}</div><div class='gain'>{}</div></td>",
+            output_pin_html, output_pin_20p
+        )
+        .unwrap();
 
         writeln!(&mut html, "</tr>").unwrap();
     }

@@ -12,6 +12,16 @@ use std::fmt::Write;
 
 static CELL_TRANSITION_COMBINATIONS_JSON: &str = include_str!("cells_transition_combinations.json");
 
+// .lib says 5614.3 (calculated from inv1 by calculating delta time over delta capacitance)
+// spice sim says 6572.7 ... should investigate
+/// Equivalent resistance for a 1um/0.15um PFET (in Ohms)
+pub const EQ_RESISTANCE_FOR_100_PFET: f32 = 5614.3;
+
+// .lib says 3326.1 (calculated from inv1 by calculating delta time over delta capacitance)
+// spice sim says 2841.4 ... should investigate
+/// Equivalent resistance for a 0.65um/0.15um NFET (in Ohms)
+pub const EQ_RESISTANCE_FOR_065_NFET: f32 = 3326.1;
+
 #[derive(Debug, Deserialize)]
 struct CellTransitionCombination {
     pins: FxHashMap<SDFPin, bool>,
@@ -217,14 +227,6 @@ pub fn extract_spice_for_manual_analysis(
         writeln!(&mut spice, "* pins ").unwrap();
         for pin in &subckt.data[celltype].pins {
             let full_pin = format!("{}/{}", instance, pin);
-            //if i == 7 {
-            //    match &**pin {
-            //        "VGND" | "VNB" | "VPB" | "VPWR" => {}
-            //        _ => {
-            //            pins_to_plot.insert(full_pin.clone());
-            //        }
-            //    }
-            //}
             if values.contains_key(&**pin) {
                 continue;
             }
@@ -248,7 +250,7 @@ pub fn extract_spice_for_manual_analysis(
                     const FLIP_FLOP_DELAY: f32 = 0.418;
                     const INV_DELAY: f32 = 0.15;
                     const RISE_DELAY: f32 = 0.1;
-                    let t_setup = analysis
+                    let _t_setup = analysis
                         .max_delay
                         .get(&(
                             connected_to.clone(),

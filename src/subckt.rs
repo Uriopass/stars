@@ -1,8 +1,6 @@
 use crate::types::{SDFCellType, SDFInstance, SDFPin};
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
-use std::collections::HashMap;
-use std::env::var;
 use std::fmt::Write;
 
 pub struct SubcktData {
@@ -45,7 +43,7 @@ impl Subckt {
             Nfet,
             Pfet,
         }
-        type SubcktNode = String;
+        #[allow(uncommon_codepoints)]
         struct Transistor<'a> {
             kind: TransistorKind,
             drain: &'a str,
@@ -152,7 +150,7 @@ impl Subckt {
             input_pin_load.insert(
                 pin.to_string(),
                 Load {
-                    pfet_area: in_nfet_area,
+                    pfet_area: in_pfet_area,
                     nfet_area: in_nfet_area,
                 },
             );

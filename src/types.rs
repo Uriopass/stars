@@ -1,6 +1,7 @@
 use miniserde::Deserialize;
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::{Display, Formatter};
+use std::ops::Neg;
 
 /// Example: instance3/A
 pub type SDFPin = String;
@@ -42,6 +43,17 @@ impl Display for Transition {
         match self {
             Transition::Rise => write!(f, "↗"),
             Transition::Fall => write!(f, "↘"),
+        }
+    }
+}
+
+impl Neg for Transition {
+    type Output = Transition;
+
+    fn neg(self) -> Self::Output {
+        match self {
+            Transition::Rise => Transition::Fall,
+            Transition::Fall => Transition::Rise,
         }
     }
 }
