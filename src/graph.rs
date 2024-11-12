@@ -1,4 +1,6 @@
-use crate::types::{InstanceMap, PinSet, PinTrans, PinTransMap, SDFCellType, SDFPin, Transition, TriUnate};
+use crate::types::{
+    InstanceMap, PinSet, PinTrans, PinTransMap, SDFCellType, SDFInstance, SDFPin, Transition, TriUnate,
+};
 use rustc_hash::FxHashMap;
 use sdfparse::{SDFBus, SDFDelay, SDFIOPathCond, SDFPath, SDFPort, SDFPortEdge, SDFValue};
 
@@ -44,10 +46,14 @@ fn extract_delay(value: &SDFValue) -> f32 {
     }
 }
 
-fn unique_name(path: &SDFPath) -> SDFPin {
+fn unique_name(path: &SDFPath, renaming: &FxHashMap<String, String>) -> SDFPin {
     let mut name = String::new();
     for part in &path.path {
-        name.push_str(part);
+        if let Some(v) = renaming.get(part.as_str()) {
+            name.push_str(&v);
+        } else {
+            name.push_str(part);
+        }
         name.push('/');
     }
     name.pop();
@@ -106,15 +112,34 @@ impl SDFGraph {
         let mut instance_fanout: InstanceMap<_> = Default::default();
         let mut regs_d = vec![];
         let mut regs_q = vec![];
+        let mut renaming_counter: FxHashMap<SDFInstance, usize> = Default::default();
+        let mut renaming_map: FxHashMap<SDFInstance, String> = Default::default();
 
         let unate = UnatenessData::new();
 
         for cell in &sdf.cells {
-            let cell_name = unique_name(cell.instance.as_ref().unwrap_or(&SDFPath {
-                path: vec![],
-                bus: SDFBus::None,
-            }));
+            let old_cell_name = unique_name(
+                cell.instance.as_ref().unwrap_or(&SDFPath {
+                    path: vec![],
+                    bus: SDFBus::None,
+                }),
+                &FxHashMap::default(),
+            );
+            let celltype_short = crate::celltype_short_with_size(&cell.celltype);
+            let rename_i = renaming_counter.entry(celltype_short.to_string()).or_insert(0);
+            *rename_i += 1;
+            let cell_name = format!("{rename_i:03}_{celltype_short}");
+            renaming_map.insert(old_cell_name, cell_name);
+        }
 
+        for cell in &sdf.cells {
+            let cell_name = unique_name(
+                cell.instance.as_ref().unwrap_or(&SDFPath {
+                    path: vec![],
+                    bus: SDFBus::None,
+                }),
+                &renaming_map,
+            );
             instance_celltype.insert(cell_name.clone(), cell.celltype.to_string());
 
             for delay in &cell.delays {
@@ -122,8 +147,8 @@ impl SDFGraph {
                     SDFDelay::Interconnect(inter) => {
                         let (up, down) = parse_delays(&inter.delay);
 
-                        let a_name = unique_name(&inter.a);
-                        let b_name = unique_name(&inter.b);
+                        let a_name = unique_name(&inter.a, &renaming_map);
+                        let b_name = unique_name(&inter.b, &renaming_map);
 
                         if let Some((instance_a, _)) = a_name.rsplit_once('/') {
                             instance_fanout
@@ -175,7 +200,6 @@ impl SDFGraph {
                     }
                     SDFDelay::IOPath(cond, io) => {
                         let celltype_short = crate::celltype_short(&cell.celltype);
-
                         let unate_pins = unate.data.get(celltype_short).unwrap_or_else(|| {
                             panic!("No unateness data for celltype {}", celltype_short);
                         });

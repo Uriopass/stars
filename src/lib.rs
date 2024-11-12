@@ -43,3 +43,7 @@ pub fn celltype_short(celltype: &str) -> &str {
         .unwrap()
         .0
 }
+
+pub fn celltype_short_with_size(celltype: &str) -> &str {
+    celltype.trim_start_matches("sky130_fd_sc_hd__")
+}

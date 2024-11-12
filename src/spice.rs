@@ -93,6 +93,7 @@ pub fn extract_spice_for_manual_analysis(
     let mut wires: Vec<(SDFPin, SDFPin)> = Default::default();
 
     let mut last_pin: Option<&PinTrans> = None;
+
     for (pin, _delay) in path {
         let instance = instance_name(&pin.0);
         let celltype = &graph.instance_celltype[&instance];
@@ -165,7 +166,7 @@ pub fn extract_spice_for_manual_analysis(
         );
     }*/
 
-    for (i, (instance, celltype, pin_i, pin_o)) in instances.iter().enumerate() {
+    for (instance, celltype, pin_i, pin_o) in instances.iter() {
         let celltype_short = celltype
             .trim_start_matches("sky130_fd_sc_hd__")
             .rsplit_once('_')
@@ -358,9 +359,7 @@ pub fn extract_spice_for_manual_analysis(
         }
     }
 
-    writeln!(&mut spice, "{}", resistances).unwrap();
-    writeln!(&mut spice, "{}", capacitances).unwrap();
-
+    writeln!(&mut spice, "* parasitic wires\n{}\n{}", resistances, capacitances).unwrap();
     writeln!(&mut spice).unwrap();
 
     let mut to_plot_str = String::new();

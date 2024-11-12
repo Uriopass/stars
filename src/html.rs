@@ -57,11 +57,9 @@ pub fn extract_html_for_manual_analysis(
     <table>
     <tr>
         <th>Instance</th>
-        <th>Celltype</th>
         <th>Setup</th>
         <th>Arr.</th>
         <th><b>Slack</b></th>
-        <th></th>
         <th>Input Pin: Setup, Arr, <b>Slack</b></th>
         <th>Output Cells Pin (fanout)</th>
     </tr>"#,
@@ -69,7 +67,6 @@ pub fn extract_html_for_manual_analysis(
 
     for (instance, pin_in, pin_out) in &instances {
         let mut pin_out = pin_out;
-        let celltype = graph.instance_celltype[instance].trim_start_matches("sky130_fd_sc_hd__");
         let pin_out_holder = (String::new(), Transition::Rise);
         if !pins_in_path.contains(&pin_out) {
             pin_out = &pin_out_holder;
@@ -92,13 +89,14 @@ pub fn extract_html_for_manual_analysis(
         writeln!(&mut html, "<tr>").unwrap();
         writeln!(
             &mut html,
-            "<td><center>{}<br/>{} → {}</center></td>",
+            "<td><center>{}<br/>{}{} → {}{}</center></td>",
             instance,
             pin_name(&pin_in.0),
-            pin_name(&pin_out.0)
+            pin_in.1,
+            pin_name(&pin_out.0),
+            pin_out.1
         )
         .unwrap();
-        writeln!(&mut html, "<td>{}</td>", celltype).unwrap();
         let mut writecell = |v: Option<f32>| {
             if let Some(v) = v {
                 writeln!(&mut html, "<td>{:.3}</td>", v).unwrap();
@@ -109,39 +107,58 @@ pub fn extract_html_for_manual_analysis(
         writecell(t_setup);
         writecell(t_arrival);
         writecell(slack);
-        writeln!(
-            &mut html,
-            "<td>{}{}<br />{}{}</td>",
-            pin_in.0, pin_in.1, pin_out.0, pin_out.1
-        )
-        .unwrap();
 
         let mut input_pin_html = String::new();
-        for other_pin_in in &graph.instance_ins[instance] {
-            for transition in [Transition::Rise, Transition::Fall] {
-                let other_pin_in = (other_pin_in.clone(), transition);
-                if pin_in == &other_pin_in {
-                    continue;
-                }
-                if pin_name(&other_pin_in.0) == "CLK" {
-                    continue;
-                }
-                let t_setup = *analysis.max_delay.get(&other_pin_in).unwrap_or(&f32::NAN);
-                let t_arrival = *analysis.max_delay_backwards.get(&other_pin_in).unwrap_or(&f32::NAN);
-                let slack = max_delay - (t_setup + t_arrival);
 
-                if !slack.is_nan() {
-                    write!(
-                        input_pin_html,
-                        "{}{}: {:.3} {:.3} <b>{:.3}</b><br>",
-                        pin_name(&other_pin_in.0),
-                        other_pin_in.1,
-                        t_setup,
-                        t_arrival,
-                        slack
-                    )
-                    .unwrap();
-                }
+        let mut fanin_with_slack = graph.instance_ins[instance]
+            .iter()
+            .filter(|fanin_pin| pin_name(&fanin_pin) != "CLK")
+            .flat_map(|fanin_pin| {
+                [Transition::Rise, Transition::Fall]
+                    .iter()
+                    .map(move |transition| (fanin_pin.clone(), *transition))
+            })
+            .map(|pin| {
+                let t_setup = analysis.max_delay.get(&pin).copied();
+                let t_arrival = analysis.max_delay_backwards.get(&pin).copied();
+                let slack = if let (Some(t_setup), Some(t_arrival)) = (t_setup, t_arrival) {
+                    Some(max_delay - (t_setup + t_arrival))
+                } else {
+                    None
+                };
+
+                (pin, t_setup, t_arrival, slack)
+            })
+            .collect::<Vec<_>>();
+
+        fanin_with_slack.sort_unstable_by_key(|(_, _, _, slack)| OrderedFloat(slack.unwrap_or(f32::INFINITY)));
+
+        for (other_pin_in, t_setup, t_arrival, slack) in &fanin_with_slack {
+            let is_critical = pin_in == other_pin_in;
+
+            if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
+                write!(
+                    input_pin_html,
+                    "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
+                    is_critical.then(|| "<b>").unwrap_or(""),
+                    pin_name(&other_pin_in.0),
+                    other_pin_in.1,
+                    t_setup,
+                    t_arrival,
+                    slack,
+                    is_critical.then(|| "</b>").unwrap_or("")
+                )
+                .unwrap();
+            } else {
+                write!(
+                    input_pin_html,
+                    "{}{}{}{}<br>",
+                    is_critical.then(|| "<b>").unwrap_or(""),
+                    pin_name(&other_pin_in.0),
+                    other_pin_in.1,
+                    is_critical.then(|| "</b>").unwrap_or("")
+                )
+                .unwrap();
             }
         }
         writeln!(&mut html, "<td>{}</td>", input_pin_html).unwrap();
@@ -169,38 +186,26 @@ pub fn extract_html_for_manual_analysis(
             })
             .collect::<Vec<_>>();
 
-        fanout_with_slack.sort_unstable_by_key(|(_, _, _, slack)| slack.map(|val| OrderedFloat(val)));
+        fanout_with_slack.sort_unstable_by_key(|(_, _, _, slack)| OrderedFloat(slack.unwrap_or(f32::INFINITY)));
 
         for (fanout_pin_in, t_setup, t_arrival, slack) in fanout_with_slack {
-            if pins_in_path.contains(&fanout_pin_in) {
-                continue;
-            }
-
-            let instance = instance_name(&fanout_pin_in.0);
-            let celltype = &graph.instance_celltype[&instance];
-            let celltype_short = celltype.trim_start_matches("sky130_fd_sc_hd__");
+            let is_critical = pins_in_path.contains(&fanout_pin_in);
 
             if let (Some(t_setup), Some(t_arrival), Some(slack)) = (t_setup, t_arrival, slack) {
                 write!(
                     output_pin_html,
-                    "{}.{}{}: {:.3} {:.3} <b>{:.3}</b><br>",
-                    celltype_short,
-                    pin_name(&fanout_pin_in.0),
+                    "{}{}{}: {:.3} {:.3} <b>{:.3}</b>{}<br>",
+                    is_critical.then(|| "<b>").unwrap_or(""),
+                    &fanout_pin_in.0,
                     fanout_pin_in.1,
                     t_setup,
                     t_arrival,
-                    slack
+                    slack,
+                    is_critical.then(|| "</b>").unwrap_or("")
                 )
                 .unwrap();
             } else {
-                write!(
-                    output_pin_html,
-                    "{}.{}{}<br>",
-                    celltype_short,
-                    pin_name(&fanout_pin_in.0),
-                    fanout_pin_in.1
-                )
-                .unwrap();
+                write!(output_pin_html, "{}{}<br>", &fanout_pin_in.0, fanout_pin_in.1).unwrap();
             }
         }
         writeln!(&mut html, "<td>{}</td>", output_pin_html).unwrap();

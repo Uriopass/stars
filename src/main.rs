@@ -72,16 +72,7 @@ fn main() {
         println!("{}  -- {}{}:\t{:.3}", i, output.0, output.1, delay);
         let path = analysis.extract_path(&graph, output);
         for ((pin, transition), delay) in &path {
-            let instance = instance_name(pin);
-            let celltype = graph.instance_celltype.get(&instance);
-            println!(
-                "  {} {}{:.3} {} {}",
-                pin,
-                transition,
-                *delay,
-                instance,
-                celltype.unwrap_or(&String::new())
-            );
+            println!("  {} {}{:.3}", pin, transition, *delay,);
         }
         let o_instance = instance_name(&output.0);
         let o_celltype = &graph.instance_celltype[&o_instance];
