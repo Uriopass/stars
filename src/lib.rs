@@ -1,3 +1,5 @@
+#![allow(uncommon_codepoints)]
+
 pub mod analysis;
 pub mod graph;
 pub mod html;

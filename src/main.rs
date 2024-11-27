@@ -80,7 +80,7 @@ fn main() {
 
         extract_html_for_manual_analysis(&graph, &analysis, output, delay, &path);
         if let Some(subckt) = &subckt {
-            extract_spice_for_manual_analysis(&graph, &analysis, &subckt, spef.as_ref(), output, &path);
+            extract_spice_for_manual_analysis(&graph, &analysis, &subckt, spef.as_ref(), output, delay, &path);
         }
     }
 }

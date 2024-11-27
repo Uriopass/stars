@@ -128,8 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
         writecell(t_setup);
         writecell(t_arrival);
 
-        let mut fanin_with_slack = graph.instance_ins[instance]
+        let mut fanin_with_slack = graph
+            .instance_ins
+            .get(instance)
             .iter()
+            .flat_map(|v| v.iter())
             .filter(|fanin_pin| pin_name(&fanin_pin) != "CLK")
             .flat_map(|fanin_pin| {
                 [Transition::Rise, Transition::Fall]
@@ -203,8 +206,11 @@ document.addEventListener('DOMContentLoaded', function() {
         )
         .unwrap();
 
-        let mut fanout_with_slack = graph.instance_fanout[instance]
+        let mut fanout_with_slack = graph
+            .instance_fanout
+            .get(instance)
             .iter()
+            .flat_map(|v| v.iter())
             .flat_map(|fanout_pin_in| {
                 [
                     (fanout_pin_in.clone(), Transition::Rise),

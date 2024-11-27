@@ -3,6 +3,7 @@ use rustc_hash::{FxHashMap, FxHashSet};
 use std::borrow::Cow;
 use std::fmt::Write;
 
+#[derive(Debug)]
 pub struct SubcktData {
     pub data: FxHashMap<SDFCellType, Subckt>,
 }
@@ -14,12 +15,14 @@ pub struct Drive {
     pub fall_lw: f32,
 }
 
+#[derive(Debug)]
 pub struct Load {
     /// in µm², proportional to load capacitance
     pub pfet_area: f32,
     pub nfet_area: f32,
 }
 
+#[derive(Debug)]
 pub struct Subckt {
     pub name: String,
     pub pins: Vec<SDFPin>,
@@ -43,7 +46,6 @@ impl Subckt {
             Nfet,
             Pfet,
         }
-        #[allow(uncommon_codepoints)]
         struct Transistor<'a> {
             kind: TransistorKind,
             drain: &'a str,
@@ -156,10 +158,10 @@ impl Subckt {
             );
         }
 
-        let mut pin_wl = FxHashMap::default();
+        let mut pin_lw = FxHashMap::default();
         let mut visited = FxHashSet::default();
 
-        fn calc_wl<'a>(
+        fn calc_lw<'a>(
             pin_wl: &mut FxHashMap<&'a str, f32>,
             visited: &mut FxHashSet<&'a str>,
             transistors: &[Transistor<'a>],
@@ -184,7 +186,7 @@ impl Subckt {
                         continue;
                     }
                     max_lw = max_lw.max(
-                        calc_wl(pin_wl, visited, transistors, &*transistor.source, kind)
+                        calc_lw(pin_wl, visited, transistors, &*transistor.source, kind)
                             + transistor.l_µm / transistor.w_µm,
                     );
                 }
@@ -193,7 +195,7 @@ impl Subckt {
                         continue;
                     }
                     max_lw = max_lw.max(
-                        calc_wl(pin_wl, visited, transistors, &*transistor.drain, kind)
+                        calc_lw(pin_wl, visited, transistors, &*transistor.drain, kind)
                             + transistor.l_µm / transistor.w_µm,
                     );
                 }
@@ -203,13 +205,13 @@ impl Subckt {
         }
 
         for pin in output_pins {
-            pin_wl.clear();
+            pin_lw.clear();
             visited.clear();
-            let rise_lw = calc_wl(&mut pin_wl, &mut visited, &transistors, &**pin, TransistorKind::Pfet);
+            let rise_lw = calc_lw(&mut pin_lw, &mut visited, &transistors, &**pin, TransistorKind::Pfet);
 
-            pin_wl.clear();
+            pin_lw.clear();
             visited.clear();
-            let fall_lw = calc_wl(&mut pin_wl, &mut visited, &transistors, &**pin, TransistorKind::Nfet);
+            let fall_lw = calc_lw(&mut pin_lw, &mut visited, &transistors, &**pin, TransistorKind::Nfet);
 
             output_pin_drive.insert(pin.to_string(), Drive { rise_lw, fall_lw });
         }
@@ -279,14 +281,15 @@ impl SubcktData {
         celltype: &SDFCellType,
         values: &FxHashMap<&str, Cow<str>>,
         spice_append: &mut String,
+        nfet_override: &FxHashMap<&str, f32>,
     ) {
         let subckt = self.data.get(celltype).unwrap();
 
         let mut substitutions =
             FxHashMap::with_capacity_and_hasher(subckt.temp_variables.len() + subckt.pins.len(), Default::default());
 
-        for temp_variable in &subckt.temp_variables {
-            substitutions.insert(&**temp_variable, format!("{}_{}", instance, temp_variable));
+        for (i, temp_variable) in subckt.temp_variables.iter().enumerate() {
+            substitutions.insert(&**temp_variable, format!("{}/temp{}", instance, i));
         }
 
         for pin in &subckt.pins {
@@ -297,22 +300,58 @@ impl SubcktData {
         }
 
         for line in subckt.body.lines() {
+            let mut newline = String::with_capacity(line.len() * 2);
             let mut first_word = true;
+
             for word in line.split_whitespace() {
                 if first_word {
                     first_word = false;
-                    write!(spice_append, "{}_{} ", word, instance).unwrap();
+                    write!(&mut newline, "{}_{} ", word, instance).unwrap();
                     continue;
                 }
                 if let Some(substitution) = substitutions.get(word) {
-                    write!(spice_append, "{} ", substitution).unwrap();
+                    write!(&mut newline, "{} ", substitution).unwrap();
                 } else if word == "sky130_fd_pr__special_nfet_01v8" {
-                    write!(spice_append, "sky130_fd_pr__nfet_01v8 ").unwrap();
+                    write!(&mut newline, "sky130_fd_pr__nfet_01v8 ").unwrap();
                 } else {
-                    write!(spice_append, "{} ", word).unwrap();
+                    write!(&mut newline, "{} ", word).unwrap();
                 }
             }
-            writeln!(spice_append).unwrap();
+
+            if nfet_override.len() > 0 {
+                if newline.contains("sky130_fd_pr__nfet_01v8") {
+                    let mut parts = newline.split_whitespace();
+                    let _ = parts.next();
+                    let _drain = parts.next();
+                    let gate = parts.next().unwrap();
+
+                    if let Some(v) = nfet_override.get(&*gate) {
+                        let mut new_line = String::with_capacity(newline.len());
+
+                        let mut mult_ = None;
+
+                        for word in newline.split_whitespace() {
+                            if !word.starts_with("w=") {
+                                write!(&mut new_line, "{} ", word).unwrap();
+                                continue;
+                            }
+
+                            let (closest_bin, mult) = crate::spice::nfet_size(*v);
+                            mult_ = Some(mult);
+
+                            write!(&mut new_line, "w={} ", closest_bin).unwrap();
+                        }
+
+                        if let Some(mult) = mult_ {
+                            write!(&mut new_line, "m={} ", mult).unwrap();
+                        }
+
+                        newline = new_line;
+                    }
+                }
+            }
+
+            writeln!(spice_append, "{}", newline).unwrap();
         }
     }
 }
@@ -325,13 +364,15 @@ mod tests {
     fn test_subckt_data() {
         let contents = r#"
 .subckt sky130_fd_sc_hd__and4 a b c y
-M1 y a b vdd sky130_fd_sc_hd__nmos
-M2 y c b vdd sky130_fd_sc_hd__nmos
+M1 y a b vdd sky130_fd_pr__nfet_01v8
+M2 y c b vdd sky130_fd_pr__nfet_01v8 w=0.1 l=0.15
 M3 y a c vdd sky130_fd_sc_hd__pmos
 M4 a_test# a vdd vdd sky130_fd_sc_hd__nmos
 .ends"#;
 
         let subckt_data = SubcktData::new(contents);
+
+        eprintln!("{:#?}", &subckt_data);
 
         let mut values: FxHashMap<_, _> = Default::default();
         values.insert("a", "oa".into());
@@ -356,10 +397,11 @@ M4 a_test# a vdd vdd sky130_fd_sc_hd__nmos
             &"sky130_fd_sc_hd__and4".to_string(),
             &values,
             &mut spice,
+            &FxHashMap::from_iter([("oc", 1.0)]),
         );
 
-        let expected = r#"M1_and4_0 oy oa ob vdd sky130_fd_sc_hd__nmos 
-M2_and4_0 oy oc ob vdd sky130_fd_sc_hd__nmos 
+        let expected = r#"M1_and4_0 oy oa ob vdd sky130_fd_pr__nfet_01v8 
+M2_and4_0 oy oc ob vdd sky130_fd_pr__nfet_01v8 w=1 l=0.15 m=1 
 M3_and4_0 oy oa oc vdd sky130_fd_sc_hd__pmos 
 M4_and4_0 and4_0_a_test# oa vdd vdd sky130_fd_sc_hd__nmos 
 "#;
