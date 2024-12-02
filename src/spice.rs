@@ -203,7 +203,12 @@ Vgnd Vgnd 0 0
 Vdd Vdd Vgnd {VDD}
 Vclk clk Vgnd PULSE(0 {VDD} 0n 0.2n 0 0 0)
 
-.ic V({}) = 0
+.param v_iq_c = 0
+.param v_start = 1.8
+
+.ic V({}) = {{v_iq_c}}
+
+VI0/D I0/D Vgnd {{v_start}}
 
 "#,
         analysis.max_delay[output],
@@ -333,14 +338,14 @@ Vclk clk Vgnd PULSE(0 {VDD} 0n 0.2n 0 0 0)
             let instance_name_ = instance_name(connected_to);
 
             if celltype_short == "dfxtp" {
-                writeln!(
+                /*writeln!(
                     &mut spice,
                     "V{} {} Vgnd {}",
                     shortify(&*full_pin),
                     shortify(&*full_pin),
                     VDD
                 )
-                .unwrap();
+                .unwrap();*/
                 values.insert(pin, shortify(&*full_pin).into());
                 continue;
             }
