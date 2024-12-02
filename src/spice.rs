@@ -549,7 +549,7 @@ VI0/D I0/D Vgnd {{v_start}}
 
     let load_model = &[23.2746, 32.1136, 48.4862, 64.0974, 86.2649, 84.2649];
 
-    let res_base = 0.0745 * 1000.0; // in ohms
+    let res_base = 0.0745 * 10.0; // in ohms
     let capa_base = 1.42e-5; // in picofarads
     let slope = 8.36;
 
