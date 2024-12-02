@@ -382,16 +382,10 @@ VI0/D I0/D Vgnd {{v_start}}
                         t_setup
                     );*/
 
-                    let slack_p = get_slack(&(connected_to.clone(), Transition::Rise), 1.0).unwrap_or(0.0); // in ns
-                    let slack_n = get_slack(&(connected_to.clone(), Transition::Fall), 1.0).unwrap_or(0.0); // in ns
+                    let slack_p = get_slack(&(connected_to.clone(), Transition::Rise), 1.2).unwrap_or(0.0); // in ns
+                    let slack_n = get_slack(&(connected_to.clone(), Transition::Fall), 1.2).unwrap_or(0.0); // in ns
 
-                    let mut slack = if inv_in_val { slack_p } else { slack_n } * 1e-9; // in seconds
-
-                    if pin_name(pin) == "A1" {
-                        slack = 0.7258 * 1e-9;
-                    } else if pin_name(pin) == "A0" {
-                        slack = 0.6896 * 1e-9;
-                    }
+                    let slack = if inv_in_val { slack_p } else { slack_n } * 1e-9; // in seconds
 
                     let rd = if pin_val {
                         EQ_RESISTANCE_PFET_HVT * drive.rise_lw
