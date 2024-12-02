@@ -203,10 +203,10 @@ Vgnd Vgnd 0 0
 Vdd Vdd Vgnd {VDD}
 Vclk clk Vgnd PULSE(0 {VDD} 0n 0.2n 0 0 0)
 
-.param v_iq_c = 0
+.param v_q_ic = 0
 .param v_start = 1.8
 
-.ic V({}) = {{v_iq_c}}
+.ic V({}) = {{v_q_ic}}
 
 VI0/D I0/D Vgnd {{v_start}}
 

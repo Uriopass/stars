@@ -102,6 +102,8 @@ fn parse_delays(value: &[SDFValue]) -> (f32, f32) {
     }
 }
 
+static DO_RENAMING: bool = false;
+
 impl SDFGraph {
     pub fn new(sdf: &sdfparse::SDF) -> Self {
         let mut graph: PinTransMap<_> = Default::default();
@@ -112,24 +114,26 @@ impl SDFGraph {
         let mut instance_fanout: InstanceMap<_> = Default::default();
         let mut regs_d = vec![];
         let mut regs_q = vec![];
-        let mut renaming_counter: FxHashMap<SDFInstance, usize> = Default::default();
         let mut renaming_map: FxHashMap<SDFInstance, String> = Default::default();
 
         let unate = UnatenessData::new();
 
-        for cell in &sdf.cells {
-            let old_cell_name = unique_name(
-                cell.instance.as_ref().unwrap_or(&SDFPath {
-                    path: vec![],
-                    bus: SDFBus::None,
-                }),
-                &FxHashMap::default(),
-            );
-            let celltype_short = crate::celltype_short_with_size(&cell.celltype);
-            let rename_i = renaming_counter.entry(celltype_short.to_string()).or_insert(0);
-            *rename_i += 1;
-            let cell_name = format!("{rename_i:03}_{celltype_short}");
-            renaming_map.insert(old_cell_name, cell_name);
+        if DO_RENAMING {
+            let mut renaming_counter: FxHashMap<SDFInstance, usize> = Default::default();
+            for cell in &sdf.cells {
+                let old_cell_name = unique_name(
+                    cell.instance.as_ref().unwrap_or(&SDFPath {
+                        path: vec![],
+                        bus: SDFBus::None,
+                    }),
+                    &FxHashMap::default(),
+                );
+                let celltype_short = crate::celltype_short_with_size(&cell.celltype);
+                let rename_i = renaming_counter.entry(celltype_short.to_string()).or_insert(0);
+                *rename_i += 1;
+                let cell_name = format!("{rename_i:03}_{celltype_short}");
+                renaming_map.insert(old_cell_name, cell_name);
+            }
         }
 
         for cell in &sdf.cells {
