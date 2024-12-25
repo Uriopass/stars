@@ -35,11 +35,11 @@ pub const EQ_RESISTANCE_PFET_HVT: f32 = 6591.7 * 1.0 / 0.15 / std::f32::consts::
 /// Equivalent resistance for a 0.65um/0.15um NFET (in Ohms). We premultiply by W / L so we can get actual resistance with R x L / W
 pub const EQ_RESISTANCE_NFET: f32 = 2832.4 * 0.65 / 0.15 / std::f32::consts::LN_2;
 
-/// Equivalent capacitance for pfet hvt (in Farads / m²)
-pub const CAPA_PER_AREA_PFET_HVT: f32 = 0.00990114 * 1.03;
+/// Equivalent capacitance for pfet hvt (in picoFarads / um²)
+pub const CAPA_PER_AREA_PFET_HVT: f32 = 0.00990114;
 
-/// Equivalent capacitance for nfet (in Farads / m²)
-pub const CAPA_PER_AREA_NFET: f32 = 0.005819149 * 1.03;
+/// Equivalent capacitance for nfet (in picoFarads / um²)
+pub const CAPA_PER_AREA_NFET: f32 = 0.01010523;
 
 #[derive(Debug, miniserde::Deserialize)]
 struct CellTransitionCombination {
@@ -413,20 +413,22 @@ VI0/D I0/D Vgnd {{v_start}}
 
                     writeln!(
                         &mut spice,
-                        "* maxw_p {}/{} {:.3} slack {} ns",
+                        "* maxw_p {}/{} {:.3} {:.0} slack {} ns",
                         shortify(&*instance),
                         pin,
                         maxw_p * 1e6,
+                        maxw_p * 1e6 / 7.0,
                         slack * 1e9
                     )
                     .unwrap();
 
                     writeln!(
                         &mut spice,
-                        "* maxw_n {}/{} {:.3} slack {} ns",
+                        "* maxw_n {}/{} {:.3} {:.0} slack {} ns",
                         shortify(&*instance),
                         pin,
                         maxw_n * 1e6,
+                        maxw_n * 1e6 / 7.0,
                         slack * 1e9
                     )
                     .unwrap();
@@ -445,7 +447,8 @@ VI0/D I0/D Vgnd {{v_start}}
                     // ignore t_setup for now, don't deal with simultaneous switching as it's weird
                     // to convert STA time to spice time correctly
 
-                    if true {
+                    //todo: if true
+                    if i != 3 {
                         writeln!(
                             &mut spice,
                             "V{} {} Vgnd {}",
