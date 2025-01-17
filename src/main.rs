@@ -33,7 +33,9 @@ fn main() {
 
     let sdf_content = read_to_string(sdf_data_path).expect("Could not read SDF file");
 
-    let sdf = sdfparse::SDF::parse_str(&sdf_content).expect("Could not parse SDF");
+    let sdf = sdfparse::SDF::parse_str(&sdf_content)
+        .map_err(|e| eprintln!("{}", e))
+        .unwrap();
 
     let graph = SDFGraph::new(&sdf);
 
@@ -68,11 +70,13 @@ fn main() {
 
     outputs_with_delay.sort_by_key(|(_, delay)| Reverse(OrderedFloat(*delay)));
 
-    for (i, (output, delay)) in outputs_with_delay.into_iter().skip(44).take(1).enumerate() {
+    for (i, (output, delay)) in outputs_with_delay.into_iter().take(1).enumerate() {
         println!("{}  -- {}{}:\t{:.3}", i, output.0, output.1, delay);
         let path = analysis.extract_path(&graph, output);
         for ((pin, transition), delay) in &path {
-            println!("  {} {}{:.3}", pin, transition, *delay,);
+            let o_instance = instance_name(pin);
+            let o_celltype = &graph.instance_celltype[&o_instance];
+            println!("  {} {}{:.3} {}", pin, transition, *delay, o_celltype);
         }
         let o_instance = instance_name(&output.0);
         let o_celltype = &graph.instance_celltype[&o_instance];

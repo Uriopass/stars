@@ -208,9 +208,9 @@ impl SDFGraph {
                             panic!("No unateness data for celltype {}", celltype_short);
                         });
 
-                        let SDFIOPathCond::None = cond else {
-                            panic!("IOPathCond is not None for {:?}", cell.instance);
-                        };
+                        //let SDFIOPathCond::None = cond else {
+                        //    panic!("IOPathCond is not None for {:?}", cell.instance);
+                        //};
 
                         if !matches!(io.a.edge_type, SDFPortEdge::None) {
                             panic!("edge_type is not None for {:?}", cell.instance);

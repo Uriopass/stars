@@ -1,0 +1,136 @@
+// implementing SDF version 3.0 (OVI 1995).
+
+WHITESPACE = _{
+    " " | "\t" | NEWLINE
+  // C and C++ style comments
+  | ("//" ~ (!NEWLINE ~ ANY)* ~ (NEWLINE | &EOI))
+  | ("/*" ~ (!"*/" ~ ANY)* ~ "*/")
+}
+
+main = {
+    SOI ~ "(DELAYFILE" ~
+    header ~
+    cell* ~
+    ")" ~ DROP ~ &EOI
+}
+
+str = @{ "\"" ~ ((!"\"" ~ !"\\" ~ ANY) | ("\\" ~ ANY))* ~ "\"" }
+real = @{ "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? ~
+    ("e" ~ ("+" | "-") ~ ASCII_DIGIT+)?}
+int = @{ ASCII_DIGIT+ }
+
+real_optional = { real? }
+rvalue_multi = { real_optional ~ ":" ~ real_optional ~ ":" ~ real_optional }
+rvalue = { rvalue_multi | real_optional }
+
+header = {
+    sdf_version ~
+    design_name? ~ date? ~ vendor? ~
+    program? ~ program_version? ~ hier_divider ~
+    voltage? ~ process? ~ temperature? ~ timescale?
+}
+
+sdf_version = { "(SDFVERSION" ~ str ~ ")" }
+design_name = { "(DESIGN" ~ str ~ ")" }
+date = { "(DATE" ~ str ~ ")" }
+vendor = { "(VENDOR" ~ str ~ ")" }
+program = { "(PROGRAM" ~ str ~ ")" }
+program_version = { "(VERSION" ~ str ~ ")" }
+hier_divider = { "(DIVIDER" ~ PUSH(hchar) ~ ")" }
+hchar = { "." | "/" }
+voltage = { "(VOLTAGE" ~ rvalue ~ ")" }
+process = { "(PROCESS" ~ str ~ ")" }
+temperature = { "(TEMPERATURE" ~ rvalue ~ ")" }
+timescale = { "(TIMESCALE" ~ real ~ timescale_unit ~ ")" }
+timescale_unit = { "ns" | "ps" | "us" }
+
+hier_divider_match = _{ &hchar ~ PEEK[0..1] }
+
+ident = @{ (ASCII_ALPHANUMERIC | "_" | ("\\" ~ ANY))+ }
+path = { ident ~ (hier_divider_match ~ ident)* ~ bus? }
+bus = { "[" ~ int ~ (":" ~ int)? ~ "]" }
+port = { ident ~ bus? }
+port_spec = { port | ("(" ~ port_edge_type ~ port ~ ")") }
+port_edge_type = {
+    "posedge" | "negedge"
+  | "01" | "10" | "0z" | "z1" | "1z" | "z0"
+}
+
+cell = {
+    "(CELL" ~
+    "(CELLTYPE" ~ str ~ ")" ~
+    "(INSTANCE" ~ path? ~ ")" ~
+    timing_spec* ~
+    ")"
+}
+
+// timingenv is unsupported, because none of our data
+// (opensta, innovus) use it.
+timing_spec = {
+    delay | timingcheck
+}
+
+// pathpulse, pathpulsepercent, & increment are unsupported.
+delay = {
+    "(DELAY" ~ "(ABSOLUTE" ~
+    delay_def* ~
+    ")" ~ ")"
+}
+
+// port & device are unsupported.
+delay_def = {
+    delay_interconnect
+  | delay_iopath | delay_cond_iopath | delay_condelse_iopath
+}
+
+delay_interconnect = {
+    "(INTERCONNECT" ~ path ~ path ~ delay_value_list ~ ")"
+}
+
+// pulse rejection limit & X-limit are unsupported.
+delay_value_list = { ("(" ~ rvalue ~ ")"){1, 12} }
+
+delay_iopath = {
+    "(IOPATH" ~ port_spec ~ port ~ delay_iopath_retain? ~ delay_value_list ~ ")"
+}
+delay_iopath_retain = { "(RETAIN" ~ delay_value_list ~ ")" }
+delay_cond_iopath = {
+    "(COND" ~ cond_expr ~ delay_iopath ~  ")"
+}
+delay_condelse_iopath = {
+    "(CONDELSE" ~ delay_iopath ~ ")"
+}
+
+// we just use a very simple expr syntax here.
+// enough for our small cases.
+cond_expr_inst_neg = {
+    (port ~ "==1'b0") | (("!" | "~") ~ port)
+}
+cond_expr_inst_pos = {
+    (port ~ "==1'b1") | port
+}
+cond_expr = {
+    "(" ~
+    (cond_expr_inst_neg | cond_expr_inst_pos) ~
+    (("&&" | "&") ~ (cond_expr_inst_neg | cond_expr_inst_pos))* ~
+    ")"
+}
+
+// timingchecks are currently parsed but ignored.
+// gonna implement it when i have time.
+timingcheck = {
+    "(TIMINGCHECK" ~ timingcheck_def* ~ ")"
+}
+
+// setuphold unsupported.
+timingcheck_def = {
+  "(" ~ tc_type ~ (port_tchk | ("(" ~ rvalue ~ ")"))* ~ ")"
+}
+
+tc_type = {
+    "SETUP" | "HOLD" | "RECOVERY" | "REMOVAL"
+  | "WIDTH" | "RECREM" | "SKEW" | "PERIOD"
+}
+
+// only simple recording of single edge condition.
+port_tchk = { port_spec | ("(COND" ~ cond_expr ~ port_spec ~ ")") }

@@ -1,687 +1,756 @@
 {
-    "buf": {
-        "A": "positive_unate"
-    },
-    "or3": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A": "positive_unate"
-    },
-    "xor3": {
-        "B": "non_unate",
-        "C": "non_unate",
-        "A": "non_unate"
-    },
-    "nand2b": {
-        "B": "negative_unate",
-        "A_N": "positive_unate"
-    },
-    "sdfxtp": {
-        "CLK": "positive_unate"
-    },
-    "nand4b": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "D": "negative_unate",
-        "A_N": "positive_unate"
-    },
-    "and3": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A": "positive_unate"
-    },
-    "sdfstp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate"
-    },
-    "and4bb": {
-        "B_N": "negative_unate",
-        "C": "positive_unate",
-        "D": "positive_unate",
-        "A_N": "negative_unate"
-    },
-    "dlxtn": {
-        "D": "positive_unate",
-        "GATE_N": "positive_unate"
-    },
-    "a221oi": {
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "einvn": {
-        "A": "negative_unate"
-    },
-    "xor2": {
-        "B": "non_unate",
-        "A": "non_unate"
-    },
-    "a22o": {
-        "B1": "positive_unate",
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "clkdlybuf4s15": {
-        "A": "positive_unate"
-    },
-    "dlymetal6s2s": {
-        "A": "positive_unate"
-    },
-    "o311ai": {
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "o2bb2a": {
-        "B1": "positive_unate",
-        "B2": "positive_unate",
-        "A2_N": "negative_unate",
-        "A1_N": "negative_unate"
-    },
-    "edfxtp": {
-        "CLK": "positive_unate"
-    },
-    "dfrbp": {
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "fah": {
-        "B": "non_unate",
-        "A": "non_unate",
-        "CI": "non_unate"
-    },
-    "dfbbp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "o21ba": {
-        "B1_N": "negative_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "dlclkp": {
-        "CLK": "positive_unate"
-    },
-    "clkbuf": {
-        "A": "positive_unate"
-    },
-    "sdfrbp": {
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "dlrbp": {
-        "GATE": "positive_unate",
-        "D": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "dfsbp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate"
-    },
-    "a41oi": {
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "A4": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "and2b": {
-        "B": "positive_unate",
-        "A_N": "negative_unate"
-    },
-    "a2111o": {
-        "A2": "positive_unate",
-        "D1": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "dlymetal6s6s": {
-        "A": "positive_unate"
-    },
-    "o21ai": {
-        "B1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "a2bb2oi": {
-        "B1": "negative_unate",
-        "B2": "negative_unate",
-        "A2_N": "positive_unate",
-        "A1_N": "positive_unate"
-    },
-    "dlrtp": {
-        "GATE": "positive_unate",
-        "D": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "nand3b": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "A_N": "positive_unate"
-    },
-    "o211a": {
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "a21oi": {
-        "B1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "o22a": {
-        "B1": "positive_unate",
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "nor3b": {
-        "B": "negative_unate",
-        "C_N": "positive_unate",
-        "A": "negative_unate"
-    },
-    "o2111a": {
-        "A2": "positive_unate",
-        "D1": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "clkdlybuf4s50": {
-        "A": "positive_unate"
-    },
-    "nor4b": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "D_N": "positive_unate",
-        "A": "negative_unate"
-    },
-    "a21bo": {
-        "B1_N": "negative_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "bufinv": {
-        "A": "negative_unate"
-    },
-    "dlrbn": {
-        "RESET_B": "positive_unate",
-        "D": "positive_unate",
-        "GATE_N": "positive_unate"
-    },
-    "dfbbn": {
-        "SET_B": "positive_unate",
-        "CLK_N": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "xnor2": {
-        "B": "non_unate",
-        "A": "non_unate"
-    },
-    "a211o": {
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "xnor3": {
-        "B": "non_unate",
-        "C": "non_unate",
-        "A": "non_unate"
-    },
-    "a21boi": {
-        "B1_N": "positive_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "o21a": {
-        "B1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "nand3": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "A": "negative_unate"
-    },
-    "dfrtn": {
-        "CLK_N": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "fa": {
-        "B": "non_unate",
-        "A": "non_unate",
-        "CIN": "non_unate"
-    },
-    "sedfxbp": {
-        "CLK": "positive_unate"
-    },
-    "and4b": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "D": "positive_unate",
-        "A_N": "negative_unate"
-    },
-    "o211ai": {
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "dfrtp": {
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "o2111ai": {
-        "A2": "negative_unate",
-        "D1": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "sdfsbp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate"
-    },
-    "a31oi": {
-        "B1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "clkdlybuf4s18": {
-        "A": "positive_unate"
-    },
-    "sdfbbn": {
-        "SET_B": "positive_unate",
-        "CLK_N": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "einvp": {
-        "A": "negative_unate"
-    },
-    "clkinv": {
-        "A": "negative_unate"
-    },
-    "sdfrtn": {
-        "CLK_N": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "clkdlybuf4s25": {
-        "A": "positive_unate"
-    },
-    "sdfxbp": {
-        "CLK": "positive_unate"
-    },
-    "or4": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A": "positive_unate",
-        "D": "positive_unate"
-    },
-    "o41ai": {
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "A4": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "a311oi": {
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "and4": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A": "positive_unate",
-        "D": "positive_unate"
-    },
-    "ebufn": {
-        "A": "positive_unate"
-    },
-    "o22ai": {
-        "B1": "negative_unate",
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "fahcin": {
-        "B": "non_unate",
-        "A": "non_unate",
-        "CIN": "non_unate"
-    },
-    "dlygate4sd1": {
-        "A": "positive_unate"
-    },
-    "a32o": {
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "or3b": {
-        "B": "positive_unate",
-        "C_N": "negative_unate",
-        "A": "positive_unate"
-    },
-    "o2bb2ai": {
-        "B1": "negative_unate",
-        "B2": "negative_unate",
-        "A2_N": "positive_unate",
-        "A1_N": "positive_unate"
-    },
-    "a22oi": {
-        "B1": "negative_unate",
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "mux2i": {
-        "S": "non_unate",
-        "A1": "negative_unate",
-        "A0": "negative_unate"
-    },
-    "nand4bb": {
-        "B_N": "positive_unate",
-        "C": "negative_unate",
-        "D": "negative_unate",
-        "A_N": "positive_unate"
-    },
-    "nand4": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "A": "negative_unate",
-        "D": "negative_unate"
-    },
-    "probec_p": {
-        "A": "positive_unate"
-    },
-    "dlrtn": {
-        "RESET_B": "positive_unate",
-        "D": "positive_unate",
-        "GATE_N": "positive_unate"
-    },
-    "nor4bb": {
-        "B": "negative_unate",
-        "C_N": "positive_unate",
-        "D_N": "positive_unate",
-        "A": "negative_unate"
-    },
-    "or4b": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "D_N": "negative_unate",
-        "A": "positive_unate"
-    },
-    "dfxtp": {
-        "CLK": "positive_unate"
-    },
-    "and3b": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A_N": "negative_unate"
-    },
-    "a211oi": {
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "or4bb": {
-        "B": "positive_unate",
-        "C_N": "negative_unate",
-        "D_N": "negative_unate",
-        "A": "positive_unate"
-    },
-    "o31ai": {
-        "B1": "negative_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "o221a": {
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "sdlclkp": {
-        "CLK": "positive_unate"
-    },
-    "nor3": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "A": "negative_unate"
-    },
-    "edfxbp": {
-        "CLK": "positive_unate"
-    },
-    "sdfbbp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    },
-    "mux4": {
-        "S0": "non_unate",
-        "A2": "positive_unate",
-        "S1": "non_unate",
-        "A1": "positive_unate",
-        "A0": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "a221o": {
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "ha": {
-        "B": "non_unate",
-        "A": "non_unate"
-    },
-    "nor2b": {
-        "B_N": "positive_unate",
-        "A": "negative_unate"
-    },
-    "maj3": {
-        "B": "positive_unate",
-        "C": "positive_unate",
-        "A": "positive_unate"
-    },
-    "and2": {
-        "B": "positive_unate",
-        "A": "positive_unate"
-    },
-    "o311a": {
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "a2bb2o": {
-        "B1": "positive_unate",
-        "B2": "positive_unate",
-        "A2_N": "negative_unate",
-        "A1_N": "negative_unate"
-    },
-    "inv": {
-        "A": "negative_unate"
-    },
-    "dlygate4sd3": {
-        "A": "positive_unate"
-    },
-    "dlygate4sd2": {
-        "A": "positive_unate"
-    },
-    "a311o": {
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "C1": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "a41o": {
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "A4": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "o21bai": {
-        "B1_N": "positive_unate",
-        "A2": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "probe_p": {
-        "A": "positive_unate"
-    },
-    "or2b": {
-        "B_N": "negative_unate",
-        "A": "positive_unate"
-    },
-    "o32a": {
-        "B2": "positive_unate",
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "o32ai": {
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "bufbuf": {
-        "A": "positive_unate"
-    },
-    "dfxbp": {
-        "CLK": "positive_unate"
-    },
-    "clkinvlp": {
-        "A": "negative_unate"
-    },
-    "nand2": {
-        "B": "negative_unate",
-        "A": "negative_unate"
-    },
-    "a21o": {
-        "B1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate"
-    },
-    "sedfxtp": {
-        "CLK": "positive_unate"
-    },
-    "o41a": {
-        "A2": "positive_unate",
-        "B1": "positive_unate",
-        "A4": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "mux2": {
-        "S": "non_unate",
-        "A1": "positive_unate",
-        "A0": "positive_unate"
-    },
-    "fahcon": {
-        "B": "non_unate",
-        "A": "non_unate",
-        "CI": "non_unate"
-    },
-    "or2": {
-        "B": "positive_unate",
-        "A": "positive_unate"
-    },
-    "dfstp": {
-        "SET_B": "positive_unate",
-        "CLK": "positive_unate"
-    },
-    "dlxbp": {
-        "GATE": "positive_unate",
-        "D": "positive_unate"
-    },
-    "dlxtp": {
-        "GATE": "positive_unate",
-        "D": "positive_unate"
-    },
-    "o221ai": {
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "dlxbn": {
-        "D": "positive_unate",
-        "GATE_N": "positive_unate"
-    },
-    "dlymetal6s4s": {
-        "A": "positive_unate"
-    },
-    "nor4": {
-        "B": "negative_unate",
-        "C": "negative_unate",
-        "A": "negative_unate",
-        "D": "negative_unate"
-    },
-    "o31a": {
-        "B1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "a32oi": {
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "A1": "negative_unate",
-        "A3": "negative_unate"
-    },
-    "a31o": {
-        "B1": "positive_unate",
-        "A2": "positive_unate",
-        "A1": "positive_unate",
-        "A3": "positive_unate"
-    },
-    "a2111oi": {
-        "A2": "negative_unate",
-        "D1": "negative_unate",
-        "B1": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "a222oi": {
-        "B2": "negative_unate",
-        "A2": "negative_unate",
-        "B1": "negative_unate",
-        "C2": "negative_unate",
-        "C1": "negative_unate",
-        "A1": "negative_unate"
-    },
-    "nor2": {
-        "B": "negative_unate",
-        "A": "negative_unate"
-    },
-    "sdfrtp": {
-        "CLK": "positive_unate",
-        "RESET_B": "positive_unate"
-    }
+  "a2bb2o": {
+    "B2": "positive_unate",
+    "A2_N": "negative_unate",
+    "B1": "positive_unate",
+    "A1_N": "negative_unate"
+  },
+  "sdlclkp": {
+    "CLK": "positive_unate"
+  },
+  "o32a": {
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B2": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate"
+  },
+  "a22o": {
+    "B2": "positive_unate",
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate"
+  },
+  "maj3": {
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "ebufn": {
+    "A": "positive_unate"
+  },
+  "mux2": {
+    "A0": "positive_unate",
+    "S": "non_unate",
+    "A1": "positive_unate"
+  },
+  "dlygate4sd1": {
+    "A": "positive_unate"
+  },
+  "buf": {
+    "A": "positive_unate"
+  },
+  "o221ai": {
+    "A1": "negative_unate",
+    "B2": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "o31a": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate",
+    "A3": "positive_unate"
+  },
+  "o221a": {
+    "A1": "positive_unate",
+    "B2": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "nor4": {
+    "C": "negative_unate",
+    "B": "negative_unate",
+    "D": "negative_unate",
+    "A": "negative_unate"
+  },
+  "or3": {
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "lpflow_clkinvkapwr": {
+    "A": "negative_unate"
+  },
+  "dfxtp": {
+    "CLK": "positive_unate"
+  },
+  "lpflow_lsbuf_lh_hl_isowell_tap": {
+    "A": "positive_unate"
+  },
+  "xor3": {
+    "C": "non_unate",
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "clkbuf": {
+    "A": "positive_unate"
+  },
+  "dlrbn": {
+    "GATE_N": "positive_unate",
+    "D": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "a2111oi": {
+    "D1": "negative_unate",
+    "A1": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "o21ai": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate"
+  },
+  "inv": {
+    "A": "negative_unate"
+  },
+  "a21boi": {
+    "A2": "negative_unate",
+    "B1_N": "positive_unate",
+    "A1": "negative_unate"
+  },
+  "clkdlyinv3sd1": {
+    "A": "negative_unate"
+  },
+  "or2b": {
+    "B_N": "negative_unate",
+    "A": "positive_unate"
+  },
+  "dlrtp": {
+    "GATE": "positive_unate",
+    "D": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "nand3b": {
+    "A_N": "positive_unate",
+    "B": "negative_unate",
+    "C": "negative_unate"
+  },
+  "nand2b": {
+    "A_N": "positive_unate",
+    "B": "negative_unate"
+  },
+  "sdfxtp": {
+    "CLK": "positive_unate"
+  },
+  "nand4b": {
+    "A_N": "positive_unate",
+    "B": "negative_unate",
+    "D": "negative_unate",
+    "C": "negative_unate"
+  },
+  "o21ba": {
+    "A2": "positive_unate",
+    "B1_N": "negative_unate",
+    "A1": "positive_unate"
+  },
+  "and3": {
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "sdfstp": {
+    "SET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "o2111a": {
+    "D1": "positive_unate",
+    "A1": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "nor3": {
+    "C": "negative_unate",
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "ha": {
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "bufbuf": {
+    "A": "positive_unate"
+  },
+  "or4bb": {
+    "D_N": "negative_unate",
+    "C_N": "negative_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "sdfrtp": {
+    "CLK": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "xnor2": {
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "a211oi": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "dlclkp": {
+    "CLK": "positive_unate"
+  },
+  "fa": {
+    "B": "non_unate",
+    "CIN": "non_unate",
+    "A": "non_unate"
+  },
+  "and4": {
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "D": "positive_unate",
+    "A": "positive_unate"
+  },
+  "nor2b": {
+    "B_N": "positive_unate",
+    "A": "negative_unate"
+  },
+  "o22ai": {
+    "B2": "negative_unate",
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate"
+  },
+  "o41a": {
+    "A4": "positive_unate",
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate"
+  },
+  "nor2": {
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "einvp": {
+    "A": "negative_unate"
+  },
+  "and4bb": {
+    "A_N": "negative_unate",
+    "B_N": "negative_unate",
+    "D": "positive_unate",
+    "C": "positive_unate"
+  },
+  "dfstp": {
+    "CLK": "positive_unate",
+    "SET_B": "positive_unate"
+  },
+  "and3b": {
+    "A_N": "negative_unate",
+    "B": "positive_unate",
+    "C": "positive_unate"
+  },
+  "or4": {
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "D": "positive_unate",
+    "A": "positive_unate"
+  },
+  "dfbbn": {
+    "CLK_N": "positive_unate",
+    "RESET_B": "positive_unate",
+    "SET_B": "positive_unate"
+  },
+  "dlxtn": {
+    "GATE_N": "positive_unate",
+    "D": "positive_unate"
+  },
+  "edfxbp": {
+    "CLK": "positive_unate"
+  },
+  "dfrtp": {
+    "RESET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "a211o": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "a21oi": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate"
+  },
+  "a221oi": {
+    "A1": "negative_unate",
+    "B2": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "einvn": {
+    "A": "negative_unate"
+  },
+  "and2b": {
+    "A_N": "negative_unate",
+    "B": "positive_unate"
+  },
+  "o211a": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "a31oi": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate",
+    "A3": "negative_unate"
+  },
+  "a32oi": {
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B2": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate"
+  },
+  "mux4": {
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "S1": "non_unate",
+    "A0": "positive_unate",
+    "A2": "positive_unate",
+    "S0": "non_unate"
+  },
+  "o21bai": {
+    "A2": "negative_unate",
+    "B1_N": "positive_unate",
+    "A1": "negative_unate"
+  },
+  "a22oi": {
+    "B2": "negative_unate",
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate"
+  },
+  "xor2": {
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "or2": {
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "nand4bb": {
+    "A_N": "positive_unate",
+    "B_N": "positive_unate",
+    "D": "negative_unate",
+    "C": "negative_unate"
+  },
+  "o22a": {
+    "B2": "positive_unate",
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate"
+  },
+  "dfxbp": {
+    "CLK": "positive_unate"
+  },
+  "bufinv": {
+    "A": "negative_unate"
+  },
+  "clkdlybuf4s25": {
+    "A": "positive_unate"
+  },
+  "a41oi": {
+    "A4": "negative_unate",
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate"
+  },
+  "clkdlybuf4s15": {
+    "A": "positive_unate"
+  },
+  "o2bb2a": {
+    "B2": "positive_unate",
+    "A2_N": "negative_unate",
+    "B1": "positive_unate",
+    "A1_N": "negative_unate"
+  },
+  "dlymetal6s2s": {
+    "A": "positive_unate"
+  },
+  "sdfxbp": {
+    "CLK": "positive_unate"
+  },
+  "o311ai": {
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "dlrtn": {
+    "GATE_N": "positive_unate",
+    "D": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "nand2": {
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "edfxtp": {
+    "CLK": "positive_unate"
+  },
+  "a21bo": {
+    "A2": "positive_unate",
+    "B1_N": "negative_unate",
+    "A1": "positive_unate"
+  },
+  "dfrbp": {
+    "RESET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "a32o": {
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B2": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate"
+  },
+  "fah": {
+    "CI": "non_unate",
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "dfbbp": {
+    "SET_B": "positive_unate",
+    "RESET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "a311o": {
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "sedfxtp": {
+    "CLK": "positive_unate"
+  },
+  "a31o": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate",
+    "A3": "positive_unate"
+  },
+  "a2111o": {
+    "D1": "positive_unate",
+    "A1": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "dlxbn": {
+    "GATE_N": "positive_unate",
+    "D": "positive_unate"
+  },
+  "a2bb2oi": {
+    "B2": "negative_unate",
+    "A2_N": "positive_unate",
+    "B1": "negative_unate",
+    "A1_N": "positive_unate"
+  },
+  "o211ai": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "clkdlybuf4s18": {
+    "A": "positive_unate"
+  },
+  "a41o": {
+    "A4": "positive_unate",
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate"
+  },
+  "or4b": {
+    "D_N": "negative_unate",
+    "C": "positive_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "lpflow_clkbufkapwr": {
+    "A": "positive_unate"
+  },
+  "nor4b": {
+    "D_N": "positive_unate",
+    "C": "negative_unate",
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "o21a": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate"
+  },
+  "and4b": {
+    "A_N": "negative_unate",
+    "B": "positive_unate",
+    "D": "positive_unate",
+    "C": "positive_unate"
+  },
+  "xnor3": {
+    "C": "non_unate",
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "sdfrbp": {
+    "RESET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "a21o": {
+    "A2": "positive_unate",
+    "B1": "positive_unate",
+    "A1": "positive_unate"
+  },
+  "dlrbp": {
+    "GATE": "positive_unate",
+    "D": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "sedfxbp": {
+    "CLK": "positive_unate"
+  },
+  "dfsbp": {
+    "SET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "o311a": {
+    "A1": "positive_unate",
+    "A3": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "clkdlyinv3sd2": {
+    "A": "negative_unate"
+  },
+  "fahcin": {
+    "B": "non_unate",
+    "CIN": "non_unate",
+    "A": "non_unate"
+  },
+  "clkdlyinv5sd2": {
+    "A": "negative_unate"
+  },
+  "or3b": {
+    "C_N": "negative_unate",
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "dlymetal6s6s": {
+    "A": "positive_unate"
+  },
+  "clkinv": {
+    "A": "negative_unate"
+  },
+  "a222oi": {
+    "A1": "negative_unate",
+    "B2": "negative_unate",
+    "B1": "negative_unate",
+    "C2": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "o31ai": {
+    "A2": "negative_unate",
+    "B1": "negative_unate",
+    "A1": "negative_unate",
+    "A3": "negative_unate"
+  },
+  "o2111ai": {
+    "D1": "negative_unate",
+    "A1": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "nand4": {
+    "C": "negative_unate",
+    "B": "negative_unate",
+    "D": "negative_unate",
+    "A": "negative_unate"
+  },
+  "nor4bb": {
+    "D_N": "positive_unate",
+    "C_N": "positive_unate",
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "nand3": {
+    "C": "negative_unate",
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "nor3b": {
+    "C_N": "positive_unate",
+    "B": "negative_unate",
+    "A": "negative_unate"
+  },
+  "clkdlybuf4s50": {
+    "A": "positive_unate"
+  },
+  "and2": {
+    "B": "positive_unate",
+    "A": "positive_unate"
+  },
+  "sdfsbp": {
+    "SET_B": "positive_unate",
+    "CLK": "positive_unate"
+  },
+  "lpflow_lsbuf_lh_isowell_tap": {
+    "A": "positive_unate"
+  },
+  "sdfbbn": {
+    "CLK_N": "positive_unate",
+    "RESET_B": "positive_unate",
+    "SET_B": "positive_unate"
+  },
+  "o2bb2ai": {
+    "B2": "negative_unate",
+    "A2_N": "positive_unate",
+    "B1": "negative_unate",
+    "A1_N": "positive_unate"
+  },
+  "dfrtn": {
+    "CLK_N": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "lpflow_isobufsrckapwr": {
+    "SLEEP": "negative_unate",
+    "A": "positive_unate"
+  },
+  "dlymetal6s4s": {
+    "A": "positive_unate"
+  },
+  "a221o": {
+    "A1": "positive_unate",
+    "B2": "positive_unate",
+    "B1": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "clkdlyinv5sd1": {
+    "A": "negative_unate"
+  },
+  "a311oi": {
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate",
+    "C1": "negative_unate"
+  },
+  "lpflow_isobufsrc": {
+    "SLEEP": "negative_unate",
+    "A": "positive_unate"
+  },
+  "o41ai": {
+    "A4": "negative_unate",
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate"
+  },
+  "clkinvlp": {
+    "A": "negative_unate"
+  },
+  "sdfrtn": {
+    "CLK_N": "positive_unate",
+    "RESET_B": "positive_unate"
+  },
+  "a222o": {
+    "A1": "positive_unate",
+    "B2": "positive_unate",
+    "B1": "positive_unate",
+    "C2": "positive_unate",
+    "A2": "positive_unate",
+    "C1": "positive_unate"
+  },
+  "o32ai": {
+    "A1": "negative_unate",
+    "A3": "negative_unate",
+    "B2": "negative_unate",
+    "B1": "negative_unate",
+    "A2": "negative_unate"
+  },
+  "clkdlyinv5sd3": {
+    "A": "negative_unate"
+  },
+  "lpflow_lsbuf_lh_isowell": {
+    "A": "positive_unate"
+  },
+  "mux2i": {
+    "A0": "negative_unate",
+    "S": "non_unate",
+    "A1": "negative_unate"
+  },
+  "sdfbbp": {
+    "CLK": "positive_unate",
+    "RESET_B": "positive_unate",
+    "SET_B": "positive_unate"
+  },
+  "probec_p": {
+    "A": "positive_unate"
+  },
+  "lpflow_inputiso0p": {
+    "SLEEP": "negative_unate",
+    "A": "positive_unate"
+  },
+  "clkdlyinv3sd3": {
+    "A": "negative_unate"
+  },
+  "dlxtp": {
+    "GATE": "positive_unate",
+    "D": "positive_unate"
+  },
+  "lpflow_inputiso1n": {
+    "SLEEP_B": "negative_unate",
+    "A": "positive_unate"
+  },
+  "lpflow_inputiso1p": {
+    "SLEEP": "positive_unate",
+    "A": "positive_unate"
+  },
+  "dlygate4sd3": {
+    "A": "positive_unate"
+  },
+  "dlygate4sd2": {
+    "A": "positive_unate"
+  },
+  "fahcon": {
+    "CI": "non_unate",
+    "B": "non_unate",
+    "A": "non_unate"
+  },
+  "probe_p": {
+    "A": "positive_unate"
+  },
+  "dlxbp": {
+    "GATE": "positive_unate",
+    "D": "positive_unate"
+  },
+  "lpflow_inputisolatch": {
+    "SLEEP_B": "positive_unate",
+    "D": "positive_unate"
+  },
+  "lpflow_inputiso0n": {
+    "SLEEP_B": "positive_unate",
+    "A": "positive_unate"
+  }
 }

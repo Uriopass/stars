@@ -40,12 +40,12 @@ pub fn instance_name(pin: &SDFPin) -> String {
 /// Turns sky130_fd_sc_hd__xor2_1 into xor2
 pub fn celltype_short(celltype: &str) -> &str {
     celltype
-        .trim_start_matches("sky130_fd_sc_hd__")
+        .trim_start_matches("sky130_fd_sc_hs__")
         .rsplit_once('_')
         .unwrap()
         .0
 }
 
 pub fn celltype_short_with_size(celltype: &str) -> &str {
-    celltype.trim_start_matches("sky130_fd_sc_hd__")
+    celltype.trim_start_matches("sky130_fd_sc_hs__")
 }

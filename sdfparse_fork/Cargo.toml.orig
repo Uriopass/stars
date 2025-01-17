@@ -1,0 +1,16 @@
+[package]
+name = "sdfparse"
+version = "0.1.1"
+edition = "2021"
+description = "Standard delay format (SDF) parser for EDA applications."
+license = "AGPL-3.0-only"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clilog = "0.2.3"
+compact_str = "0.6.1"
+either = "1.8.0"
+parsing-utils = "0.1.0"
+pest = "2.4.0"
+pest_derive = "2.4.0"
